@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 
 public class SSRB extends JPanel{
   
+  private static int scaleRatio = 4;
   private Color backGroundGreen = new Color(59,206,113);  
   //stores screenwidth/height
   private int screenWidth;
@@ -15,7 +16,21 @@ public class SSRB extends JPanel{
   //the player character
   private PlayerCharacter pc;
   
-    SSRB(){
+  public SSRB(){
+    addKeyListener(new KeyListener() {
+      @Override
+      public void keyTyped(KeyEvent e) {
+      }
+      @Override
+      public void keyReleased(KeyEvent e) {
+        pc.keyReleased(e);
+      }
+      @Override
+      public void keyPressed(KeyEvent e) {
+        pc.keyPressed(e);
+      }
+    });
+    setFocusable(true); 
     //get the screen height/width
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     screenWidth = (int)screenSize.getWidth();
@@ -23,18 +38,25 @@ public class SSRB extends JPanel{
     //create a new plaercharacter in the middle of the screen
     pc = new PlayerCharacter(screenWidth/2,screenHeight/2);
   }
-    
+  
   @Override
   public void paint(Graphics g){
-     Graphics2D g2d = (Graphics2D) g;
-     //draw the background
-     g2d.setColor(backGroundGreen);
+    Graphics2D g2d = (Graphics2D) g;
+    //draw the background
+    g2d.setColor(backGroundGreen);
     g2d.fillRect(0,0,screenWidth,screenHeight);
     
     //draw the player
     pc.paint(g2d);
   }
-
+  
+  public void move(){
+    pc.move();
+  }
+  
+  public static int getScaleRatio(){
+  return scaleRatio;
+  }
   
   public static void main(String[] args) throws InterruptedException, IOException {
     JFrame frame = new JFrame("SUPER SPICY ROBOT BOYS 23");
@@ -49,6 +71,7 @@ public class SSRB extends JPanel{
     
     while (true){
       s.repaint();
+      s.move();
       Thread.sleep(10);
     }
   }
