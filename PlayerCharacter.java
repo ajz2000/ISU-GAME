@@ -88,7 +88,6 @@ public class PlayerCharacter extends Character{
         accelTimer++;
       }
     }
-    
     super.move();
   }
   

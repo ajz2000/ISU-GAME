@@ -14,7 +14,7 @@ public abstract class MovableObject extends GraphicsObject{
   protected boolean movingDown = false;
   protected boolean movingLeft = false;
   protected boolean movingRight = false;
-  
+  protected boolean facingRight = false;
   public void move(){
     if(movingUp){
       if(movingRight){
@@ -52,7 +52,18 @@ public abstract class MovableObject extends GraphicsObject{
   }
   
   public void paint(Graphics2D g2d){
+    if(movingRight){
+      facingRight = true;
+    }
+    else if (movingLeft){
+      facingRight = false;
+    }
+    if(facingRight){
+    g2d.drawImage(sprite.getSubimage(frameStart, 0, width, height), x+width*SSRB.getScaleRatio(), y, -width*SSRB.getScaleRatio(), height*SSRB.getScaleRatio(), null);
+    }
+    else{
     g2d.drawImage(sprite.getSubimage(frameStart, 0, width, height), x, y, width*SSRB.getScaleRatio(), height*SSRB.getScaleRatio(), null);
+    }
   }
   
 }
