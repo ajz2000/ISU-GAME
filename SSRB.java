@@ -15,6 +15,7 @@ public class SSRB extends JPanel{
   private int screenHeight;
   //the player character
   private PlayerCharacter pc;
+  private RobotCompanion rc;
   
   public SSRB(){
     addKeyListener(new KeyListener() {
@@ -37,21 +38,26 @@ public class SSRB extends JPanel{
     screenHeight = (int)screenSize.getHeight();
     //create a new plaercharacter in the middle of the screen
     pc = new PlayerCharacter(screenWidth/2,screenHeight/2);
+    rc = new RobotCompanion(pc);
   }
   
   @Override
   public void paint(Graphics g){
     Graphics2D g2d = (Graphics2D) g;
+    
+    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     //draw the background
     g2d.setColor(backGroundGreen);
     g2d.fillRect(0,0,screenWidth,screenHeight);
     
     //draw the player
     pc.paint(g2d);
+    rc.paint(g2d);
   }
   
   public void move(){
     pc.move();
+    rc.move();
   }
   
   public static int getScaleRatio(){

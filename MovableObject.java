@@ -7,6 +7,7 @@ public abstract class MovableObject extends GraphicsObject{
   //current frame of animation row
   protected int curFrame = 0;
   //how many frames in the animation
+  //number of frames -1 (frames start at ZERO)
   protected int maxFrame = 0;
   //x position of frame top left in image
   protected int frameStart = 0;
@@ -15,6 +16,7 @@ public abstract class MovableObject extends GraphicsObject{
   protected boolean movingLeft = false;
   protected boolean movingRight = false;
   protected boolean facingRight = false;
+  
   public void move(){
     if(movingUp){
       if(movingRight){
@@ -49,9 +51,14 @@ public abstract class MovableObject extends GraphicsObject{
     int Ya = (int)(Math.sin(Math.toRadians(angle))*velocity);
     x += Xa;
     y +=Ya;
+    //reverts the player to standing position when they are not moving
+    if(velocity==0){
+    curFrame = 0;
+    }
   }
   
   public void paint(Graphics2D g2d){
+    //a quick implementation of left/right flipping of sprites
     if(movingRight){
       facingRight = true;
     }
@@ -59,11 +66,16 @@ public abstract class MovableObject extends GraphicsObject{
       facingRight = false;
     }
     if(facingRight){
-    g2d.drawImage(sprite.getSubimage(frameStart, 0, width, height), x+width*SSRB.getScaleRatio(), y, -width*SSRB.getScaleRatio(), height*SSRB.getScaleRatio(), null);
+    g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), x+width*SSRB.getScaleRatio(), y, -width*SSRB.getScaleRatio(), height*SSRB.getScaleRatio(), null);
     }
     else{
-    g2d.drawImage(sprite.getSubimage(frameStart, 0, width, height), x, y, width*SSRB.getScaleRatio(), height*SSRB.getScaleRatio(), null);
+    g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), x, y, width*SSRB.getScaleRatio(), height*SSRB.getScaleRatio(), null);
     }
   }
-  
+  public double getAngle(){
+  return angle;
+  }
+  public double getVelocity(){
+  return velocity;
+  }
 }

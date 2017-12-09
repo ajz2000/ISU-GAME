@@ -14,4 +14,10 @@ public abstract class GraphicsObject{
     g2d.drawImage(sprite, x, y, width, height, null);
   }
   
+  public int getX(){
+    return x;
+  }
+  public int getY(){
+    return y;
+  }
 }
