@@ -31,6 +31,23 @@ public class SSRB extends JPanel{
         pc.keyPressed(e);
       }
     });
+    
+    addMouseListener(new MouseListener() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+      }
+      @Override
+      public void mouseEntered(MouseEvent e) {
+      }
+      @Override
+      public void mouseExited(MouseEvent e) {
+      }
+      public void mousePressed(MouseEvent e) {
+      }
+      public void mouseReleased(MouseEvent e) {
+      }
+    });
+    
     setFocusable(true); 
     //get the screen height/width
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
