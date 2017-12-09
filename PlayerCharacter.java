@@ -13,13 +13,12 @@ public class PlayerCharacter extends Character{
   private int accelTimer = 0;
   private int runAnimTimer = 0;
   private String currentGun;
-  
   PlayerCharacter(int x, int y){
     this.x = x;
     this.y = y;
     width = 16;
     height = 32; 
-
+    health = 100;
     maxFrame = 3;
     try {
       sprite = ImageIO.read(new File("PlayerCharacter1.png"));
@@ -40,7 +39,9 @@ public class PlayerCharacter extends Character{
     else if (e.getKeyCode() == KeyEvent.VK_S){
       movingDown = true;
     }
-    
+    else if (e.getKeyCode() == KeyEvent.VK_SPACE){
+      //D O D G E 
+      }
   }
   
   public void keyReleased(KeyEvent e){
@@ -62,6 +63,7 @@ public class PlayerCharacter extends Character{
   }
   
   public void dodge(){
+    
   }
   
   public void shoot(){
@@ -103,6 +105,7 @@ public class PlayerCharacter extends Character{
         curFrame = 0;
       }
     }
+
     //calls the movable objects default movement (
     super.move();
   }

@@ -33,7 +33,7 @@ public class RobotCompanion extends Character{
     accelTimer++;
     floatTimer++;
     
-    if(distanceToPlayer>=96){
+    if(distanceToPlayer>=24*SSRB.getScaleRatio()){
       if(velocity<5&&accelTimer>15){
         velocity++;
         accelTimer = 0;

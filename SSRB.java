@@ -16,7 +16,7 @@ public class SSRB extends JPanel{
   //the player character
   private PlayerCharacter pc;
   private RobotCompanion rc;
-  
+  private HUD hud;
   public SSRB(){
     addKeyListener(new KeyListener() {
       @Override
@@ -36,9 +36,10 @@ public class SSRB extends JPanel{
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     screenWidth = (int)screenSize.getWidth();
     screenHeight = (int)screenSize.getHeight();
-    //create a new plaercharacter in the middle of the screen
+    //create a new playercharacter in the middle of the screen
     pc = new PlayerCharacter(screenWidth/2,screenHeight/2);
     rc = new RobotCompanion(pc);
+    hud = new HUD(pc);
   }
   
   @Override
@@ -53,6 +54,7 @@ public class SSRB extends JPanel{
     //draw the player
     pc.paint(g2d);
     rc.paint(g2d);
+    hud.paint(g2d);
   }
   
   public void move(){
