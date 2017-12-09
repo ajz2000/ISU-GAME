@@ -2,6 +2,7 @@ import java.awt.*;
 import java.io.*;
 import javax.imageio.*;
 import java.awt.image.BufferedImage;
+import java.awt.event.*; 
 
 public class RobotCompanion extends Character{
   private PlayerCharacter pc;
@@ -9,8 +10,13 @@ public class RobotCompanion extends Character{
   private int floatTimer = 0;
   private double distanceToPlayer;
   private boolean floatingUp = false;
-  public RobotCompanion(PlayerCharacter pc){
+  private SSRB ssrb;
+  private double mouseX;
+  private double mouseY;
+  
+  public RobotCompanion(PlayerCharacter pc, SSRB ssrb){
     this.pc=pc;
+    this.ssrb = ssrb;
     width = 16;
     height = 16; 
     x = pc.getX() - 16 * SSRB.getScaleRatio();
@@ -61,5 +67,22 @@ public class RobotCompanion extends Character{
     int Ya = (int)(Math.sin(Math.toRadians(angle))*velocity);
     x += Xa;
     y +=Ya;
+  }
+  
+  public void shoot(MouseEvent e){
+    //Get mouse x and y
+    mouseX = e.getX();
+    mouseY = e.getY();
+    
+    //Find x and y distance between mouse and companion's centre.
+    double xDist = mouseX - (x + ((width * SSRB.getScaleRatio()) / 2));
+    double yDist = mouseY - (y + ((height * SSRB.getScaleRatio()) / 2));
+    
+    //Find angle to fire by using Tan-1(opp/adj or y/x)
+    double bulletAngle = (double)Math.toDegrees(Math.atan2(yDist, xDist));
+    
+    Projectile toAdd = new Projectile((int)(x + ((width * SSRB.getScaleRatio()) / 2)), (int)(y + ((height * SSRB.getScaleRatio()) / 2)), 5.0, bulletAngle, 10, "Pistol", true);
+    
+    ssrb.addBullet(toAdd);
   }
 }

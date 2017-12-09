@@ -47,10 +47,11 @@ public abstract class MovableObject extends GraphicsObject{
       angle = 180;
     }
     
-    int Xa = (int)(Math.cos(Math.toRadians(angle))*velocity);
-    int Ya = (int)(Math.sin(Math.toRadians(angle))*velocity);
+    double Xa = (Math.cos(Math.toRadians(angle))*velocity);
+    double Ya = (Math.sin(Math.toRadians(angle))*velocity);
+
     x += Xa;
-    y +=Ya;
+    y += Ya;
     //reverts the player to standing position when they are not moving
     if(velocity==0){
     curFrame = 0;
@@ -66,10 +67,10 @@ public abstract class MovableObject extends GraphicsObject{
       facingRight = false;
     }
     if(facingRight){
-    g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), x+width*SSRB.getScaleRatio(), y, -width*SSRB.getScaleRatio(), height*SSRB.getScaleRatio(), null);
+    g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), (int)(x+width*SSRB.getScaleRatio()), (int)y, -width*SSRB.getScaleRatio(), height*SSRB.getScaleRatio(), null);
     }
     else{
-    g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), x, y, width*SSRB.getScaleRatio(), height*SSRB.getScaleRatio(), null);
+    g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), (int)x, (int)y, width*SSRB.getScaleRatio(), height*SSRB.getScaleRatio(), null);
     }
   }
   public double getAngle(){

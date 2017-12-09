@@ -3,21 +3,21 @@ import java.awt.image.BufferedImage;
 
 public abstract class GraphicsObject{
   
-  protected int x;
-  protected int y;
+  protected double x = 0;
+  protected double y = 0;
   protected int width;
   protected int height;
   protected BufferedImage sprite;
-  protected boolean isActive;
+  protected boolean isActive = true;
   
   public void paint(Graphics2D g2d){
-    g2d.drawImage(sprite, x, y, width, height, null);
+    g2d.drawImage(sprite, (int)x, (int)y, width, height, null);
   }
   
-  public int getX(){
+  public double getX(){
     return x;
   }
-  public int getY(){
+  public double getY(){
     return y;
   }
 }

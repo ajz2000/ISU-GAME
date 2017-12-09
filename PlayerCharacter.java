@@ -66,9 +66,6 @@ public class PlayerCharacter extends Character{
     
   }
   
-  public void shoot(){
-  }
-  
   public void move(){
     //accelerate and decelerate the player
     if(movingUp||movingDown||movingLeft||movingRight){

@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.*;
 import javax.swing.*;
 import java.awt.event.*; 
 import java.io.*;
@@ -17,6 +18,8 @@ public class SSRB extends JPanel{
   private PlayerCharacter pc;
   private RobotCompanion rc;
   private HUD hud;
+  private ArrayList<Projectile> bulletList = new ArrayList<Projectile>();
+  
   public SSRB(){
     addKeyListener(new KeyListener() {
       @Override
@@ -43,6 +46,9 @@ public class SSRB extends JPanel{
       public void mouseExited(MouseEvent e) {
       }
       public void mousePressed(MouseEvent e) {
+        if(e.getButton() == MouseEvent.BUTTON1){
+          rc.shoot(e);
+        }
       }
       public void mouseReleased(MouseEvent e) {
       }
@@ -55,7 +61,7 @@ public class SSRB extends JPanel{
     screenHeight = (int)screenSize.getHeight();
     //create a new playercharacter in the middle of the screen
     pc = new PlayerCharacter(screenWidth/2,screenHeight/2);
-    rc = new RobotCompanion(pc);
+    rc = new RobotCompanion(pc, this);
     hud = new HUD(pc);
   }
   
@@ -72,11 +78,27 @@ public class SSRB extends JPanel{
     pc.paint(g2d);
     rc.paint(g2d);
     hud.paint(g2d);
+    
+    //loop through every bullet in bulletList
+    for(int i = 0; i < bulletList.size(); i++){
+      // paint the bullet at location i in the array.
+      bulletList.get(i).paint(g2d);
+    }
   }
   
   public void move(){
     pc.move();
     rc.move();
+    
+    //loop through every bullet in bulletList
+    for(int i = 0; i < bulletList.size(); i++){
+      // move the bullet at location i in the array.
+      bulletList.get(i).move();
+    }
+  }
+  
+  public void addBullet(Projectile p){
+    bulletList.add(p);
   }
   
   public static int getScaleRatio(){
