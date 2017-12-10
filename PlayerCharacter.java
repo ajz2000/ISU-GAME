@@ -12,7 +12,11 @@ public class PlayerCharacter extends Character{
   private int dodgeCooldown;
   private int accelTimer = 0;
   private int runAnimTimer = 0;
+  private int dodgeTimer = 0;
+  private int dodgeDelayTimer = 0;
   private String currentGun;
+  private boolean dodging = false;
+  
   PlayerCharacter(int x, int y){
     this.x = x;
     this.y = y;
@@ -40,8 +44,11 @@ public class PlayerCharacter extends Character{
       movingDown = true;
     }
     else if (e.getKeyCode() == KeyEvent.VK_SPACE){
-      //D O D G E 
+      if(dodgeDelayTimer >= 50){
+        dodgeDelayTimer = 0;
+        dodge();
       }
+    }
   }
   
   public void keyReleased(KeyEvent e){
@@ -63,7 +70,8 @@ public class PlayerCharacter extends Character{
   }
   
   public void dodge(){
-    
+    dodging = true;
+    velocity = 10;
   }
   
   public void move(){
@@ -102,9 +110,36 @@ public class PlayerCharacter extends Character{
         curFrame = 0;
       }
     }
+    
+    //Increases dodge timer and resets velocity and timer when timer is done.
+    if(dodging){
+      if(dodgeTimer >= 50){
+        velocity = 5;
+        dodgeTimer = 0;
+        dodging = false;
+      }
+      else{
+        dodgeTimer++;
+      }
+    } else if(dodgeDelayTimer < 50){
+        dodgeDelayTimer++;
+    }
 
     //calls the movable objects default movement (
     super.move();
   }
   
+  public void paint(Graphics2D g2d){
+    //If player is dodging, they are slightly transparent.
+    if(dodging){
+      AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+      g2d.setComposite(alphaComposite);
+    }
+    
+    super.paint(g2d);
+  }
+  
+  public boolean getDodging(){
+    return dodging;
+  }
 }
