@@ -6,15 +6,10 @@ import java.awt.image.BufferedImage;
 
 public class PlayerCharacter extends Character{
   
-  private int machineGunAmmo;
-  private int sniperAmmo;
-  private int shotgunAmmo;
-  private int dodgeCooldown;
   private int accelTimer = 0;
   private int runAnimTimer = 0;
   private int dodgeTimer = 0;
   private int dodgeDelayTimer = 0;
-  private String currentGun;
   private boolean dodging = false;
   
   PlayerCharacter(int x, int y){

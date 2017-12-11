@@ -6,6 +6,9 @@ import java.awt.event.*;
 
 public class RobotCompanion extends Character{
   private PlayerCharacter pc;
+  private int machineGunAmmo;
+  private int sniperAmmo;
+  private int shotgunAmmo;
   private int accelTimer = 0;
   private int floatTimer = 0;
   private double distanceToPlayer;
@@ -13,6 +16,8 @@ public class RobotCompanion extends Character{
   private SSRB ssrb;
   private double mouseX;
   private double mouseY;
+  //Integer stores gun types: 0 - Pistol, 1 - Shotgun, 2 - Sniper, 3 - Machine Gun
+  private int currentGun = 0;
   
   public RobotCompanion(PlayerCharacter pc, SSRB ssrb){
     this.pc=pc;
@@ -84,5 +89,36 @@ public class RobotCompanion extends Character{
     Projectile toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 5.0, bulletAngle, 10, "Pistol", true);
     
     ssrb.addBullet(toAdd);
+  }
+  
+  public void mousePressed(MouseEvent e){
+    if(e.getButton() == MouseEvent.BUTTON1){
+          shoot(e);
+    }
+    else if(e.getButton() == MouseEvent.BUTTON3){
+      if(currentGun < 3){
+        currentGun++;
+      }
+      else{
+        currentGun = 0;
+      }
+    }
+  }
+  
+  public int getCurrentGun(){
+    return currentGun;
+  }
+  
+  public int getAmmo(int gun){
+    switch(gun){
+      case 1:
+        return shotgunAmmo;
+      case 2:
+        return sniperAmmo;
+      case 3:
+        return machineGunAmmo;
+      default:
+        return 0;
+    }
   }
 }

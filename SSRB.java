@@ -46,9 +46,7 @@ public class SSRB extends JPanel{
       public void mouseExited(MouseEvent e) {
       }
       public void mousePressed(MouseEvent e) {
-        if(e.getButton() == MouseEvent.BUTTON1){
-          rc.shoot(e);
-        }
+        rc.mousePressed(e);
       }
       public void mouseReleased(MouseEvent e) {
       }
@@ -62,7 +60,7 @@ public class SSRB extends JPanel{
     //create a new playercharacter in the middle of the screen
     pc = new PlayerCharacter(screenWidth/2/SSRB.getScaleRatio(),screenHeight/2/SSRB.getScaleRatio());
     rc = new RobotCompanion(pc, this);
-    hud = new HUD(pc);
+    hud = new HUD(pc, rc);
   }
   
   @Override
