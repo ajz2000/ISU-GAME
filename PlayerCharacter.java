@@ -117,6 +117,9 @@ public class PlayerCharacter extends Character{
         velocity = 5;
         dodgeTimer = 0;
         dodging = false;
+        if (!movingUp&&!movingDown&&!movingLeft&&!movingRight){
+          velocity = 0;
+        }
       }
       else{
         dodgeTimer++;

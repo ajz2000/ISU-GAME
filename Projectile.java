@@ -13,8 +13,8 @@ public class Projectile extends MovableObject{
     this.y = y;
     this.velocity = velocity;
     this.angle = angle;
-    width = 2;
-    height = 2;
+    width = 4;
+    height = 4;
   }
   
   public void paint(Graphics2D g2d){
