@@ -60,7 +60,7 @@ public class SSRB extends JPanel{
     screenWidth = (int)screenSize.getWidth();
     screenHeight = (int)screenSize.getHeight();
     //create a new playercharacter in the middle of the screen
-    pc = new PlayerCharacter(screenWidth/2,screenHeight/2);
+    pc = new PlayerCharacter(screenWidth/2/SSRB.getScaleRatio(),screenHeight/2/SSRB.getScaleRatio());
     rc = new RobotCompanion(pc, this);
     hud = new HUD(pc);
   }
@@ -70,6 +70,9 @@ public class SSRB extends JPanel{
     Graphics2D g2d = (Graphics2D) g;
     
     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    //Set Scale Ratio
+    g2d.scale(scaleRatio, scaleRatio);
+    
     //draw the background
     g2d.setColor(backGroundGreen);
     g2d.fillRect(0,0,screenWidth,screenHeight);

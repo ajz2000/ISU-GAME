@@ -67,10 +67,10 @@ public abstract class MovableObject extends GraphicsObject{
       facingRight = false;
     }
     if(facingRight){
-    g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), (int)(x+width*SSRB.getScaleRatio()), (int)y, -width*SSRB.getScaleRatio(), height*SSRB.getScaleRatio(), null);
+    g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), (int)(x+width), (int)y, -width, height, null);
     }
     else{
-    g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), (int)x, (int)y, width*SSRB.getScaleRatio(), height*SSRB.getScaleRatio(), null);
+    g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), (int)x, (int)y, width, height, null);
     }
   }
   public double getAngle(){

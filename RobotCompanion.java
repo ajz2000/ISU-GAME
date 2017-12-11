@@ -19,7 +19,7 @@ public class RobotCompanion extends Character{
     this.ssrb = ssrb;
     width = 16;
     height = 16; 
-    x = pc.getX() - 16 * SSRB.getScaleRatio();
+    x = pc.getX() - 16;
     y = pc.getY();
     try {
       sprite = ImageIO.read(new File("RobotCompanion1.png"));
@@ -39,14 +39,14 @@ public class RobotCompanion extends Character{
     accelTimer++;
     floatTimer++;
     
-    if(distanceToPlayer>=24*SSRB.getScaleRatio()){
-      if(velocity<5&&accelTimer>15){
+    if(distanceToPlayer>=24){
+      if(velocity<2&&accelTimer>15){
         velocity++;
         accelTimer = 0;
       }
     }
     else {
-      if(velocity>0&&accelTimer>5){
+      if(velocity>0&&accelTimer>2){
         velocity--;
         accelTimer = 0;
       }
@@ -55,11 +55,11 @@ public class RobotCompanion extends Character{
     if(floatTimer>=40){
       floatTimer = 0;
       if(floatingUp){
-        y = y + 1*SSRB.getScaleRatio();
+        y = y + 1;
         floatingUp = false;
       }
       else if(!floatingUp){
-        y = y - 1*SSRB.getScaleRatio();
+        y = y - 1;
         floatingUp = true;
       }
     }
@@ -71,17 +71,17 @@ public class RobotCompanion extends Character{
   
   public void shoot(MouseEvent e){
     //Get mouse x and y
-    mouseX = e.getX();
-    mouseY = e.getY();
+    mouseX = e.getX() / SSRB.getScaleRatio();
+    mouseY = e.getY() / SSRB.getScaleRatio();
     
     //Find x and y distance between mouse and companion's centre.
-    double xDist = mouseX - (x + ((width * SSRB.getScaleRatio()) / 2));
-    double yDist = mouseY - (y + ((height * SSRB.getScaleRatio()) / 2));
+    double xDist = mouseX - (x + ((width) / 2));
+    double yDist = mouseY - (y + ((height) / 2));
     
     //Find angle to fire by using Tan-1(opp/adj or y/x)
     double bulletAngle = (double)Math.toDegrees(Math.atan2(yDist, xDist));
     
-    Projectile toAdd = new Projectile((int)(x + ((width * SSRB.getScaleRatio()) / 2)), (int)(y + ((height * SSRB.getScaleRatio()) / 2)), 5.0, bulletAngle, 10, "Pistol", true);
+    Projectile toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 5.0, bulletAngle, 10, "Pistol", true);
     
     ssrb.addBullet(toAdd);
   }

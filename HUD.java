@@ -10,11 +10,11 @@ public class HUD extends GraphicsObject{
   
   public void paint (Graphics2D g2d){
     g2d.setColor(Color.GRAY);
-    g2d.fillRect(2*SSRB.getScaleRatio(),2*SSRB.getScaleRatio(),2*SSRB.getScaleRatio(),2*SSRB.getScaleRatio());
-    g2d.fillRect(2*SSRB.getScaleRatio(), 105*SSRB.getScaleRatio(),2*SSRB.getScaleRatio(),2*SSRB.getScaleRatio());
+    g2d.fillRect(2,2,2,2);
+    g2d.fillRect(2,105,2,2);
     g2d.setColor(Color.RED);
     for(int i = pc.getHealth(); i>=1; i--){
-      g2d.fillRect(2*SSRB.getScaleRatio(),(100-i)*SSRB.getScaleRatio()+4*SSRB.getScaleRatio(),2*SSRB.getScaleRatio(),2*SSRB.getScaleRatio());
+      g2d.fillRect(2,(100-i)+4,2,2);
     }
   }
 }
