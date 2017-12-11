@@ -140,6 +140,11 @@ public class PlayerCharacter extends Character{
     }
     
     super.paint(g2d);
+    
+    if(dodging){
+      AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f);
+      g2d.setComposite(alphaComposite);
+    }
   }
   
   public boolean getDodging(){
