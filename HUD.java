@@ -44,20 +44,25 @@ public class HUD extends GraphicsObject{
     switch(rc.getCurrentGun()){
       case 0:
         sprite = imageList.get(0);
+        g2d.drawString("Unlimited",10,20);
         break;
       case 1:
         sprite = imageList.get(1);
+        g2d.drawString(Integer.toString(rc.getAmmo(1)),10,20);
         break;
       case 2:
         sprite = imageList.get(2);
+        g2d.drawString(Integer.toString(rc.getAmmo(2)),10,20);
         break;
       case 3:
         sprite = imageList.get(3);
+        g2d.drawString(Integer.toString(rc.getAmmo(3)),10,20);
         break;
       default:
         System.out.println("WHY ARE YOU ON GUN TYPE 4?!?");
     }
     
+    //ammo
     super.paint(g2d);
   }
 }

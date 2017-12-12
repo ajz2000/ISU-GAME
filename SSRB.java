@@ -49,6 +49,7 @@ public class SSRB extends JPanel{
         rc.mousePressed(e);
       }
       public void mouseReleased(MouseEvent e) {
+        rc.mouseReleased(e);
       }
     });
     
