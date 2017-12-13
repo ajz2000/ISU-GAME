@@ -26,8 +26,8 @@ public class RobotCompanion extends Character{
   public RobotCompanion(PlayerCharacter pc, SSRB ssrb){
     this.pc=pc;
     this.ssrb = ssrb;
-    width = 16;
-    height = 16; 
+    width = 32;
+    height = 32; 
     x = pc.getX() - 16;
     y = pc.getY();
     try {
@@ -48,8 +48,8 @@ public class RobotCompanion extends Character{
     accelTimer++;
     floatTimer++;
     
-    if(distanceToPlayer>=24){
-      if(velocity<2&&accelTimer>15){
+    if(distanceToPlayer>=48){
+      if(velocity<4&&accelTimer>15){
         velocity++;
         accelTimer = 0;
       }
@@ -77,7 +77,7 @@ public class RobotCompanion extends Character{
     y +=Ya;
     
     if(machineGunShooting){
-      shootMachineGun(mouseX,mouseY);
+      shootMachineGun();
     }
      if (shotgunTimer < 60){
         shotgunTimer++;
@@ -110,7 +110,7 @@ public class RobotCompanion extends Character{
       case 1:
         if(shotgunAmmo>0&&shotgunTimer>=60){
         for (int i = 0; i <=5; i++){
-          toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 5.0, bulletAngle+((Math.random()*30)-15), 10, "Shotgun", true);
+          toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 5.0, bulletAngle+((Math.random()*30)-15), 5, "Shotgun", true);
           ssrb.addBullet(toAdd);
         }
         shotgunTimer = 0;
@@ -120,25 +120,29 @@ public class RobotCompanion extends Character{
         break;
       case 2:
         if(sniperAmmo>0&&sniperTimer>=100){
-        toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 10.0, bulletAngle, 10, "Sniper", true);
+        toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 10.0, bulletAngle, 50, "Sniper", true);
         ssrb.addBullet(toAdd);
         sniperAmmo--;
         sniperTimer = 0;
       }
     }
   }
-  public void shootMachineGun(double mouseX, double mouseY){
+  
+  public void shootMachineGun(){
     if (machineGunAmmo>0&&machinegunTimer>=10){
+      mouseX = (MouseInfo.getPointerInfo().getLocation().x + ssrb.getXPosition())/SSRB.getScaleRatio();
+      mouseY = (MouseInfo.getPointerInfo().getLocation().y + ssrb.getYPosition()-31)/SSRB.getScaleRatio();
       Projectile toAdd;
       double xDist = mouseX - (x + ((width) / 2));
       double yDist = mouseY - (y + ((height) / 2));
       double bulletAngle = (double)Math.toDegrees(Math.atan2(yDist, xDist));
-      toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 7.0, bulletAngle, 10, "MachineGun", true);
+      toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 7.0, bulletAngle, 3, "MachineGun", true);
       ssrb.addBullet(toAdd);
       machineGunAmmo--;
       machinegunTimer = 0;
     }
   }
+  
   public void mousePressed(MouseEvent e){
     if(e.getButton() == MouseEvent.BUTTON1){
       if(currentGun == 3){   

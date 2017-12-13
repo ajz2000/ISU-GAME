@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 public class SSRB extends JPanel{
   
-  private static int scaleRatio = 4;
+  private static int scaleRatio = 2;
   private Color backGroundGreen = new Color(59,206,113);  
   //stores screenwidth/height
   private int screenWidth;
@@ -105,6 +105,14 @@ public class SSRB extends JPanel{
   
   public static int getScaleRatio(){
   return scaleRatio;
+  }
+  
+  public int getXPosition(){
+    return this.getX();
+  }
+  
+  public int getYPosition(){
+    return this.getY();
   }
   
   public static void main(String[] args) throws InterruptedException, IOException {

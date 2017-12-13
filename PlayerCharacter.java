@@ -15,8 +15,8 @@ public class PlayerCharacter extends Character{
   PlayerCharacter(int x, int y){
     this.x = x;
     this.y = y;
-    width = 16;
-    height = 32; 
+    width = 32;
+    height = 64; 
     health = 100;
     maxFrame = 3;
     try {
@@ -66,14 +66,14 @@ public class PlayerCharacter extends Character{
   
   public void dodge(){
     dodging = true;
-    velocity = 4;
+    velocity = 8;
   }
   
   public void move(){
     //accelerate and decelerate the player
     if(movingUp||movingDown||movingLeft||movingRight){
       if(accelTimer >= 10){
-        if(velocity < 2){
+        if(velocity < 4){
           velocity++;
         }
         accelTimer = 0;
@@ -109,7 +109,7 @@ public class PlayerCharacter extends Character{
     //Increases dodge timer and resets velocity and timer when timer is done.
     if(dodging){
       if(dodgeTimer >= 50){
-        velocity = 2;
+        velocity = 4;
         dodgeTimer = 0;
         dodging = false;
         if (!movingUp&&!movingDown&&!movingLeft&&!movingRight){
