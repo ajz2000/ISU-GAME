@@ -11,4 +11,12 @@ public abstract class Character extends MovableObject{
   public int getHealth(){
     return health;
   }
+  
+  public void setHealth(int damage){
+    health -= damage;
+    
+    if(health < 0){
+      isActive = false;
+    }
+  }
 }

@@ -41,7 +41,7 @@ public class Enemy extends Character{
       }
     }
     else{
-    floatTimer++;
+      floatTimer++;
     }
     super.move();
   }

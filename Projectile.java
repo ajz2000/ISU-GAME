@@ -56,4 +56,45 @@ public class Projectile extends MovableObject{
       }
     }
   }
+  
+  public boolean collide(GraphicsObject toCollide){
+    if(type.equals("Sniper")){
+      try{
+        if(Math.tan(Math.toRadians(angle)) > 0){
+          System.out.println("Reached");
+          double objTLX = toCollide.getX();
+          double objTLY = toCollide.getY();
+          double objBRX = toCollide.getX() + toCollide.getWidth();
+          double objBRY = toCollide.getY() + toCollide.getHeight();
+          double xDistTL = objTLX - (x + ((width) / 2));
+          double yDistTL = objTLY - (y + ((height) / 2));
+          double angleToTL = (double)Math.toDegrees(Math.atan2(yDistTL, xDistTL));
+          double xDistBR = objTLX - (x + ((width) / 2));
+          double yDistBR = objTLY - (y + ((height) / 2));
+          double angleToBR = (double)Math.toDegrees(Math.atan2(yDistBR, xDistBR));
+          
+          if((Math.abs(angle) > Math.abs(angleToTL) && Math.abs(angle) < Math.abs(angleToBR)) || (Math.abs(angle) < Math.abs(angleToTL) && Math.abs(angle) > Math.abs(angleToBR))){
+            return true;
+          }
+          else{
+            return false;
+          }
+        }
+        else{
+          
+        }
+      }catch(Exception e){
+        return false;
+      }
+      
+      return false;
+    }
+    else{
+      return super.collide(toCollide);
+    }
+  }
+  
+  public int getDamage(){
+    return damage;
+  }
 }

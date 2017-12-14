@@ -17,7 +17,20 @@ public abstract class GraphicsObject{
   public double getX(){
     return x;
   }
+  
   public double getY(){
     return y;
+  }
+  
+  public int getWidth(){
+    return width;
+  }
+  
+  public int getHeight(){
+    return height;
+  }
+  
+  public void setActive(boolean active){
+    isActive = active;
   }
 }

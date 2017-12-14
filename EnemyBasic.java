@@ -10,6 +10,7 @@ public class EnemyBasic extends Enemy{
     this.x = (int)x;
     this.y = (int)y;
     maxVelocity = 1;
+    health = 20;
     try {
       sprite = ImageIO.read(new File("EnemyBasic1.png"));
     } catch (IOException e) {

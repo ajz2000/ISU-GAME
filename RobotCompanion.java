@@ -161,7 +161,7 @@ public class RobotCompanion extends Character{
       }
         break;
       case 3:
-        if(limitBreak == 2000){
+        if(limitBreak == 2000&&machineGunAmmo>0){
         bulletAngle = 0;
         machineGunAmmo--;
         for(int i = 0; i<36; i++){

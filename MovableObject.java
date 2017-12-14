@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.*;
 
 public abstract class MovableObject extends GraphicsObject{
   
@@ -67,15 +68,28 @@ public abstract class MovableObject extends GraphicsObject{
       facingRight = false;
     }
     if(facingRight){
-    g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), (int)(x+width), (int)y, -width, height, null);
+      g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), (int)(x+width), (int)y, -width, height, null);
     }
     else{
-    g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), (int)x, (int)y, width, height, null);
+      g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), (int)x, (int)y, width, height, null);
     }
   }
+  
+  public boolean collide(GraphicsObject toCollide){
+    double distanceToObject = Math.sqrt((Math.pow(((x + width/2)-(toCollide.x + toCollide.width/2)), 2) + (Math.pow(((y + height/2)-(toCollide.y + toCollide.height/2)), 2))));
+    
+    if(distanceToObject < (width/2 + toCollide.width/2)){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  
   public double getAngle(){
   return angle;
   }
+  
   public double getVelocity(){
   return velocity;
   }

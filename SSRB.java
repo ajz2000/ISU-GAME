@@ -99,8 +99,15 @@ public class SSRB extends JPanel{
     rc.move();
     
     for(int i = 0; i < enemyList.size(); i++){
-      // paint the bullet at location i in the array.
+      // paint the enemy at location i in the array.
       enemyList.get(i).move();
+    }
+    
+    //Check for enemies to delete.
+    for(int i = 0; i < enemyList.size(); i++){
+      if(!enemyList.get(i).isActive){
+        enemyList.remove(i);
+      }
     }
     
     //Check for bullets to delete.
@@ -114,6 +121,19 @@ public class SSRB extends JPanel{
     for(int i = 0; i < bulletList.size(); i++){
       // move the bullet at location i in the array.
       bulletList.get(i).move();
+    }
+    
+    checkCollisions();
+  }
+  
+  public void checkCollisions(){
+    for(int i = 0; i < bulletList.size(); i++){
+      for(int j = 0; j < enemyList.size(); j++){
+        if(bulletList.get(i).collide(enemyList.get(j))){
+          enemyList.get(j).setHealth(bulletList.get(i).getDamage());
+          bulletList.get(i).setActive(false);
+        }
+      }
     }
   }
   
