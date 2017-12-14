@@ -131,7 +131,10 @@ public class SSRB extends JPanel{
       for(int j = 0; j < enemyList.size(); j++){
         if(bulletList.get(i).collide(enemyList.get(j))){
           enemyList.get(j).setHealth(bulletList.get(i).getDamage());
-          bulletList.get(i).setActive(false);
+          
+          if(!bulletList.get(i).getType().equals("Sniper")){
+            bulletList.get(i).setActive(false);
+          }
         }
       }
     }

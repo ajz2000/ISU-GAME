@@ -23,7 +23,6 @@ public class Projectile extends MovableObject{
   public void paint(Graphics2D g2d){
     g2d.setColor(Color.WHITE);
     if (type.equals("Sniper")){
-      double raa = angle % 90;
       int drawXDistance = (int)(maxSniperDistance * Math.cos(Math.toRadians(angle)));
       int drawYDistance = (int)(maxSniperDistance * Math.sin(Math.toRadians(angle)));
       AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, sniperComposite);
@@ -59,9 +58,32 @@ public class Projectile extends MovableObject{
   
   public boolean collide(GraphicsObject toCollide){
     if(type.equals("Sniper")){
+      
+      if(sniperComposite < 1.0f){
+        return false;
+      }
+      
       try{
         if(Math.tan(Math.toRadians(angle)) > 0){
-          System.out.println("Reached");
+          double objTRX = toCollide.getX() + toCollide.getWidth();
+          double objTRY = toCollide.getY();
+          double objBLX = toCollide.getX();
+          double objBLY = toCollide.getY() + toCollide.getHeight();
+          double xDistTR = objTRX - (x + ((width) / 2));
+          double yDistTR = objTRY - (y + ((height) / 2));
+          double angleToTR = (double)Math.toDegrees(Math.atan2(yDistTR, xDistTR));
+          double xDistBL = objBLX - (x + ((width) / 2));
+          double yDistBL = objBLY - (y + ((height) / 2));
+          double angleToBL = (double)Math.toDegrees(Math.atan2(yDistBL, xDistBL));
+          
+          if((Math.abs(angle) > Math.abs(angleToTR) && Math.abs(angle) < Math.abs(angleToBL)) || (Math.abs(angle) < Math.abs(angleToTR) && Math.abs(angle) > Math.abs(angleToBL))){
+            return true;
+          }
+          else{
+            return false;
+          }
+        }
+        else{
           double objTLX = toCollide.getX();
           double objTLY = toCollide.getY();
           double objBRX = toCollide.getX() + toCollide.getWidth();
@@ -69,8 +91,8 @@ public class Projectile extends MovableObject{
           double xDistTL = objTLX - (x + ((width) / 2));
           double yDistTL = objTLY - (y + ((height) / 2));
           double angleToTL = (double)Math.toDegrees(Math.atan2(yDistTL, xDistTL));
-          double xDistBR = objTLX - (x + ((width) / 2));
-          double yDistBR = objTLY - (y + ((height) / 2));
+          double xDistBR = objBRX - (x + ((width) / 2));
+          double yDistBR = objBRY - (y + ((height) / 2));
           double angleToBR = (double)Math.toDegrees(Math.atan2(yDistBR, xDistBR));
           
           if((Math.abs(angle) > Math.abs(angleToTL) && Math.abs(angle) < Math.abs(angleToBR)) || (Math.abs(angle) < Math.abs(angleToTL) && Math.abs(angle) > Math.abs(angleToBR))){
@@ -80,14 +102,10 @@ public class Projectile extends MovableObject{
             return false;
           }
         }
-        else{
-          
-        }
       }catch(Exception e){
+        System.out.println("Something went wrong with sniper collision.");
         return false;
       }
-      
-      return false;
     }
     else{
       return super.collide(toCollide);
@@ -96,5 +114,9 @@ public class Projectile extends MovableObject{
   
   public int getDamage(){
     return damage;
+  }
+  
+  public String getType(){
+    return type;
   }
 }
