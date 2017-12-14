@@ -8,7 +8,7 @@ public class Projectile extends MovableObject{
   private int sniperLife = 3;
   private float sniperComposite = 1.0f;
 
-  public Projectile(int x, int y, double velocity, double angle, int damage, String type, boolean isFriendly){
+  public Projectile(int x, int y, int size, double velocity, double angle, int damage, String type, boolean isFriendly){
     this.damage = damage;
     this.friendly = friendly;
     this.type = type;
@@ -16,11 +16,12 @@ public class Projectile extends MovableObject{
     this.y = y;
     this.velocity = velocity;
     this.angle = angle;
-    width = 4;
-    height = 4;
+    width = size;
+    height = size;
   }
   
   public void paint(Graphics2D g2d){
+    g2d.setColor(Color.WHITE);
     if (type.equals("Sniper")){
       double raa = angle % 90;
       int drawXDistance = (int)(maxSniperDistance * Math.cos(Math.toRadians(angle)));

@@ -84,7 +84,7 @@ public class PlayerCharacter extends Character{
       }
     }
     else{
-      if(accelTimer >= 3){
+      if(accelTimer >= 3&&!dodging){
         if(velocity > 0){
           velocity--;
         }
@@ -108,7 +108,7 @@ public class PlayerCharacter extends Character{
     
     //Increases dodge timer and resets velocity and timer when timer is done.
     if(dodging){
-      if(dodgeTimer >= 50){
+      if(dodgeTimer >= 30){
         velocity = 4;
         dodgeTimer = 0;
         dodging = false;
