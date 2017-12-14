@@ -19,6 +19,7 @@ public class SSRB extends JPanel{
   private RobotCompanion rc;
   private HUD hud;
   private ArrayList<Projectile> bulletList = new ArrayList<Projectile>();
+  private ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
   
   public SSRB(){
     addKeyListener(new KeyListener() {
@@ -61,6 +62,7 @@ public class SSRB extends JPanel{
     //create a new playercharacter in the middle of the screen
     pc = new PlayerCharacter(screenWidth/2/SSRB.getScaleRatio(),screenHeight/2/SSRB.getScaleRatio());
     rc = new RobotCompanion(pc, this);
+    enemyList.add(new EnemyBasic(40,40,pc,this));
     hud = new HUD(pc, rc);
   }
   
@@ -86,11 +88,20 @@ public class SSRB extends JPanel{
       // paint the bullet at location i in the array.
       bulletList.get(i).paint(g2d);
     }
+    for(int i = 0; i < enemyList.size(); i++){
+      // paint the bullet at location i in the array.
+      enemyList.get(i).paint(g2d);
+    }
   }
   
   public void move(){
     pc.move();
     rc.move();
+    
+    for(int i = 0; i < enemyList.size(); i++){
+      // paint the bullet at location i in the array.
+      enemyList.get(i).move();
+    }
     
     //Check for bullets to delete.
     for(int i = 0; i < bulletList.size(); i++){

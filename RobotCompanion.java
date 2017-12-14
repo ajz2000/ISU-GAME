@@ -54,7 +54,7 @@ public class RobotCompanion extends Character{
       floatTimer++;
       
       if(distanceToPlayer>=48){
-        if(velocity<4&&accelTimer>15){
+        if(velocity<5&&accelTimer>5){
           velocity++;
           accelTimer = 0;
         }
