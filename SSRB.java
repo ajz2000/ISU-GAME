@@ -92,6 +92,13 @@ public class SSRB extends JPanel{
     pc.move();
     rc.move();
     
+    //Check for bullets to delete.
+    for(int i = 0; i < bulletList.size(); i++){
+      if(!bulletList.get(i).isActive){
+        bulletList.remove(i);
+      }
+    }
+    
     //loop through every bullet in bulletList
     for(int i = 0; i < bulletList.size(); i++){
       // move the bullet at location i in the array.
