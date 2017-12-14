@@ -46,7 +46,7 @@ public class Projectile extends MovableObject{
       }
       else
       {
-        if(sniperComposite > 0){
+        if(sniperComposite > 0.01){
           sniperComposite -= 0.01f;
         }
         else{
