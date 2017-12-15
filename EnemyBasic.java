@@ -5,8 +5,8 @@ public class EnemyBasic extends Enemy{
  public EnemyBasic(int x, int y, PlayerCharacter pc, SSRB ssrb){
     this.pc=pc;
     this.ssrb = ssrb;
-    width = 32;
-    height = 32; 
+    width = 20;
+    height = 28; 
     this.x = (int)x;
     this.y = (int)y;
     maxVelocity = 1;
