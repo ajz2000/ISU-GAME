@@ -105,12 +105,16 @@ public class Projectile extends MovableObject{
           System.out.println(angleToTR);
           System.out.println(angleToBR);
           
-          if(angleToTR < 0){
-            angleToTR = 360 - angleToTR;
+          if(angle < 0){
+            angle = 360 + angle;
           }
           
           if(angleToTR < 0){
-            angleToBR = 360 - angleToBR;
+            angleToTR = 360 + angleToTR;
+          }
+          
+          if(angleToTR < 0){
+            angleToBR = 360 + angleToBR;
           }
           
           if((angle < angleToBR && angle > angleToTR) || (angle > angleToBR && angle < angleToTR)){
