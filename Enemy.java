@@ -47,7 +47,7 @@ public class Enemy extends Character{
   }
   
   public boolean collision(GraphicsObject toCollide){
-    if(x < toCollide.getX()+toCollide.getWidth() && x + width >toCollide.getX() && y < toCollide.getY()+toCollide.getHeight() && y+ height > toCollide.getY()){
+    if(hitBox.intersects(toCollide.getHitBox())){
     return true;
     }
     else{

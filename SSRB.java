@@ -129,6 +129,7 @@ public class SSRB extends JPanel{
   }
   
   public void checkCollisions(){
+    //bullet and enemy collision
     for(int i = 0; i < bulletList.size(); i++){
       for(int j = 0; j < enemyList.size(); j++){
         if(bulletList.get(i).collide(enemyList.get(j))){
@@ -140,7 +141,7 @@ public class SSRB extends JPanel{
         }
       }
     }
-    
+    //enemy and player collision
     for(int i = 0; i < enemyList.size(); i++){
       if(enemyList.get(i).collide(pc)){
         if(enemyList.get(i) instanceof EnemyBasic){

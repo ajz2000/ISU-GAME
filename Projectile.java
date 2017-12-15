@@ -1,5 +1,5 @@
 import java.awt.*;
-
+import java.awt.geom.Line2D;
 public class Projectile extends MovableObject{
   private int damage = 0;
   private String type = "";
@@ -7,7 +7,8 @@ public class Projectile extends MovableObject{
   private int maxSniperDistance = 1000;
   private int sniperLife = 3;
   private float sniperComposite = 1.0f;
-
+  private Line2D sniperShot;
+  
   public Projectile(int x, int y, int size, double velocity, double angle, int damage, String type, boolean isFriendly){
     this.damage = damage;
     this.friendly = friendly;
@@ -18,6 +19,10 @@ public class Projectile extends MovableObject{
     this.angle = angle;
     width = size;
     height = size;
+    hitBox.x = x;
+    hitBox.y = y;
+    hitBox.height = size;
+    hitBox.width = size;
   }
   
   public void paint(Graphics2D g2d){

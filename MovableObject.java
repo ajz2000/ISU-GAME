@@ -53,6 +53,8 @@ public abstract class MovableObject extends GraphicsObject{
 
     x += Xa;
     y += Ya;
+    hitBox.x=(int)x;
+    hitBox.y=(int)y;
     //reverts the player to standing position when they are not moving
     if(velocity==0){
     curFrame = 0;
@@ -76,9 +78,7 @@ public abstract class MovableObject extends GraphicsObject{
   }
   
   public boolean collide(GraphicsObject toCollide){
-    double distanceToObject = Math.sqrt((Math.pow(((x + width/2)-(toCollide.x + toCollide.width/2)), 2) + (Math.pow(((y + height/2)-(toCollide.y + toCollide.height/2)), 2))));
-    
-    if(distanceToObject < (width/2 + toCollide.width/2)){
+    if(hitBox.intersects(toCollide.getHitBox())){
       return true;
     }
     else{
@@ -93,4 +93,5 @@ public abstract class MovableObject extends GraphicsObject{
   public double getVelocity(){
   return velocity;
   }
+
 }

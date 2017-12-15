@@ -14,6 +14,10 @@ public class EnemyExploding extends Enemy{
     this.y = (int)y;
     maxVelocity = 2;
     health = 30;
+    hitBox.x = x;
+    hitBox.y = y;
+    hitBox.width = width;
+    hitBox.height = height;
     try {
       sprite = ImageIO.read(new File("EnemyExploding1.png"));
     } catch (IOException e) {

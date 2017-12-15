@@ -9,6 +9,7 @@ public abstract class GraphicsObject{
   protected int height;
   protected BufferedImage sprite;
   protected boolean isActive = true;
+  protected Rectangle hitBox = new Rectangle();
   
   public void paint(Graphics2D g2d){
     g2d.drawImage(sprite, (int)x, (int)y, width, height, null);
@@ -33,4 +34,9 @@ public abstract class GraphicsObject{
   public void setActive(boolean active){
     isActive = active;
   }
+  
+  public Rectangle getHitBox(){
+    return hitBox;
+  }
+  
 }

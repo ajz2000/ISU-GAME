@@ -19,6 +19,11 @@ public class PlayerCharacter extends Character{
     height = 64; 
     health = 100;
     maxFrame = 3;
+    hitBox.x=x;
+    hitBox.x=y;
+    hitBox.width = width;
+    hitBox.height = height;
+    
     try {
       sprite = ImageIO.read(new File("PlayerCharacter1.png"));
     } catch (IOException e) {
