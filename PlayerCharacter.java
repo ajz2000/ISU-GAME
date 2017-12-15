@@ -62,6 +62,7 @@ public class PlayerCharacter extends Character{
   }
   
   public void die(){
+    isActive = false;
   }
   
   public void dodge(){
@@ -70,6 +71,7 @@ public class PlayerCharacter extends Character{
   }
   
   public void move(){
+    if(isActive){
     //accelerate and decelerate the player
     if(movingUp||movingDown||movingLeft||movingRight){
       if(accelTimer >= 10){
@@ -125,9 +127,14 @@ public class PlayerCharacter extends Character{
 
     //calls the movable objects default movement (
     super.move();
+    if(health<0){
+    die();
+    }
+    }
   }
   
   public void paint(Graphics2D g2d){
+    if(isActive){
     //If player is dodging, they are slightly transparent.
     if(dodging){
       AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
@@ -139,6 +146,7 @@ public class PlayerCharacter extends Character{
     if(dodging){
       AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f);
       g2d.setComposite(alphaComposite);
+    }
     }
   }
   

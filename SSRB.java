@@ -63,6 +63,8 @@ public class SSRB extends JPanel{
     pc = new PlayerCharacter(screenWidth/2/SSRB.getScaleRatio(),screenHeight/2/SSRB.getScaleRatio());
     rc = new RobotCompanion(pc, this);
     enemyList.add(new EnemyBasic(40,40,pc,this));
+    enemyList.add(new EnemyExploding(80,80,pc,this));
+    enemyList.add(new EnemyShooting(200,80,pc,this));
     hud = new HUD(pc, rc);
   }
   
@@ -138,6 +140,14 @@ public class SSRB extends JPanel{
         }
       }
     }
+    
+    for(int i = 0; i < enemyList.size(); i++){
+      if(enemyList.get(i).collide(pc)){
+        if(enemyList.get(i) instanceof EnemyBasic){
+          pc.setHealth(1);
+        }
+      }
+    }
   }
   
   public void addBullet(Projectile p){
@@ -145,7 +155,7 @@ public class SSRB extends JPanel{
   }
   
   public static int getScaleRatio(){
-  return scaleRatio;
+    return scaleRatio;
   }
   
   public int getXPosition(){
