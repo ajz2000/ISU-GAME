@@ -10,6 +10,7 @@ public class PlayerCharacter extends Character{
   private int runAnimTimer = 0;
   private int dodgeTimer = 0;
   private int dodgeDelayTimer = 0;
+  private int hitInvinciblityTimer = 0;
   private boolean dodging = false;
   
   PlayerCharacter(int x, int y){
@@ -129,6 +130,11 @@ public class PlayerCharacter extends Character{
     } else if(dodgeDelayTimer < 50){
         dodgeDelayTimer++;
     }
+    
+    //I-Frame counter.
+    if(hitInvinciblityTimer < 100){
+      hitInvinciblityTimer++;
+    }
 
     //calls the movable objects default movement (
     super.move();
@@ -152,6 +158,13 @@ public class PlayerCharacter extends Character{
       AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f);
       g2d.setComposite(alphaComposite);
     }
+    }
+  }
+  
+  public void setHealth(int damage){
+    if(hitInvinciblityTimer == 100){
+      super.setHealth(damage);
+      hitInvinciblityTimer = 0;
     }
   }
   
