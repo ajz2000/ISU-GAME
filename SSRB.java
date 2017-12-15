@@ -143,7 +143,7 @@ public class SSRB extends JPanel{
     }
     //enemy and player collision
     for(int i = 0; i < enemyList.size(); i++){
-      if(enemyList.get(i).collide(pc)){
+      if(enemyList.get(i).collide(pc)&&!pc.getDodging()){
         if(enemyList.get(i) instanceof EnemyBasic){
           pc.setHealth(1);
         }
