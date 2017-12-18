@@ -67,6 +67,10 @@ public class EnemyShooting extends Enemy{
      
      shootTimer = 0;
      shooting = false;
+     if(Math.sqrt(((pc.getX()-x)*(pc.getX()-x)) + ((pc.getY()-y)*(pc.getY()-y)))>160){
+   super.move();
    }
+   }
+   
  }
 }
