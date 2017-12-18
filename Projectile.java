@@ -11,7 +11,7 @@ public class Projectile extends MovableObject{
   
   public Projectile(int x, int y, int size, double velocity, double angle, int damage, String type, boolean isFriendly){
     this.damage = damage;
-    this.friendly = friendly;
+    this.friendly = isFriendly;
     this.type = type;
     this.x = x;
     this.y = y;
