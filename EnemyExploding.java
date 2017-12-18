@@ -4,6 +4,7 @@ import java.io.*;
 public class EnemyExploding extends Enemy{
 
   private boolean isExploding;
+  private int explodeTimer = 0;
 
   public EnemyExploding(int x, int y, PlayerCharacter pc, SSRB ssrb){
     this.pc=pc;
@@ -14,6 +15,7 @@ public class EnemyExploding extends Enemy{
     this.y = (int)y;
     maxVelocity = 2;
     health = 30;
+    damage = 40;
     hitBox.x = x;
     hitBox.y = y;
     hitBox.width = width;
@@ -23,18 +25,34 @@ public class EnemyExploding extends Enemy{
     } catch (IOException e) {
     } 
  }
- 
- public void move(){
-   
-    distanceToPlayer = Math.sqrt(((pc.getX()-x)*(pc.getX()-x)) + ((pc.getY()-y)*(pc.getY()-y)));
+  
+  public void move(){
+    if(!isExploding){
+      super.move();
+    } else{
+      if(explodeTimer < 200){
+        explodeTimer++;
+      } else{
+        explode();
+        isExploding = false;
+      }
+    }
+  }
+  
+  public void explode(){
+    hitBox.x -= 32;
+    hitBox.y -= 32;
+    hitBox.width = 64;
+    hitBox.height = 64;
     
-    if(distanceToPlayer<32){
-      explode();
+    if(collide(pc)){
+      pc.setHealth(damage);
     }
-    else{
-    super.move();
-    }
- }
- public void explode(){
- }
+    
+    die();
+  }
+ 
+  public void setExplode(){
+    isExploding = true;
+  }
 }

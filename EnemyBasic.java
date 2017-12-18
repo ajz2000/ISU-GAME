@@ -2,7 +2,8 @@ import javax.imageio.*;
 import java.io.*;
 
 public class EnemyBasic extends Enemy{
- public EnemyBasic(int x, int y, PlayerCharacter pc, SSRB ssrb){
+  
+  public EnemyBasic(int x, int y, PlayerCharacter pc, SSRB ssrb){
     this.pc=pc;
     this.ssrb = ssrb;
     width = 20;
@@ -15,9 +16,11 @@ public class EnemyBasic extends Enemy{
     hitBox.y = y;
     hitBox.width = width;
     hitBox.height = height;
+    damage = 1;
     try {
       sprite = ImageIO.read(new File("EnemyBasic1.png"));
     } catch (IOException e) {
     } 
- }
+  }
+  
 }

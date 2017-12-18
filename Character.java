@@ -16,7 +16,11 @@ public abstract class Character extends MovableObject{
     health -= damage;
     
     if(health < 0){
-      isActive = false;
+      die();
     }
+  }
+  
+  public void die(){
+    isActive = false;
   }
 }

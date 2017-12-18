@@ -75,6 +75,13 @@ public abstract class MovableObject extends GraphicsObject{
     else{
       g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), (int)x, (int)y, width, height, null);
     }
+    
+    if(SSRB.getDebug()){
+      g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+      g2d.setColor(Color.RED);
+      g2d.fill(hitBox);
+      g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+    }
   }
   
   public boolean collide(GraphicsObject toCollide){

@@ -87,4 +87,8 @@ public class Projectile extends MovableObject{
   public String getType(){
     return type;
   }
+  
+  public boolean getFriendly(){
+    return friendly;
+  }
 }

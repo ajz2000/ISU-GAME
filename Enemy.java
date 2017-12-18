@@ -6,6 +6,7 @@ public class Enemy extends Character{
   protected boolean floatingUp = false; 
   protected double distanceToPlayer;
   protected int maxVelocity;
+  protected boolean moving = true;
   
   public void move(){
     if(angle > 90 && angle < 270){
@@ -46,12 +47,7 @@ public class Enemy extends Character{
     super.move();
   }
   
-  public boolean collision(GraphicsObject toCollide){
-    if(hitBox.intersects(toCollide.getHitBox())){
-    return true;
-    }
-    else{
-      return false;
-    }
+  public int getDamage(){
+    return damage;
   }
 }

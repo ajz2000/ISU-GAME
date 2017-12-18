@@ -67,10 +67,6 @@ public class PlayerCharacter extends Character{
     }
   }
   
-  public void die(){
-    isActive = false;
-  }
-  
   public void dodge(){
     dodging = true;
     velocity = 8;

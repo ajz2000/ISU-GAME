@@ -20,6 +20,7 @@ public class SSRB extends JPanel{
   private HUD hud;
   private ArrayList<Projectile> bulletList = new ArrayList<Projectile>();
   private ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
+  private static boolean debug = false;
   
   public SSRB(){
     addKeyListener(new KeyListener() {
@@ -33,6 +34,9 @@ public class SSRB extends JPanel{
       @Override
       public void keyPressed(KeyEvent e) {
         pc.keyPressed(e);
+        if(e.getKeyCode() == KeyEvent.VK_Z){
+          SSRB.debug = !SSRB.debug;
+        }
       }
     });
     
@@ -132,7 +136,7 @@ public class SSRB extends JPanel{
     //bullet and enemy collision
     for(int i = 0; i < bulletList.size(); i++){
       for(int j = 0; j < enemyList.size(); j++){
-        if(bulletList.get(i).collide(enemyList.get(j))){
+        if(bulletList.get(i).collide(enemyList.get(j)) && bulletList.get(i).getFriendly()){
           enemyList.get(j).setHealth(bulletList.get(i).getDamage());
           
           if(!bulletList.get(i).getType().equals("Sniper")){
@@ -141,11 +145,24 @@ public class SSRB extends JPanel{
         }
       }
     }
+    
+    //bullet and player collision
+    for(int i = 0; i < bulletList.size(); i++){
+        if(bulletList.get(i).collide(pc) && !bulletList.get(i).getFriendly()){
+          pc.setHealth(bulletList.get(i).getDamage());
+          
+          bulletList.get(i).setActive(false);
+        }
+    }
+    
     //enemy and player collision
     for(int i = 0; i < enemyList.size(); i++){
       if(enemyList.get(i).collide(pc)&&!pc.getDodging()){
         if(enemyList.get(i) instanceof EnemyBasic){
-          pc.setHealth(1);
+          pc.setHealth(enemyList.get(i).getDamage());
+        } else if(enemyList.get(i) instanceof EnemyExploding){
+          EnemyExploding toExplode = (EnemyExploding)enemyList.get(i);
+          toExplode.setExplode();
         }
       }
     }
@@ -167,6 +184,10 @@ public class SSRB extends JPanel{
     return this.getY();
   }
   
+  public static boolean getDebug(){
+    return debug;
+  }
+  
   public static void main(String[] args) throws InterruptedException, IOException {
     JFrame frame = new JFrame("SUPER SPICY ROBOT BOYS 23");
     SSRB s = new SSRB();
@@ -184,5 +205,4 @@ public class SSRB extends JPanel{
       Thread.sleep(10);
     }
   }
-  
 }
