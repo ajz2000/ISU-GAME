@@ -30,7 +30,7 @@ public class PlayerCharacter extends Character{
     } catch (IOException e) {
     } 
   }
-  
+  //sets direction based on WASD keypress
   public void keyPressed(KeyEvent e){
     if (e.getKeyCode() == KeyEvent.VK_A){
       movingLeft = true;
@@ -51,7 +51,7 @@ public class PlayerCharacter extends Character{
       }
     }
   }
-  
+  //un-sets direction based on WASD key release
   public void keyReleased(KeyEvent e){
     if (e.getKeyCode() == KeyEvent.VK_A){
       movingLeft = false;
@@ -67,6 +67,7 @@ public class PlayerCharacter extends Character{
     }
   }
   
+  //begins the player's dodge
   public void dodge(){
     dodging = true;
     velocity = 8;
@@ -138,6 +139,10 @@ public class PlayerCharacter extends Character{
     die();
     }
     }
+    //reverts the player to standing position when they are not moving
+    if(velocity==0){
+    curFrame = 0;
+    }
   }
   
   public void paint(Graphics2D g2d){
@@ -149,21 +154,21 @@ public class PlayerCharacter extends Character{
     }
     
     super.paint(g2d);
-    
+    //make the player opaque again
     if(dodging){
       AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f);
       g2d.setComposite(alphaComposite);
     }
     }
   }
-  
+  //damage the player
   public void setHealth(int damage){
     if(hitInvinciblityTimer == 100){
       super.setHealth(damage);
       hitInvinciblityTimer = 0;
     }
   }
-  
+  //return true if the player is dodging
   public boolean getDodging(){
     return dodging;
   }

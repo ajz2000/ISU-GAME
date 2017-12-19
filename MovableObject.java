@@ -18,7 +18,9 @@ public abstract class MovableObject extends GraphicsObject{
   protected boolean movingRight = false;
   protected boolean facingRight = false;
   
+  //moves the object a set distance (velocity) in the direction specified by angle
   public void move(){
+    //player's angle calculation
     if(movingUp){
       if(movingRight){
         angle = 315;
@@ -48,21 +50,20 @@ public abstract class MovableObject extends GraphicsObject{
       angle = 180;
     }
     
+    //calculate the vertical and horizontal acceration;
     double Xa = (Math.cos(Math.toRadians(angle))*velocity);
     double Ya = (Math.sin(Math.toRadians(angle))*velocity);
-
+    //adjust the object's x/y basede on the horizontal acceleration
     x += Xa;
     y += Ya;
+    //update the hitbox's coordinates to match those of the player
     hitBox.x=(int)x;
     hitBox.y=(int)y;
-    //reverts the player to standing position when they are not moving
-    if(velocity==0){
-    curFrame = 0;
-    }
+    
   }
   
   public void paint(Graphics2D g2d){
-    //a quick implementation of left/right flipping of sprites
+    //left/right flipping of sprites
     if(movingRight){
       facingRight = true;
     }
@@ -75,7 +76,7 @@ public abstract class MovableObject extends GraphicsObject{
     else{
       g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), (int)x, (int)y, width, height, null);
     }
-    
+    //draws hitbox if in debug mode
     if(SSRB.getDebug()){
       g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
       g2d.setColor(Color.RED);
@@ -83,7 +84,7 @@ public abstract class MovableObject extends GraphicsObject{
       g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
     }
   }
-  
+  //checks collision
   public boolean collide(GraphicsObject toCollide){
     if(hitBox.intersects(toCollide.getHitBox())){
       return true;
@@ -92,11 +93,11 @@ public abstract class MovableObject extends GraphicsObject{
       return false;
     }
   }
-  
+  //returns object's angle
   public double getAngle(){
   return angle;
   }
-  
+  //returns object's velocity
   public double getVelocity(){
   return velocity;
   }

@@ -25,7 +25,7 @@ public class EnemyExploding extends Enemy{
     } catch (IOException e) {
     } 
  }
-  
+  //move exploding enemies
   public void move(){
     if(!isExploding){
       super.move();
@@ -38,20 +38,21 @@ public class EnemyExploding extends Enemy{
       }
     }
   }
-  
+  //explode
   public void explode(){
+    //resize hitbox to match the size of the explosion
     hitBox.x -= 32;
     hitBox.y -= 32;
     hitBox.width = 64;
     hitBox.height = 64;
-    
+    //checks collision of the explosion with the player, damages them if true
     if(collide(pc)){
       pc.setHealth(damage);
     }
-    
+    //kills the robot
     die();
   }
- 
+ //starts the enemies explosion
   public void setExplode(){
     isExploding = true;
   }

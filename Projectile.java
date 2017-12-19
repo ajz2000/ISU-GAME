@@ -27,29 +27,32 @@ public class Projectile extends MovableObject{
     int drawYDistance = (int)(maxSniperDistance * Math.sin(Math.toRadians(angle)));
     sniperShot = new Line2D.Float((int)x, (int)y, (int)(x + drawXDistance), (int)(y + drawYDistance));
   }
-  
+  //draw bullet
   public void paint(Graphics2D g2d){
     g2d.setColor(Color.WHITE);
+    //if sniper, draw a line
     if (type.equals("Sniper")){
       int drawXDistance = (int)(maxSniperDistance * Math.cos(Math.toRadians(angle)));
       int drawYDistance = (int)(maxSniperDistance * Math.sin(Math.toRadians(angle)));
       AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, sniperComposite);
       g2d.setComposite(alphaComposite);
-      g2d.drawLine((int)x, (int)y, (int)(x + drawXDistance), (int)(y + drawYDistance));
-      
+      g2d.drawLine((int)x, (int)y, (int)(x + drawXDistance), (int)(y + drawYDistance));      
       g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
     }
     else{
+      //if a bullet, draw bullet
       g2d.fillRect((int)x, (int)y, width, height);
     }
   }
   
   public void move(){
+    //standard movement for all non-sniper bullets
     if(!type.equals("Sniper")){
       super.move();
     }
     else
     {
+      //fade sniper shot and then deactivate
       if(sniperLife > 0){
         sniperLife--;
       }
@@ -64,7 +67,7 @@ public class Projectile extends MovableObject{
       }
     }
   }
-  
+  //check collision with another entity
   public boolean collide(GraphicsObject toCollide){
     if(type.equals("Sniper")){
       if(sniperComposite < 1.0f){
@@ -79,15 +82,15 @@ public class Projectile extends MovableObject{
       return super.collide(toCollide);
     }
   }
-  
+  //return damage ammount
   public int getDamage(){
     return damage;
   }
-  
+  //return shot type
   public String getType(){
     return type;
   }
-  
+  //return true if bullet is firendly (player's bullets)
   public boolean getFriendly(){
     return friendly;
   }

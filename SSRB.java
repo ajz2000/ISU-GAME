@@ -16,10 +16,15 @@ public class SSRB extends JPanel{
   private int screenHeight;
   //the player character
   private PlayerCharacter pc;
+  //the robot companion
   private RobotCompanion rc;
+  //the hud
   private HUD hud;
+  //the list of active projectiles
   private ArrayList<Projectile> bulletList = new ArrayList<Projectile>();
+  //list of all active enemies
   private ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
+  //Toggle for debug (Currently includes: Hitboxes.)
   private static boolean debug = false;
   
   public SSRB(){
@@ -63,12 +68,14 @@ public class SSRB extends JPanel{
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     screenWidth = (int)screenSize.getWidth();
     screenHeight = (int)screenSize.getHeight();
-    //create a new playercharacter in the middle of the screen
+    //create a new playercharacter, with a robot companion in the middle of the screen
     pc = new PlayerCharacter(screenWidth/2/SSRB.getScaleRatio(),screenHeight/2/SSRB.getScaleRatio());
     rc = new RobotCompanion(pc, this);
+    //creates 3 basic enemies for testing purposes
     enemyList.add(new EnemyBasic(40,40,pc,this));
     enemyList.add(new EnemyExploding(80,80,pc,this));
     enemyList.add(new EnemyShooting(200,80,pc,this));
+    //initialise the hud
     hud = new HUD(pc, rc);
   }
   
@@ -94,41 +101,42 @@ public class SSRB extends JPanel{
       // paint the bullet at location i in the array.
       bulletList.get(i).paint(g2d);
     }
+    //loop through every bullet in bulletList
     for(int i = 0; i < enemyList.size(); i++){
-      // paint the bullet at location i in the array.
+      // paint the enemy at location i in the array.
       enemyList.get(i).paint(g2d);
     }
   }
   
   public void move(){
+    //move the player and robot
     pc.move();
     rc.move();
     
+    //move all active enemies
     for(int i = 0; i < enemyList.size(); i++){
-      // paint the enemy at location i in the array.
       enemyList.get(i).move();
     }
     
-    //Check for enemies to delete.
+    //Check for enemies to delete
     for(int i = 0; i < enemyList.size(); i++){
       if(!enemyList.get(i).isActive){
         enemyList.remove(i);
       }
     }
     
-    //Check for bullets to delete.
+    //Check for bullets to delete
     for(int i = 0; i < bulletList.size(); i++){
       if(!bulletList.get(i).isActive){
         bulletList.remove(i);
       }
     }
     
-    //loop through every bullet in bulletList
+    //move every active bullet
     for(int i = 0; i < bulletList.size(); i++){
-      // move the bullet at location i in the array.
       bulletList.get(i).move();
     }
-    
+    //check all collisions
     checkCollisions();
   }
   
@@ -148,7 +156,7 @@ public class SSRB extends JPanel{
     
     //bullet and player collision
     for(int i = 0; i < bulletList.size(); i++){
-        if(bulletList.get(i).collide(pc) && !bulletList.get(i).getFriendly()){
+        if(bulletList.get(i).collide(pc) && !bulletList.get(i).getFriendly()&&!pc.getDodging()){
           pc.setHealth(bulletList.get(i).getDamage());
           
           bulletList.get(i).setActive(false);
@@ -167,23 +175,23 @@ public class SSRB extends JPanel{
       }
     }
   }
-  
+  //add a bullet to the list of active projectiles
   public void addBullet(Projectile p){
     bulletList.add(p);
   }
-  
+  //returns the scaling factor of the window
   public static int getScaleRatio(){
     return scaleRatio;
   }
-  
+  //return X position of the window
   public int getXPosition(){
     return this.getX();
   }
-  
+  //return Y position of the window
   public int getYPosition(){
     return this.getY();
   }
-  
+  //returns true if debug is active
   public static boolean getDebug(){
     return debug;
   }

@@ -26,7 +26,7 @@ public class EnemyShooting extends Enemy{
     } catch (IOException e) {
     } 
  }
- 
+ //if robot is not shooting, move.
  public void move(){
    if(shooting){
      shoot();
@@ -35,8 +35,8 @@ public class EnemyShooting extends Enemy{
    }
  }
  
- public boolean collide(GraphicsObject toCollide){
-   
+ //if the distance to the player is within a specified range, begin shooting
+ public boolean collide(GraphicsObject toCollide){   
    if(toCollide instanceof PlayerCharacter){
      if(distanceToPlayer < 160){
        shooting = true;
@@ -49,6 +49,7 @@ public class EnemyShooting extends Enemy{
    }
  }
  
+ //shoot at the player if within range
  private void shoot(){
    if(shootTimer < 100){
      shootTimer++;
