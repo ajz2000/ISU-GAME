@@ -13,7 +13,7 @@ public class EnemyExploding extends Enemy{
     height = 32; 
     this.x = (int)x;
     this.y = (int)y;
-    maxVelocity = 2;
+    maxVelocity = 3;
     health = 30;
     damage = 40;
     hitBox.x = x;

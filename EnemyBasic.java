@@ -10,7 +10,7 @@ public class EnemyBasic extends Enemy{
     height = 28; 
     this.x = (int)x;
     this.y = (int)y;
-    maxVelocity = 1;
+    maxVelocity = 2;
     health = 20;
     hitBox.x = x;
     hitBox.y = y;
