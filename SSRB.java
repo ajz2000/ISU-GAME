@@ -12,8 +12,8 @@ public class SSRB extends JPanel{
   private static int scaleRatio = 2;
   private Color backGroundGreen = new Color(59,206,113);  
   //stores screenwidth/height
-  private int screenWidth;
-  private int screenHeight;
+  private static int screenWidth;
+  private static int screenHeight;
   //the player character
   private PlayerCharacter pc;
   //the robot companion
@@ -28,6 +28,10 @@ public class SSRB extends JPanel{
   private static boolean debug = false;
   //current level
   private LevelAsset currentLevel = new LevelAsset("Level1");
+  //offset
+  private static double xOffset;
+  private static double yOffset;
+  
   public SSRB(){
     addKeyListener(new KeyListener() {
       @Override
@@ -87,7 +91,8 @@ public class SSRB extends JPanel{
     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     //Set Scale Ratio
     g2d.scale(scaleRatio, scaleRatio);
-    
+    //translate the "camera"
+    g2d.translate(-xOffset+(screenWidth/4), -yOffset+(screenHeight/4));
     //draw the background
     g2d.setColor(backGroundGreen);
     g2d.fillRect(0,0,screenWidth,screenHeight);
@@ -199,6 +204,24 @@ public class SSRB extends JPanel{
     return debug;
   }
   
+  public static double getXOffset(){
+  return xOffset;
+  }
+  public static double getYOffset(){
+  return yOffset;
+  }
+  public static void setXOffset(double xOffset){
+  SSRB.xOffset = xOffset;
+  }
+  public static void setYOffset(double yOffset){
+  SSRB.yOffset = yOffset;
+  }
+  public static int getScreenHeight(){
+  return screenHeight;
+  }
+  public static int getScreenWidth(){
+  return screenWidth;
+  }
   public static void main(String[] args) throws InterruptedException, IOException {
     JFrame frame = new JFrame("SUPER SPICY ROBOT BOYS 23");
     SSRB s = new SSRB();

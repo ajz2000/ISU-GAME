@@ -48,7 +48,7 @@ public class HUD extends GraphicsObject{
       g2d.fillRect(8,(100 -((i/40)*2))+8,4,4);
     }
     //Gun Image
-    g2d.setColor(Color.BLACK);
+    g2d.setColor(Color.ORANGE);
     switch(rc.getCurrentGun()){
       case 0:
         sprite = imageList.get(0);

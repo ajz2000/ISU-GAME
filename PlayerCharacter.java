@@ -143,6 +143,8 @@ public class PlayerCharacter extends Character{
     if(velocity==0){
     curFrame = 0;
     }
+    SSRB.setXOffset(x);
+    SSRB.setYOffset(y);
   }
   
   public void paint(Graphics2D g2d){
