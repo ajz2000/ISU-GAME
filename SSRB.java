@@ -26,7 +26,8 @@ public class SSRB extends JPanel{
   private ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
   //Toggle for debug (Currently includes: Hitboxes.)
   private static boolean debug = false;
-  
+  //current level
+  private LevelAsset currentLevel = new LevelAsset("Level1");
   public SSRB(){
     addKeyListener(new KeyListener() {
       @Override
@@ -91,6 +92,8 @@ public class SSRB extends JPanel{
     g2d.setColor(backGroundGreen);
     g2d.fillRect(0,0,screenWidth,screenHeight);
     
+      currentLevel.paint(g2d); 
+      
     //draw the player
     pc.paint(g2d);
     rc.paint(g2d);
