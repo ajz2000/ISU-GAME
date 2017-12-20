@@ -26,6 +26,11 @@ public class SSRB extends JPanel{
   private ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
   //Toggle for debug (Currently includes: Hitboxes.)
   private static boolean debug = false;
+  //X and Y Offest
+  private static double xOffset;
+  private static double yOffset;
+  //Level
+  private LevelAsset currentLevel = new LevelAsset("Level1");
   
   public SSRB(){
     addKeyListener(new KeyListener() {
@@ -81,15 +86,22 @@ public class SSRB extends JPanel{
   
   @Override
   public void paint(Graphics g){
+    super.paint(g);
     Graphics2D g2d = (Graphics2D) g;
     
     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     //Set Scale Ratio
     g2d.scale(scaleRatio, scaleRatio);
     
+    //Set Translation
+    g2d.translate(-xOffset, -yOffset);
+    
     //draw the background
     g2d.setColor(backGroundGreen);
     g2d.fillRect(0,0,screenWidth,screenHeight);
+    
+    //Draw Level
+    currentLevel.paint(g2d);
     
     //draw the player
     pc.paint(g2d);
@@ -194,6 +206,22 @@ public class SSRB extends JPanel{
   //returns true if debug is active
   public static boolean getDebug(){
     return debug;
+  }
+  //Return x Offset
+  public static double getXOffset(){
+    return xOffset;
+  }
+  //Return y Offset
+  public static double getYOffset(){
+    return yOffset;
+  }
+  //Set x Offset
+  public static void setXOffset(double xOffset){
+    SSRB.xOffset = xOffset;
+  }
+  //Set y Offset
+  public static void setYOffset(double yOffset){
+    SSRB.yOffset = yOffset;
   }
   
   public static void main(String[] args) throws InterruptedException, IOException {

@@ -11,11 +11,15 @@ public class PlayerCharacter extends Character{
   private int dodgeTimer = 0;
   private int dodgeDelayTimer = 0;
   private int hitInvinciblityTimer = 0;
+  private double drawX;
+  private double drawY;
   private boolean dodging = false;
   
   PlayerCharacter(int x, int y){
     this.x = x;
     this.y = y;
+    drawX = x;
+    drawY = y;
     width = 32;
     height = 64; 
     health = 100;
@@ -75,90 +79,114 @@ public class PlayerCharacter extends Character{
   
   public void move(){
     if(isActive){
-    //accelerate and decelerate the player
-    if(movingUp||movingDown||movingLeft||movingRight){
-      if(accelTimer >= 10){
-        if(velocity < 4){
-          velocity++;
+      //accelerate and decelerate the player
+      if(movingUp||movingDown||movingLeft||movingRight){
+        if(accelTimer >= 10){
+          if(velocity < 4){
+            velocity++;
+          }
+          accelTimer = 0;
         }
-        accelTimer = 0;
-      }
-      else
-      {
-        accelTimer++;
-      }
-    }
-    else{
-      if(accelTimer >= 3&&!dodging){
-        if(velocity > 0){
-          velocity--;
-        }
-        accelTimer = 0;
-      }
-      else
-      {
-        accelTimer++;
-      }
-    }
-    
-    //increments the current frame whenever player is moving (running animation)
-    runAnimTimer++;
-    if(runAnimTimer>=15){
-      curFrame++;
-      runAnimTimer=0;
-      if(curFrame>maxFrame){
-        curFrame = 0;
-      }
-    }
-    
-    //Increases dodge timer and resets velocity and timer when timer is done.
-    if(dodging){
-      if(dodgeTimer >= 30){
-        velocity = 4;
-        dodgeTimer = 0;
-        dodging = false;
-        if (!movingUp&&!movingDown&&!movingLeft&&!movingRight){
-          velocity = 0;
+        else
+        {
+          accelTimer++;
         }
       }
       else{
-        dodgeTimer++;
+        if(accelTimer >= 3&&!dodging){
+          if(velocity > 0){
+            velocity--;
+          }
+          accelTimer = 0;
+        }
+        else
+        {
+          accelTimer++;
+        }
       }
-    } else if(dodgeDelayTimer < 50){
+      
+      //increments the current frame whenever player is moving (running animation)
+      runAnimTimer++;
+      if(runAnimTimer>=15){
+        curFrame++;
+        runAnimTimer=0;
+        if(curFrame>maxFrame){
+          curFrame = 0;
+        }
+      }
+      
+      //Increases dodge timer and resets velocity and timer when timer is done.
+      if(dodging){
+        if(dodgeTimer >= 30){
+          velocity = 4;
+          dodgeTimer = 0;
+          dodging = false;
+          if (!movingUp&&!movingDown&&!movingLeft&&!movingRight){
+            velocity = 0;
+          }
+        }
+        else{
+          dodgeTimer++;
+        }
+      } else if(dodgeDelayTimer < 50){
         dodgeDelayTimer++;
-    }
-    
-    //I-Frame counter.
-    if(hitInvinciblityTimer < 100){
-      hitInvinciblityTimer++;
-    }
-
-    //calls the movable objects default movement (
-    super.move();
-    if(health<0){
-    die();
-    }
+      }
+      
+      //I-Frame counter.
+      if(hitInvinciblityTimer < 100){
+        hitInvinciblityTimer++;
+      }
+      
+      //calls the movable objects default movement (
+      super.move();
+      if(health<0){
+        die();
+      }
     }
     //reverts the player to standing position when they are not moving
     if(velocity==0){
-    curFrame = 0;
+      curFrame = 0;
     }
+    
+    SSRB.setXOffset(x);
+    SSRB.setYOffset(y);
   }
   
   public void paint(Graphics2D g2d){
     if(isActive){
-    //If player is dodging, they are slightly transparent.
-    if(dodging){
-      AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
-      g2d.setComposite(alphaComposite);
+      //If player is dodging, they are slightly transparent.
+      if(dodging){
+        AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+        g2d.setComposite(alphaComposite);
+      }
+      
+      double tempX = x;
+      double tempY = y;
+      x = drawX;
+      y = drawY;
+      
+//      super.paint(g2d);
+      if(movingRight){
+      facingRight = true;
+    }
+    else if (movingLeft){
+      facingRight = false;
+    }
+    if(facingRight){
+      g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), (int)(drawX+width+SSRB.getXOffset()), (int)(drawY+SSRB.getYOffset()), -width, height, null);
+    }
+    else{
+      g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), (int)(drawX+SSRB.getXOffset()), (int)(drawY+SSRB.getYOffset()), width, height, null);
     }
     
-    super.paint(g2d);
-    //make the player opaque again
-    if(dodging){
-      AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f);
-      g2d.setComposite(alphaComposite);
-    }
+      x = tempX;
+      y = tempY;
+      
+      //make the player opaque again
+      if(dodging){
+        AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f);
+        g2d.setComposite(alphaComposite);
+      }
     }
   }
   //damage the player
