@@ -32,6 +32,7 @@ public class EnemyExploding extends Enemy{
     } else{
       if(explodeTimer < 200){
         explodeTimer++;
+        velocity = 0;
       } else{
         explode();
         isExploding = false;

@@ -26,6 +26,11 @@ public class SSRB extends JPanel{
   private ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
   //Toggle for debug (Currently includes: Hitboxes.)
   private static boolean debug = false;
+  //global offsets for player position
+  private static double xOffset;
+  private static double yOffset;
+  //test level
+  LevelAsset currentLevel = new LevelAsset("Level1");
   
   public SSRB(){
     addKeyListener(new KeyListener() {
@@ -90,6 +95,9 @@ public class SSRB extends JPanel{
     //draw the background
     g2d.setColor(backGroundGreen);
     g2d.fillRect(0,0,screenWidth,screenHeight);
+    
+    //    
+    currentLevel.paint(g2d);
     
     //draw the player
     pc.paint(g2d);
@@ -156,11 +164,11 @@ public class SSRB extends JPanel{
     
     //bullet and player collision
     for(int i = 0; i < bulletList.size(); i++){
-        if(bulletList.get(i).collide(pc) && !bulletList.get(i).getFriendly()&&!pc.getDodging()){
-          pc.setHealth(bulletList.get(i).getDamage());
-          
-          bulletList.get(i).setActive(false);
-        }
+      if(bulletList.get(i).collide(pc) && !bulletList.get(i).getFriendly()&&!pc.getDodging()){
+        pc.setHealth(bulletList.get(i).getDamage());
+        
+        bulletList.get(i).setActive(false);
+      }
     }
     
     //enemy and player collision
@@ -194,6 +202,22 @@ public class SSRB extends JPanel{
   //returns true if debug is active
   public static boolean getDebug(){
     return debug;
+  }
+  
+  public static double getXOffset(){
+    return xOffset;
+  }
+  
+  public static double getYOffset(){
+    return yOffset;
+  }
+  
+  public static void setXOffset(double newXOffset){
+    xOffset = newXOffset;
+  }
+  
+  public static void setYOffset(double newYOffset){
+    yOffset = newYOffset;
   }
   
   public static void main(String[] args) throws InterruptedException, IOException {

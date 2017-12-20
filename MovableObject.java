@@ -56,9 +56,12 @@ public abstract class MovableObject extends GraphicsObject{
     //adjust the object's x/y basede on the horizontal acceleration
     x += Xa;
     y += Ya;
-    //update the hitbox's coordinates to match those of the player
-    hitBox.x=(int)x;
-    hitBox.y=(int)y;
+    
+    if(velocity > 0){
+      //update the hitbox's coordinates to match those of the player
+      hitBox.x=(int)(x-SSRB.getXOffset());
+      hitBox.y=(int)(y-SSRB.getYOffset());
+    }
     
   }
   
@@ -71,10 +74,10 @@ public abstract class MovableObject extends GraphicsObject{
       facingRight = false;
     }
     if(facingRight){
-      g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), (int)(x+width), (int)y, -width, height, null);
+      g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), (int)(x+width-SSRB.getXOffset()), (int)(y-SSRB.getYOffset()), -width, height, null);
     }
     else{
-      g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), (int)x, (int)y, width, height, null);
+      g2d.drawImage(sprite.getSubimage(curFrame*width, 0, width, height), (int)(x-SSRB.getXOffset()), (int)(y-SSRB.getYOffset()), width, height, null);
     }
     //draws hitbox if in debug mode
     if(SSRB.getDebug()){

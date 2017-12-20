@@ -13,7 +13,7 @@ public abstract class GraphicsObject{
   
   //draws the spirte at a specific position on screen
   public void paint(Graphics2D g2d){
-    g2d.drawImage(sprite, (int)x, (int)y, width, height, null);
+    g2d.drawImage(sprite, (int)(x-SSRB.getXOffset()), (int)(y-SSRB.getYOffset()), width, height, null);
   }
   //returns X position
   public double getX(){

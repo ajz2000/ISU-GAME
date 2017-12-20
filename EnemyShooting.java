@@ -40,6 +40,7 @@ public class EnemyShooting extends Enemy{
    if(toCollide instanceof PlayerCharacter){
      if(distanceToPlayer < 160){
        shooting = true;
+       velocity = 0;
        return true;
      } else{
        return false;
