@@ -31,6 +31,7 @@ public class HUD extends GraphicsObject{
   }
   
   public void paint (Graphics2D g2d){
+    g2d.translate(SSRB.getXOffset()-SSRB.getScreenWidth()/4,SSRB.getYOffset()-SSRB.getScreenHeight()/4);
     //Health Bar
     g2d.setColor(Color.WHITE);
     g2d.fillRect(4,4,4,4);
@@ -70,5 +71,6 @@ public class HUD extends GraphicsObject{
         System.out.println("WHY ARE YOU ON GUN TYPE 4?!?");
     }
     super.paint(g2d);
+    g2d.translate(-SSRB.getXOffset()+SSRB.getScreenWidth()/4,-SSRB.getYOffset()+SSRB.getScreenHeight()/4);
   }
 }

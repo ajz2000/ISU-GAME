@@ -56,6 +56,7 @@ public abstract class MovableObject extends GraphicsObject{
     //adjust the object's x/y basede on the horizontal acceleration
     x += Xa;
     y += Ya;
+
     //update the hitbox's coordinates to match those of the player
     hitBox.x=(int)x;
     hitBox.y=(int)y;

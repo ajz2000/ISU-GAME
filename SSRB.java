@@ -69,6 +69,7 @@ public class SSRB extends JPanel{
     });
     
     setFocusable(true); 
+    setDoubleBuffered(true);
     //get the screen height/width
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     screenWidth = (int)screenSize.getWidth();
@@ -87,6 +88,7 @@ public class SSRB extends JPanel{
   @Override
   public void paint(Graphics g){
     Graphics2D g2d = (Graphics2D) g;
+    super.paint(g);
     
     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     //Set Scale Ratio
