@@ -29,8 +29,8 @@ public class SSRB extends JPanel{
   //current level
   private LevelAsset currentLevel = new LevelAsset("Level1");
   //offset
-  private static double xOffset;
-  private static double yOffset;
+  private static int xOffset;
+  private static int yOffset;
   
   public SSRB(){
     addKeyListener(new KeyListener() {
@@ -213,10 +213,10 @@ public class SSRB extends JPanel{
   return yOffset;
   }
   public static void setXOffset(double xOffset){
-  SSRB.xOffset = xOffset;
+  SSRB.xOffset = (int)xOffset;
   }
   public static void setYOffset(double yOffset){
-  SSRB.yOffset = yOffset;
+  SSRB.yOffset = (int)yOffset;
   }
   public static int getScreenHeight(){
   return screenHeight;

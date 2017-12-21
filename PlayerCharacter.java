@@ -134,7 +134,48 @@ public class PlayerCharacter extends Character{
     }
 
     //calls the movable objects default movement (
-    super.move();
+    //super.move();
+        //player's angle calculation
+    if(movingUp){
+      if(movingRight){
+        angle = 315;
+      }
+      else if(movingLeft){
+        angle = 225;
+      }
+      else{
+        angle = 270;
+      }
+    }
+    else if(movingDown){
+      if(movingRight){
+        angle = 45;
+      }
+      else if(movingLeft){
+        angle = 135;
+      }
+      else{
+        angle = 90;
+      }
+    }
+    else if(movingRight){
+      angle = 0;
+    }
+    else if(movingLeft){ 
+      angle = 180;
+    }
+    
+    //calculate the vertical and horizontal acceration;
+    double Xa = (Math.cos(Math.toRadians(angle))*velocity);
+    double Ya = (Math.sin(Math.toRadians(angle))*velocity);
+    //adjust the object's x/y basede on the horizontal acceleration
+    x += Xa;
+    y += Ya;
+
+    //update the hitbox's coordinates to match those of the player
+    hitBox.x=(int)x;
+    hitBox.y=(int)y;
+    
     if(health<0){
     die();
     }
