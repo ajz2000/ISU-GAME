@@ -24,6 +24,8 @@ public class SSRB extends JPanel{
   private ArrayList<Projectile> bulletList = new ArrayList<Projectile>();
   //list of all active enemies
   private ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
+  //list of walls
+  private ArrayList<Wall> wallList= new ArrayList<Wall>();
   //Toggle for debug (Currently includes: Hitboxes.)
   private static boolean debug = false;
   //current level
@@ -31,6 +33,8 @@ public class SSRB extends JPanel{
   //offset
   private static double xOffset;
   private static double yOffset;
+  
+  private Wall testWall = new Wall(0,0,32,32);
   
   public SSRB(){
     addKeyListener(new KeyListener() {
@@ -83,6 +87,7 @@ public class SSRB extends JPanel{
     enemyList.add(new EnemyShooting(200,80,pc,this));
     //initialise the hud
     hud = new HUD(pc, rc);
+    wallList.add(testWall);
   }
   
   @Override
@@ -99,8 +104,8 @@ public class SSRB extends JPanel{
     g2d.setColor(backGroundGreen);
     g2d.fillRect(0,0,screenWidth,screenHeight);
     
-      currentLevel.paint(g2d); 
-      
+    currentLevel.paint(g2d); 
+    
     //draw the player
     pc.paint(g2d);
     rc.paint(g2d);
@@ -115,6 +120,9 @@ public class SSRB extends JPanel{
     for(int i = 0; i < enemyList.size(); i++){
       // paint the enemy at location i in the array.
       enemyList.get(i).paint(g2d);
+    }
+    for(int i = 0; i < wallList.size(); i++){
+      wallList.get(i).paint(g2d);
     }
   }
   
@@ -166,11 +174,11 @@ public class SSRB extends JPanel{
     
     //bullet and player collision
     for(int i = 0; i < bulletList.size(); i++){
-        if(bulletList.get(i).collide(pc) && !bulletList.get(i).getFriendly()&&!pc.getDodging()){
-          pc.setHealth(bulletList.get(i).getDamage());
-          
-          bulletList.get(i).setActive(false);
-        }
+      if(bulletList.get(i).collide(pc) && !bulletList.get(i).getFriendly()&&!pc.getDodging()){
+        pc.setHealth(bulletList.get(i).getDamage());
+        
+        bulletList.get(i).setActive(false);
+      }
     }
     
     //enemy and player collision
@@ -184,6 +192,12 @@ public class SSRB extends JPanel{
         }
       }
     }
+    //player and wall
+    for(int i = 0; i <wallList.size(); i++){
+     pc.footCollide(wallList.get(i));
+    }
+    
+    
   }
   //add a bullet to the list of active projectiles
   public void addBullet(Projectile p){
@@ -207,22 +221,22 @@ public class SSRB extends JPanel{
   }
   
   public static double getXOffset(){
-  return xOffset;
+    return xOffset;
   }
   public static double getYOffset(){
-  return yOffset;
+    return yOffset;
   }
   public static void setXOffset(double xOffset){
-  SSRB.xOffset = xOffset;
+    SSRB.xOffset = xOffset;
   }
   public static void setYOffset(double yOffset){
-  SSRB.yOffset = yOffset;
+    SSRB.yOffset = yOffset;
   }
   public static int getScreenHeight(){
-  return screenHeight;
+    return screenHeight;
   }
   public static int getScreenWidth(){
-  return screenWidth;
+    return screenWidth;
   }
   public static void main(String[] args) throws InterruptedException, IOException {
     JFrame frame = new JFrame("SUPER SPICY ROBOT BOYS 23");

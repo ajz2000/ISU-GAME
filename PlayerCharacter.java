@@ -12,7 +12,7 @@ public class PlayerCharacter extends Character{
   private int dodgeDelayTimer = 0;
   private int hitInvinciblityTimer = 0;
   private boolean dodging = false;
-  
+  private Rectangle footHitBox = new Rectangle();
   PlayerCharacter(int x, int y){
     this.x = x;
     this.y = y;
@@ -24,7 +24,8 @@ public class PlayerCharacter extends Character{
     hitBox.x=y;
     hitBox.width = width;
     hitBox.height = height;
-    
+    footHitBox.height = 2;
+    footHitBox.width = width;
     try {
       sprite = ImageIO.read(new File("PlayerCharacter1.png"));
     } catch (IOException e) {
@@ -184,6 +185,8 @@ public class PlayerCharacter extends Character{
     if(velocity==0){
     curFrame = 0;
     }
+    footHitBox.y=(int)y+62;
+    footHitBox.x=(int)x;
     SSRB.setXOffset(x);
     SSRB.setYOffset(y);
   }
@@ -201,9 +204,25 @@ public class PlayerCharacter extends Character{
     if(dodging){
       AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f);
       g2d.setComposite(alphaComposite);
+    } 
     }
+    if(SSRB.getDebug()){
+      g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+      g2d.setColor(Color.BLUE);
+      g2d.fill(footHitBox);
+      g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
     }
   }
+  
+   public void footCollide(GraphicsObject toCollide){
+    if(footHitBox.intersects(toCollide.getHitBox())){
+      if(footHitBox.x > toCollide.getX()){
+        
+      }
+    }
+  }
+  
+  
   //damage the player
   public void setHealth(int damage){
     if(hitInvinciblityTimer == 100){
@@ -214,5 +233,8 @@ public class PlayerCharacter extends Character{
   //return true if the player is dodging
   public boolean getDodging(){
     return dodging;
+  }
+  public void setVelocity(int velocity){
+    this.velocity = velocity;
   }
 }
