@@ -30,7 +30,7 @@ public class PlayerCharacter extends Character{
     hitBox.height = height;
     footHitBox.height = 2;
     footHitBox.width = width;
-    headHitBox.height = 2;
+    headHitBox.height = 33;
     headHitBox.width = width;
     try {
       sprite = ImageIO.read(new File("PlayerCharacter1.png"));
