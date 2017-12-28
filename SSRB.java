@@ -34,6 +34,11 @@ public class SSRB extends JPanel{
   private static double xOffset;
   private static double yOffset;
   
+  static int cameraX = 0;
+  static int cameraY = 0;
+  private int cameraTargetX = 0;
+  private int cameraTargetY = 0;
+  
   private Wall testWall = new Wall(0,0,32,32);
   
   public SSRB(){
@@ -99,7 +104,14 @@ public class SSRB extends JPanel{
     //Set Scale Ratio
     g2d.scale(scaleRatio, scaleRatio);
     //translate the "camera"
-    g2d.translate(-xOffset+(screenWidth/4), -yOffset+(screenHeight/4));
+//    g2d.translate(-xOffset+(screenWidth/4), -yOffset+(screenHeight/4));
+    cameraTargetX = (int)(-xOffset+(screenWidth/4));
+    cameraTargetY = (int)(-yOffset+(screenHeight/4));
+    
+    cameraX += (cameraTargetX-cameraX) * 0.1;
+    cameraY += (cameraTargetY-cameraY) * 0.1;
+    g2d.translate(cameraX,cameraY);
+    
     //draw the background
     g2d.setColor(backGroundGreen);
     g2d.fillRect(0,0,screenWidth,screenHeight);

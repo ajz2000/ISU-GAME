@@ -110,9 +110,10 @@ public class RobotCompanion extends Character{
   public void shoot(MouseEvent e){
     Projectile toAdd;
     //Get mouse x and y
-    mouseX = e.getX() / SSRB.getScaleRatio() + SSRB.getXOffset() - (ssrb.getScreenWidth()/4);
-    mouseY = e.getY() / SSRB.getScaleRatio() + SSRB.getYOffset() - (ssrb.getScreenHeight()/4);
-    
+//    mouseX = e.getX() / SSRB.getScaleRatio() + SSRB.getXOffset() - (ssrb.getScreenWidth()/4);
+//    mouseY = e.getY() / SSRB.getScaleRatio() + SSRB.getYOffset() - (ssrb.getScreenHeight()/4);
+    mouseX = e.getX() / SSRB.getScaleRatio() - SSRB.cameraX - (ssrb.getScreenWidth()/4);
+    mouseY = e.getY() / SSRB.getScaleRatio() - SSRB.cameraY - (ssrb.getScreenHeight()/4);
     //Find x and y distance between mouse and companion's centre.
     double xDist = mouseX - (x + ((width) / 2));
     double yDist = mouseY - (y + ((height) / 2));
