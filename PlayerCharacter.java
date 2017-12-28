@@ -13,6 +13,10 @@ public class PlayerCharacter extends Character{
   private int hitInvinciblityTimer = 0;
   private boolean dodging = false;
   private Rectangle footHitBox = new Rectangle();
+  private Rectangle headHitBox = new Rectangle();
+  private double prevX;
+  private double prevY;
+  
   PlayerCharacter(int x, int y){
     this.x = x;
     this.y = y;
@@ -26,6 +30,8 @@ public class PlayerCharacter extends Character{
     hitBox.height = height;
     footHitBox.height = 2;
     footHitBox.width = width;
+    headHitBox.height = 2;
+    headHitBox.width = width;
     try {
       sprite = ImageIO.read(new File("PlayerCharacter1.png"));
     } catch (IOException e) {
@@ -75,6 +81,9 @@ public class PlayerCharacter extends Character{
   }
   
   public void move(){
+    prevX = x;
+    prevY = y;
+    
     if(isActive){
     //accelerate and decelerate the player
     if(movingUp||movingDown||movingLeft||movingRight){
@@ -172,7 +181,8 @@ public class PlayerCharacter extends Character{
     //adjust the object's x/y basede on the horizontal acceleration
     x += Xa;
     y += Ya;
-
+//    x = (int) x;
+//    y = (int) y;
     //update the hitbox's coordinates to match those of the player
     hitBox.x=(int)x;
     hitBox.y=(int)y;
@@ -187,6 +197,8 @@ public class PlayerCharacter extends Character{
     }
     footHitBox.y=(int)y+62;
     footHitBox.x=(int)x;
+    headHitBox.y = (int)y;
+    headHitBox.x = (int)x;
     SSRB.setXOffset(x);
     SSRB.setYOffset(y);
   }
@@ -210,15 +222,23 @@ public class PlayerCharacter extends Character{
       g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
       g2d.setColor(Color.BLUE);
       g2d.fill(footHitBox);
+      g2d.fill(headHitBox);
       g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
     }
   }
   
    public void footCollide(GraphicsObject toCollide){
     if(footHitBox.intersects(toCollide.getHitBox())){
-      if(footHitBox.x > toCollide.getX()){
-        
-      }
+      Rectangle collisionRect = footHitBox.intersection(toCollide.getHitBox());
+      
+        y = prevY;
+        x = prevX;
+        hitBox.x = (int)prevX;
+        hitBox.y = (int)prevY;
+        footHitBox.x = (int)prevX;
+        footHitBox.y = (int)prevY+62;
+        headHitBox.x = (int)prevX;
+        headHitBox.y = (int)prevY;
     }
   }
   
@@ -236,5 +256,8 @@ public class PlayerCharacter extends Character{
   }
   public void setVelocity(int velocity){
     this.velocity = velocity;
+  }
+  public Rectangle getHeadHitBox(){
+    return headHitBox;
   }
 }

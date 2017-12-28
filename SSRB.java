@@ -29,12 +29,10 @@ public class SSRB extends JPanel{
   //Toggle for debug (Currently includes: Hitboxes.)
   private static boolean debug = false;
   //current level
-  private LevelAsset currentLevel = new LevelAsset("Level1");
+  private LevelAsset currentLevel = new LevelAsset("Level1",this);
   //offset
   private static double xOffset;
   private static double yOffset;
-  
-  private Wall testWall = new Wall(0,0,32,32);
   
   public SSRB(){
     addKeyListener(new KeyListener() {
@@ -87,11 +85,12 @@ public class SSRB extends JPanel{
     enemyList.add(new EnemyShooting(200,80,pc,this));
     //initialise the hud
     hud = new HUD(pc, rc);
-    wallList.add(testWall);
   }
   
   @Override
   public void paint(Graphics g){
+    boolean FGDrawn = false;
+    
     Graphics2D g2d = (Graphics2D) g;
     super.paint(g);
     
@@ -104,13 +103,23 @@ public class SSRB extends JPanel{
     g2d.setColor(backGroundGreen);
     g2d.fillRect(0,0,screenWidth,screenHeight);
     
-    currentLevel.paint(g2d); 
-    
+    currentLevel.paintBG(g2d); 
+         for(int i = 0; i < wallList.size(); i++){
+      if(wallList.get(i).getHitBox().intersects(pc.getHeadHitBox())){
+        currentLevel.paintFG(g2d);
+        FGDrawn = true;
+        break;
+      }
+    }
     //draw the player
     pc.paint(g2d);
-    rc.paint(g2d);
+    
     hud.paint(g2d);
     
+    if(!FGDrawn){
+      currentLevel.paintFG(g2d);
+    }
+rc.paint(g2d);
     //loop through every bullet in bulletList
     for(int i = 0; i < bulletList.size(); i++){
       // paint the bullet at location i in the array.
@@ -202,6 +211,10 @@ public class SSRB extends JPanel{
   //add a bullet to the list of active projectiles
   public void addBullet(Projectile p){
     bulletList.add(p);
+  }
+  
+  public void addWall(Wall w){
+  wallList.add(w);
   }
   //returns the scaling factor of the window
   public static int getScaleRatio(){
