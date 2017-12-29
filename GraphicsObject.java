@@ -11,7 +11,7 @@ public abstract class GraphicsObject{
   protected boolean isActive = true;
   protected Rectangle hitBox = new Rectangle();
   
-  //draws the spirte at a specific position on screen
+  //draws the sprite at a specific position on screen
   public void paint(Graphics2D g2d){
     g2d.drawImage(sprite, (int)x, (int)y, width, height, null);
   }

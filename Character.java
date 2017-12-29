@@ -1,13 +1,15 @@
 import javax.sound.sampled.Clip;
 import java.util.*;
 import javax.sound.sampled.AudioInputStream;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public abstract class Character extends MovableObject{
 
-  int health;
-  Clip audio;
-  ArrayList<AudioInputStream> soundList;
-  
+  protected int health;
+  protected Clip audio;
+  protected ArrayList<AudioInputStream> soundList;
+
   public int getHealth(){
     return health;
   }

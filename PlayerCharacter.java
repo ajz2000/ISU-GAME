@@ -181,8 +181,6 @@ public class PlayerCharacter extends Character{
     //adjust the object's x/y basede on the horizontal acceleration
     x += Xa;
     y += Ya;
-//    x = (int) x;
-//    y = (int) y;
     //update the hitbox's coordinates to match those of the player
     hitBox.x=(int)x;
     hitBox.y=(int)y;
@@ -248,6 +246,9 @@ public class PlayerCharacter extends Character{
     if(hitInvinciblityTimer == 100){
       super.setHealth(damage);
       hitInvinciblityTimer = 0;
+    }
+    if(health>100){
+      health = 100;
     }
   }
   //return true if the player is dodging

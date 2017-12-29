@@ -12,30 +12,30 @@ public class Enemy extends Character{
   public void move(){
     //sets facingRight true/false
     if(angle > 90 && angle < 270){
-    facingRight = false;
+      facingRight = false;
     }
     else{
-    facingRight = true;
+      facingRight = true;
     }
     //calculate distance to player usi
     distanceToPlayer = Math.sqrt(((pc.getX()-x)*(pc.getX()-x)) + ((pc.getY()-y)*(pc.getY()-y)));
-      
+    
     //calculate angle to the player
-      angle = (double) Math.toDegrees(Math.atan2(pc.getY() - y, pc.getX() - x));
-      //adjusts the angle to be positive
-      if(angle < 0){
-        angle += 360;
-      }
-      //stops enemies if they are within a certain distance of the palyer
-      //stops them from "freaking out" and attempting to reach the position they are already at
-      if(distanceToPlayer<8){
-        velocity = 0;
-      }
-      else{
-        //if the enemy is not in range of the player, accelerate
+    angle = (double) Math.toDegrees(Math.atan2(pc.getY() - y, pc.getX() - x));
+    //adjusts the angle to be positive
+    if(angle < 0){
+      angle += 360;
+    }
+    //stops enemies if they are within a certain distance of the palyer
+    //stops them from "freaking out" and attempting to reach the position they are already at
+    if(distanceToPlayer<8){
+      velocity = 0;
+    }
+    else{
+      //if the enemy is not in range of the player, accelerate
       velocity = maxVelocity;
-      }
-     // makes robots float up and down
+    }
+    // makes robots float up and down
     if(floatTimer>=40){
       floatTimer = 0;
       if(floatingUp){
@@ -53,8 +53,28 @@ public class Enemy extends Character{
     //call super's move
     super.move();
   }
-  //return enenmy's damage
-  public int getDamage(){
-    return damage;
+
+//return enenmy's damage
+public int getDamage(){
+  return damage;
+}
+
+public void die(){
+  super.die();
+  
+  double drop = Math.random()*100;
+  
+  if(drop <= 10){
+    ssrb.addPickup(new HealthPickup((int)x,(int)y));
   }
+  else if (drop > 10 && drop <= 20){
+    ssrb.addPickup(new AmmoPickup((int)x,(int)y,1));
+  }
+  else if(drop > 20 && drop <= 30){
+    ssrb.addPickup(new AmmoPickup((int)x,(int)y,2));
+  }
+  else if(drop > 30 && drop <= 40 ){
+    ssrb.addPickup(new AmmoPickup((int)x,(int)y,3));
+  }
+}
 }

@@ -26,6 +26,8 @@ public class SSRB extends JPanel{
   private ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
   //list of walls
   private ArrayList<Wall> wallList= new ArrayList<Wall>();
+  //list of pickUps
+  private ArrayList<Pickup> pickupList = new ArrayList<Pickup>();
   //Toggle for debug (Currently includes: Hitboxes.)
   private static boolean debug = false;
   //current level
@@ -98,41 +100,47 @@ public class SSRB extends JPanel{
     //Set Scale Ratio
     g2d.scale(scaleRatio, scaleRatio);
     //translate the "camera"
-    g2d.translate(-xOffset+(screenWidth/4), -yOffset+(screenHeight/4));
+    g2d.translate(-xOffset+(screenWidth/4), - yOffset+(screenHeight/4));
     //draw the background
     g2d.setColor(backGroundGreen);
     g2d.fillRect(0,0,screenWidth,screenHeight);
     
     currentLevel.paintBG(g2d); 
-         for(int i = 0; i < wallList.size(); i++){
+    
+    for(int i = 0; i < wallList.size(); i++){
       if(wallList.get(i).getHitBox().intersects(pc.getHeadHitBox())){
         currentLevel.paintFG(g2d);
         FGDrawn = true;
         break;
       }
     }
+    
     //draw the player
     pc.paint(g2d);
     
-    hud.paint(g2d);
+    
     
     if(!FGDrawn){
       currentLevel.paintFG(g2d);
     }
-rc.paint(g2d);
+    rc.paint(g2d);
     //loop through every bullet in bulletList
     for(int i = 0; i < bulletList.size(); i++){
-      // paint the bullet at location i in the array.
       bulletList.get(i).paint(g2d);
     }
-    //loop through every bullet in bulletList
+    //loop through every enemy in enemyList
     for(int i = 0; i < enemyList.size(); i++){
-      // paint the enemy at location i in the array.
       enemyList.get(i).paint(g2d);
     }
+    //loop through every wall in wallList
     for(int i = 0; i < wallList.size(); i++){
       wallList.get(i).paint(g2d);
     }
+    //loop through every pickup in pickupList
+    for (int i = 0; i < pickupList.size(); i++){
+      pickupList.get(i).paint(g2d);
+    }
+    hud.paint(g2d);
   }
   
   public void move(){
@@ -158,7 +166,12 @@ rc.paint(g2d);
         bulletList.remove(i);
       }
     }
-    
+    //check for pickups to delete
+    for(int i = 0; i < pickupList.size(); i++){
+      if(!pickupList.get(i).isActive){
+        pickupList.remove(i);
+      }
+    }
     //move every active bullet
     for(int i = 0; i < bulletList.size(); i++){
       bulletList.get(i).move();
@@ -203,18 +216,35 @@ rc.paint(g2d);
     }
     //player and wall
     for(int i = 0; i <wallList.size(); i++){
-     pc.footCollide(wallList.get(i));
+      pc.footCollide(wallList.get(i));
     }
     
-    
+    //player and pickup
+    for(int i = 0; i < pickupList.size(); i++){
+      if(pc.collide(pickupList.get(i))){
+        if(pickupList.get(i) instanceof HealthPickup && pc.getHealth()<100){
+          pc.setHealth(-1*pickupList.get(i).getValue());
+          pickupList.get(i).collect();
+        }
+        else if(pickupList.get(i) instanceof AmmoPickup){
+          rc.addAmmo(pickupList.get(i).getType(),pickupList.get(i).getValue());   
+          pickupList.get(i).collect();
+        }
+      }
+    }
   }
+  
   //add a bullet to the list of active projectiles
   public void addBullet(Projectile p){
     bulletList.add(p);
   }
-  
+  //add a wall to the list of active walls
   public void addWall(Wall w){
-  wallList.add(w);
+    wallList.add(w);
+  }
+  //add a pickup to the list of active pickups
+  public void addPickup(Pickup p){
+    pickupList.add(p);
   }
   //returns the scaling factor of the window
   public static int getScaleRatio(){

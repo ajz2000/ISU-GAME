@@ -229,6 +229,31 @@ public class RobotCompanion extends Character{
     }
   }
   
+  public void addAmmo(int gun, int ammo){
+   switch(gun){
+      case 1:
+        shotgunAmmo += ammo;
+        if(shotgunAmmo>10){
+        shotgunAmmo = 10;
+        }
+        break;
+      case 2:
+        sniperAmmo += ammo;
+        if(sniperAmmo>5){
+        sniperAmmo = 5;
+        }
+        break;
+      case 3:
+        machineGunAmmo += ammo;
+        if(machineGunAmmo > 60){
+          machineGunAmmo = 60;
+        }
+        break;
+     default:
+        System.out.println("type passed was: " + gun);
+    }
+  }
+  
   public int getLimitBreak(){
     return limitBreak;
   }
