@@ -229,6 +229,19 @@ public class RobotCompanion extends Character{
     }
   }
   
+  public int getMaxAmmo(int gun){
+    switch(gun){
+      case 1:
+        return 10;
+      case 2:
+        return 5;
+      case 3:
+        return 60;
+      default:
+        return 0;
+    }
+  }
+  
   public void addAmmo(int gun, int ammo){
    switch(gun){
       case 1:

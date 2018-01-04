@@ -114,7 +114,11 @@ public class SSRB extends JPanel{
         break;
       }
     }
-    
+    //loop through every pickup in pickupList
+    for (int i = 0; i < pickupList.size(); i++){
+      pickupList.get(i).paint(g2d);
+    }
+
     //draw the player
     pc.paint(g2d);
     
@@ -136,16 +140,12 @@ public class SSRB extends JPanel{
     for(int i = 0; i < wallList.size(); i++){
       wallList.get(i).paint(g2d);
     }
-    //loop through every pickup in pickupList
-    for (int i = 0; i < pickupList.size(); i++){
-      pickupList.get(i).paint(g2d);
-    }
-    hud.paint(g2d);
+      hud.paint(g2d);
   }
   
   public void move(){
     //move the player and robot
-    pc.move();
+    pc.move(wallList);
     rc.move();
     
     //move all active enemies
@@ -214,11 +214,11 @@ public class SSRB extends JPanel{
         }
       }
     }
-    //player and wall
-    for(int i = 0; i <wallList.size(); i++){
-      pc.footCollide(wallList.get(i));
-    }
-    
+//    //player and wall
+//    for(int i = 0; i <wallList.size(); i++){
+//      pc.footCollide(wallList.get(i));
+//    }
+//    
     //player and pickup
     for(int i = 0; i < pickupList.size(); i++){
       if(pc.collide(pickupList.get(i))){
@@ -226,7 +226,7 @@ public class SSRB extends JPanel{
           pc.setHealth(-1*pickupList.get(i).getValue());
           pickupList.get(i).collect();
         }
-        else if(pickupList.get(i) instanceof AmmoPickup){
+        else if(pickupList.get(i) instanceof AmmoPickup && rc.getAmmo(pickupList.get(i).getType()) < rc.getMaxAmmo(pickupList.get(i).getType())){
           rc.addAmmo(pickupList.get(i).getType(),pickupList.get(i).getValue());   
           pickupList.get(i).collect();
         }

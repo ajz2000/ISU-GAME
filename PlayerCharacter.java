@@ -1,4 +1,5 @@
 import java.awt.event.KeyEvent;
+import java.util.*;
 import java.awt.*;
 import java.io.*;
 import javax.imageio.*;
@@ -16,6 +17,7 @@ public class PlayerCharacter extends Character{
   private Rectangle headHitBox = new Rectangle();
   private double prevX;
   private double prevY;
+  private boolean collisionHandled = false;
   
   PlayerCharacter(int x, int y){
     this.x = x;
@@ -80,7 +82,8 @@ public class PlayerCharacter extends Character{
     velocity = 8;
   }
   
-  public void move(){
+  public void move(ArrayList<Wall> wallList){
+    collisionHandled = false;
     prevX = x;
     prevY = y;
     
@@ -178,12 +181,27 @@ public class PlayerCharacter extends Character{
     //calculate the vertical and horizontal acceration;
     double Xa = (Math.cos(Math.toRadians(angle))*velocity);
     double Ya = (Math.sin(Math.toRadians(angle))*velocity);
-    //adjust the object's x/y basede on the horizontal acceleration
-    x += Xa;
-    y += Ya;
-    //update the hitbox's coordinates to match those of the player
-    hitBox.x=(int)x;
-    hitBox.y=(int)y;
+    
+    footHitBox.y += Ya;
+    footHitBox.x += Xa;
+    
+    //check collision
+    for(int i = 0; i < wallList.size(); i++){
+      footCollide(wallList.get(i), Xa, Ya);
+//      if(collisionHandled){
+//        break;
+//      }
+    }
+    
+    //If collision code made no adjustments, move normally.
+    if(!collisionHandled){
+      //adjust the object's x/y basede on the horizontal acceleration
+      x += Xa;
+      y += Ya;
+      //update the hitbox's coordinates to match those of the player
+      hitBox.x=(int)x;
+      hitBox.y=(int)y;
+    }
     
     if(health<0){
     die();
@@ -225,18 +243,34 @@ public class PlayerCharacter extends Character{
     }
   }
   
-   public void footCollide(GraphicsObject toCollide){
+   public void footCollide(GraphicsObject toCollide, double Xa, double Ya){
     if(footHitBox.intersects(toCollide.getHitBox())){
-      Rectangle collisionRect = footHitBox.intersection(toCollide.getHitBox());
+      collisionHandled = true;
       
-        y = prevY;
-        x = prevX;
-        hitBox.x = (int)prevX;
-        hitBox.y = (int)prevY;
-        footHitBox.x = (int)prevX;
-        footHitBox.y = (int)prevY+62;
-        headHitBox.x = (int)prevX;
-        headHitBox.y = (int)prevY;
+      footHitBox.y -= Ya;
+      footHitBox.x -= Xa;
+      
+      Rectangle xCollide;
+      
+      if(footHitBox.x < toCollide.getX()){
+        xCollide = new Rectangle((int)(footHitBox.x + footHitBox.width + Xa), (int)(footHitBox.y), 1, 1);
+      }
+      else{
+        xCollide = new Rectangle((int)(footHitBox.x + Xa), (int)(footHitBox.y), 1, 1);
+      }
+         
+      Rectangle yCollide = new Rectangle((int)footHitBox.x, (int)(footHitBox.y + Ya), 1, 1);
+      
+      if(!(toCollide.getHitBox().contains(xCollide) && toCollide.getHitBox().contains(yCollide))){
+        if(toCollide.getHitBox().contains(xCollide)){
+          y += Ya;
+          hitBox.y += Ya;
+        }
+        else {
+          x += Xa;
+          hitBox.x += Xa;
+        }
+      }
     }
   }
   
