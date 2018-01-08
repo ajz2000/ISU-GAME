@@ -35,6 +35,8 @@ public class SSRB extends JPanel{
   //offset
   private static double xOffset;
   private static double yOffset;
+  //the enemy director
+  private Director director;
   
   public SSRB(){
     addKeyListener(new KeyListener() {
@@ -82,11 +84,12 @@ public class SSRB extends JPanel{
     pc = new PlayerCharacter(screenWidth/2/SSRB.getScaleRatio(),screenHeight/2/SSRB.getScaleRatio());
     rc = new RobotCompanion(pc, this);
     //creates 3 basic enemies for testing purposes
-    enemyList.add(new EnemyBasic(40,40,pc,this));
-    enemyList.add(new EnemyExploding(80,80,pc,this));
-    enemyList.add(new EnemyShooting(200,80,pc,this));
+//    enemyList.add(new EnemyBasic(40,40,pc,this));
+//    enemyList.add(new EnemyExploding(80,80,pc,this));
+//    enemyList.add(new EnemyShooting(200,80,pc,this));
     //initialise the hud
     hud = new HUD(pc, rc);
+    director = new Director(this,pc);
   }
   
   @Override
@@ -178,6 +181,10 @@ public class SSRB extends JPanel{
     }
     //check all collisions
     checkCollisions();
+    
+    if(enemyList.size() == 0){
+      director.spawnEnemies();
+    }
   }
   
   public void checkCollisions(){
@@ -241,6 +248,10 @@ public class SSRB extends JPanel{
   //add a wall to the list of active walls
   public void addWall(Wall w){
     wallList.add(w);
+  }
+  //add an enemy to the list of active enemies
+  public void addEnemy(Enemy e){
+    enemyList.add(e);
   }
   //add a pickup to the list of active pickups
   public void addPickup(Pickup p){
