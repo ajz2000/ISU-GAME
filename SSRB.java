@@ -81,7 +81,7 @@ public class SSRB extends JPanel{
     screenWidth = (int)screenSize.getWidth();
     screenHeight = (int)screenSize.getHeight();
     //create a new playercharacter, with a robot companion in the middle of the screen
-    pc = new PlayerCharacter(screenWidth/2/SSRB.getScaleRatio(),screenHeight/2/SSRB.getScaleRatio());
+    pc = new PlayerCharacter(screenWidth/2/SSRB.getScaleRatio(),screenHeight/2/SSRB.getScaleRatio(),this);
     rc = new RobotCompanion(pc, this);
 //    creates 3 basic enemies for testing purposes
 //    enemyList.add(new EnemyBasic(40,40,pc,this));
@@ -291,6 +291,9 @@ public class SSRB extends JPanel{
   }
   public static int getScreenWidth(){
     return screenWidth;
+  }
+  public RobotCompanion getRobotCompanion(){
+    return rc;
   }
   public static void main(String[] args) throws InterruptedException, IOException {
     JFrame frame = new JFrame("SUPER SPICY ROBOT BOYS 23");

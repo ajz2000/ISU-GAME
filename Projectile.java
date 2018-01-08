@@ -29,7 +29,7 @@ public class Projectile extends MovableObject{
   }
   //draw bullet
   public void paint(Graphics2D g2d){
-    g2d.setColor(Color.WHITE);
+    g2d.setColor(Color.MAGENTA);
     //if sniper, draw a line
     if (type.equals("Sniper")){
       int drawXDistance = (int)(maxSniperDistance * Math.cos(Math.toRadians(angle)));

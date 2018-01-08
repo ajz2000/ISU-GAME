@@ -5,7 +5,7 @@ import javax.imageio.*;
 import java.awt.image.BufferedImage;
 
 public class PlayerCharacter extends Character{
-  
+  private SSRB ssrb;
   private int accelTimer = 0;
   private int runAnimTimer = 0;
   private int dodgeTimer = 0;
@@ -17,9 +17,10 @@ public class PlayerCharacter extends Character{
   private double prevX;
   private double prevY;
   
-  PlayerCharacter(int x, int y){
+  PlayerCharacter(int x, int y, SSRB ssrb){
     this.x = x;
     this.y = y;
+    this.ssrb = ssrb;
     width = 32;
     height = 64; 
     health = 100;
@@ -78,6 +79,7 @@ public class PlayerCharacter extends Character{
   public void dodge(){
     dodging = true;
     velocity = 8;
+    ssrb.getRobotCompanion().setVelocity(9);
   }
   
   public void move(){
@@ -125,6 +127,7 @@ public class PlayerCharacter extends Character{
     if(dodging){
       if(dodgeTimer >= 30){
         velocity = 4;
+        ssrb.getRobotCompanion().setVelocity(4);
         dodgeTimer = 0;
         dodging = false;
         if (!movingUp&&!movingDown&&!movingLeft&&!movingRight){

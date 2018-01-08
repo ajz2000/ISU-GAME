@@ -52,8 +52,11 @@ public class RobotCompanion extends Character{
       
       accelTimer++;
       floatTimer++;
+       
+       
       
-      if(distanceToPlayer>=48){
+   
+        if(distanceToPlayer>=48){
         if(velocity<5&&accelTimer>5){
           velocity++;
           accelTimer = 0;
@@ -258,4 +261,7 @@ public class RobotCompanion extends Character{
     return limitBreak;
   }
   
+  public void setVelocity(int velocity){
+    this.velocity = velocity;
+  }
 }

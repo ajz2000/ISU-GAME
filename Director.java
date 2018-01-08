@@ -7,6 +7,7 @@ public class Director{
   private int basicMultiplier = 1;
   private int rangedMultiplier = 1;
   private int explodeMultiplier = 1;
+  private int smallMultiplier = 1;
   private Stack<Enemy> spawnStack;
   private int baseEnemies;
   private int addBase;
@@ -18,6 +19,7 @@ public class Director{
     basicMultiplier = 3;
     rangedMultiplier = 0;
     explodeMultiplier = 0;
+    smallMultiplier = 1;
     calculateEnemies();
   }
   
@@ -38,6 +40,11 @@ public class Director{
     }
     for(int i = 0; i < baseEnemies * explodeMultiplier; i++){
       ssrb.addEnemy(new EnemyExploding(spawnX,spawnY,pc,ssrb));
+      spawnX = (int)((Math.random() * 2000) + 1);
+      spawnY = (int)((Math.random() * 2000) + 1);
+    }
+    for(int i = 0; i < baseEnemies * smallMultiplier; i++){
+      ssrb.addEnemy(new EnemySmall(spawnX,spawnY,pc,ssrb));
       spawnX = (int)((Math.random() * 2000) + 1);
       spawnY = (int)((Math.random() * 2000) + 1);
     }
