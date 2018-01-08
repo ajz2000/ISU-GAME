@@ -11,7 +11,7 @@ public class Director{
   public Director(){
     baseEnemies = (int)((Math.random() * 5) + 1);
     basicMultiplier = 3;
-    rangedMultipler = 0;
+    rangedMultiplier = 0;
     explodeMultiplier = 0;
     spawnEnemies();
   }

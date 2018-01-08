@@ -64,10 +64,23 @@ public class LevelAsset extends GraphicsObject{
     } catch (Exception e){
       System.out.println("Error on collision load");
     }
-    for(int i = 0; i <= tileHeight-1; i++){
-      for(int j = 0; j <= tileWidth-1; j++){
-        if(levelArray[i][j] == 'x'){
-              ssrb.addWall(new Wall(j*32,i*32,32,32));
+    
+    int wallHeight = 0;
+    
+    for(int i = 0; i <= tileWidth-1; i++){
+      for(int j = 0; j <= tileHeight-1; j++){
+        if(levelArray[j][i] == 'x'){
+          wallHeight = 32;
+          
+          while(j < levelArray.length - 1){
+            if(levelArray[j + 1][i] != 'x'){
+              break;
+            }
+            wallHeight += 32;
+            j++;
+          }
+          
+          ssrb.addWall(new Wall(i*32,j*32 - (wallHeight - 32),32,wallHeight));
         }
       }
     }

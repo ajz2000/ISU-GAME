@@ -226,17 +226,36 @@ public class PlayerCharacter extends Character{
   }
   
    public void footCollide(GraphicsObject toCollide){
-    if(footHitBox.intersects(toCollide.getHitBox())){
-      Rectangle collisionRect = footHitBox.intersection(toCollide.getHitBox());
+    while(footHitBox.intersects(toCollide.getHitBox())){
+      double distDown = (toCollide.getY() + toCollide.getHeight()) - footHitBox.y;
+      double distUp =  (footHitBox.y + footHitBox.height) - toCollide.getY();
+      double distRight = (toCollide.getX() + toCollide.getWidth()) - footHitBox.x;
+      double distLeft = (footHitBox.x + footHitBox.width) - toCollide.getX();
       
-        y = prevY;
-        x = prevX;
-        hitBox.x = (int)prevX;
-        hitBox.y = (int)prevY;
-        footHitBox.x = (int)prevX;
-        footHitBox.y = (int)prevY+62;
-        headHitBox.x = (int)prevX;
-        headHitBox.y = (int)prevY;
+      if(distDown < distUp && distDown < distRight && distDown < distLeft) {
+        y += distDown;
+        hitBox.y += distDown;
+        footHitBox.y += distDown;
+        headHitBox.y += distDown;
+      }
+      else if(distLeft < distUp && distLeft < distRight) {
+        x -= distLeft;
+        hitBox.x -= distLeft;
+        footHitBox.x -= distLeft;
+        headHitBox.x -= distLeft;
+      }
+      else if(distRight < distUp) {
+        x += distRight;
+        hitBox.x += distRight;
+        footHitBox.x += distRight;
+        headHitBox.x += distRight;
+      }
+      else {
+        y -= distUp;
+        hitBox.y -= distUp;
+        footHitBox.y -= distUp;
+        headHitBox.y -= distUp;
+      }
     }
   }
   

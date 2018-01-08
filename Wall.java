@@ -18,6 +18,8 @@ public class Wall extends GraphicsObject{
       g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
       g2d.setColor(Color.GREEN);
       g2d.fill(hitBox);
+      g2d.setColor(Color.ORANGE);
+      g2d.draw(hitBox);
       g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
     }
   }
