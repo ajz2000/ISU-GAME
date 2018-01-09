@@ -11,7 +11,7 @@ public class EnemySmall extends Enemy{
     this.x = (int)x;
     this.y = (int)y;
     maxVelocity = 4;
-    health = 10;
+    health = 2;
     hitBox.x = x;
     hitBox.y = y;
     hitBox.width = width;
@@ -23,4 +23,20 @@ public class EnemySmall extends Enemy{
     } 
   }
   
+  public EnemySmall(int x, int y, PlayerCharacter pc, SSRB ssrb, double angle){
+    this.angle = angle;
+    this.pc=pc;
+    this.ssrb = ssrb;
+    width = 16;
+    height = 16; 
+    this.x = (int)x;
+    this.y = (int)y;
+    maxVelocity = 4;
+    health = 10;
+    hitBox.x = x;
+    hitBox.y = y;
+    hitBox.width = width;
+    hitBox.height = height;
+    damage = 1;
+  }
 }

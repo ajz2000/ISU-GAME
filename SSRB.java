@@ -213,7 +213,7 @@ public class SSRB extends JPanel{
     //enemy and player collision
     for(int i = 0; i < enemyList.size(); i++){
       if(enemyList.get(i).collide(pc)&&!pc.getDodging()){
-        if(enemyList.get(i) instanceof EnemyBasic){
+        if(enemyList.get(i) instanceof EnemyBasic||enemyList.get(i) instanceof EnemySmall){
           pc.setHealth(enemyList.get(i).getDamage());
         } else if(enemyList.get(i) instanceof EnemyExploding){
           EnemyExploding toExplode = (EnemyExploding)enemyList.get(i);

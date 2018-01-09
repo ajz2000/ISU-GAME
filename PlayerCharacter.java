@@ -142,7 +142,7 @@ public class PlayerCharacter extends Character{
     }
     
     //I-Frame counter.
-    if(hitInvinciblityTimer < 100){
+    if(hitInvinciblityTimer < 13){
       hitInvinciblityTimer++;
     }
 
@@ -265,7 +265,7 @@ public class PlayerCharacter extends Character{
   
   //damage the player
   public void setHealth(int damage){
-    if(hitInvinciblityTimer == 100){
+    if(hitInvinciblityTimer == 13){
       super.setHealth(damage);
       hitInvinciblityTimer = 0;
     }
