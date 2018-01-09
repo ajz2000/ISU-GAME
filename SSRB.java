@@ -37,6 +37,8 @@ public class SSRB extends JPanel{
   private static double yOffset;
   //enemy director
   private Director director;
+  //Audio Director
+  private AudioDirector audioDirector;
   
   public SSRB(){
     addKeyListener(new KeyListener() {
@@ -90,6 +92,9 @@ public class SSRB extends JPanel{
 //    initialise the hud
     hud = new HUD(pc, rc);
     director = new Director(this,pc);
+    audioDirector = new AudioDirector(this);
+    
+    audioDirector.start();
   }
   
   @Override
@@ -296,6 +301,7 @@ public class SSRB extends JPanel{
     return rc;
   }
   public static void main(String[] args) throws InterruptedException, IOException {
+    
     JFrame frame = new JFrame("SUPER SPICY ROBOT BOYS 23");
     SSRB s = new SSRB();
     frame.add(s);

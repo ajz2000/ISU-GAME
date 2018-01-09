@@ -19,7 +19,7 @@ public class Director{
     basicMultiplier = 3;
     rangedMultiplier = 0;
     explodeMultiplier = 0;
-    spawnerMultiplier = 1;
+    spawnerMultiplier = 0;
     calculateEnemies();
   }
   
@@ -59,11 +59,17 @@ public class Director{
         explodeMultiplier = 0;
         addBase = 1;
       }
+      else if(wave == 4){
+        basicMultiplier = 2;
+        rangedMultiplier = 3;
+        explodeMultiplier = 2;
+      }
       else{
         addBase += 5;
         basicMultiplier = 3;
         rangedMultiplier = 1;
         explodeMultiplier = 1;
+        spawnerMultiplier = 1;
       }
     }
     else if(wave%3 == 2){
@@ -72,19 +78,33 @@ public class Director{
         rangedMultiplier = 3;
         explodeMultiplier = 0; 
       }
+      else if(wave == 5){
+        basicMultiplier = 2;
+        rangedMultiplier = 3;
+        explodeMultiplier = 2;
+      }
       else{
         
         basicMultiplier = 2;
         rangedMultiplier = 3;
         explodeMultiplier = 2;
+        spawnerMultiplier = 1;
       }
     }
     else if(wave%3 == 0){
-      basicMultiplier = 2;
+      if(wave == 3){
+        basicMultiplier = 2;
         rangedMultiplier = 2;
         explodeMultiplier = 3;
+      }
+      else{
+        basicMultiplier = 2;
+        rangedMultiplier = 2;
+        explodeMultiplier = 3;
+        spawnerMultiplier = 2;
+      }
     }
-    baseEnemies = (int)((Math.random() * 5) + addBase);
+    baseEnemies = (int)((Math.random() * 3) + addBase);
     
     spawnEnemies();
   }
