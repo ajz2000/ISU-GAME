@@ -148,7 +148,7 @@ public class SSRB extends JPanel{
     for (int i = 0; i < pickupList.size(); i++){
       pickupList.get(i).paint(g2d);
     }
-    hud.paint(g2d);
+    hud.paint(g2d, this);
   }
   
   public void move(){
