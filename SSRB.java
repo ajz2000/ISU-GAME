@@ -190,6 +190,8 @@ public class SSRB extends JPanel{
     if(enemyList.size() == 0){
       director.calculateEnemies();
     }
+    
+    audioDirector.setVolume();
   }
   
   public void checkCollisions(){
@@ -299,6 +301,12 @@ public class SSRB extends JPanel{
   }
   public RobotCompanion getRobotCompanion(){
     return rc;
+  }
+  public PlayerCharacter getPlayer(){
+    return pc;
+  }
+  public ArrayList<Enemy> getEnemyList(){
+    return enemyList;
   }
   public static void main(String[] args) throws InterruptedException, IOException {
     

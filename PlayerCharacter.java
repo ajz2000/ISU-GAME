@@ -283,4 +283,7 @@ public class PlayerCharacter extends Character{
   public Rectangle getHeadHitBox(){
     return headHitBox;
   }
+  public int getHealth(){
+    return health;
+  }
 }
