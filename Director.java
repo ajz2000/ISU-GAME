@@ -105,7 +105,6 @@ public class Director{
       }
     }
     baseEnemies = (int)((Math.random() * 3) + addBase);
-    
     spawnEnemies();
   }
   

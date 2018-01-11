@@ -6,7 +6,7 @@ import java.awt.event.*;
 
 public class RobotCompanion extends Character{
   private PlayerCharacter pc;
-  private int machineGunAmmo = 60;
+  private int machineGunAmmo = 120;
   private int sniperAmmo = 5;
   private int shotgunAmmo = 10;
   private int accelTimer = 0;
@@ -138,13 +138,13 @@ public class RobotCompanion extends Character{
         break;
       case 1:
         if(shotgunAmmo>0&&shotgunTimer>=60){
-        int shotgunBullets = 6;
+        int shotgunBullets = 20;
         if(limitBreak == 2000){
-          shotgunBullets = 12;
+          shotgunBullets = 40;
           limitBreak = 0;
         }
         for (int i = 0; i <shotgunBullets; i++){
-          toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 2, 5.0, bulletAngle+((Math.random()*30)-15), 5, "Shotgun", true);
+          toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 2, 5.0, bulletAngle+((Math.random()*30)-15), 2, "Shotgun", true);
           ssrb.addBullet(toAdd);
         }
         shotgunTimer = 0;
@@ -178,7 +178,7 @@ public class RobotCompanion extends Character{
   }
   
   public void shootMachineGun(){
-    if (machineGunAmmo>0&&machinegunTimer>=10){
+    if (machineGunAmmo>0&&machinegunTimer>=5){
       mouseX = (MouseInfo.getPointerInfo().getLocation().x + ssrb.getXPosition())/SSRB.getScaleRatio() + SSRB.getXOffset() - (ssrb.getScreenWidth()/4);
       mouseY = (MouseInfo.getPointerInfo().getLocation().y + ssrb.getYPosition()-31)/SSRB.getScaleRatio() + SSRB.getYOffset() - (ssrb.getScreenHeight()/4);
       Projectile toAdd;
@@ -248,8 +248,8 @@ public class RobotCompanion extends Character{
         break;
       case 3:
         machineGunAmmo += ammo;
-        if(machineGunAmmo > 60){
-          machineGunAmmo = 60;
+        if(machineGunAmmo > 120){
+          machineGunAmmo = 120;
         }
         break;
      default:

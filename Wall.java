@@ -1,8 +1,8 @@
 import java.awt.*;
 
 public class Wall extends GraphicsObject{
-  
-  public Wall(int x, int y, int width, int height){
+  private boolean isPit;
+  public Wall(int x, int y, int width, int height, boolean isPit){
     this.x = x;
     this.y = y;
     this.width = width;
@@ -22,5 +22,9 @@ public class Wall extends GraphicsObject{
       g2d.draw(hitBox);
       g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
     }
+  }
+  
+  public boolean isPit(){
+    return isPit;
   }
 }

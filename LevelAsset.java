@@ -80,11 +80,25 @@ public class LevelAsset extends GraphicsObject{
             j++;
           }
           
-          ssrb.addWall(new Wall(i*32,j*32 - (wallHeight - 32),32,wallHeight));
+          ssrb.addWall(new Wall(i*32,j*32 - (wallHeight - 32),32,wallHeight, false));
+        }
+        
+        if(levelArray[j][i] == 'p'){
+          wallHeight = 32;
+          
+          while(j < levelArray.length - 1){
+            if(levelArray[j + 1][i] != 'p'){
+              break;
+            }
+            wallHeight += 32;
+            j++;
+          }
+          
+          ssrb.addWall(new Wall(i*32,j*32 - (wallHeight - 32),32,wallHeight, true));
         }
       }
     }
-    
+
   }
 }
 

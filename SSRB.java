@@ -39,6 +39,9 @@ public class SSRB extends JPanel{
   private Director director;
   //Audio Director
   private AudioDirector audioDirector;
+  private BufferedImage background = null;
+  private BufferedImage logo = null;
+  private boolean atLogo = true;
   
   public SSRB(){
     addKeyListener(new KeyListener() {
@@ -95,6 +98,12 @@ public class SSRB extends JPanel{
     audioDirector = new AudioDirector(this);
     
     audioDirector.start();
+    try {
+      background = ImageIO.read(new File("BackgroundBig.png"));
+      logo = ImageIO.read(new File("Sad Worm.png"));
+    } catch (IOException e) {
+    } 
+    
   }
   
   @Override
@@ -112,7 +121,7 @@ public class SSRB extends JPanel{
     //draw the background
     g2d.setColor(backGroundGreen);
     g2d.fillRect(0,0,screenWidth,screenHeight);
-    
+    g2d.drawImage(background, -512,-512, null);
     currentLevel.paintBG(g2d); 
     
     for(int i = 0; i < wallList.size(); i++){
@@ -149,6 +158,11 @@ public class SSRB extends JPanel{
       pickupList.get(i).paint(g2d);
     }
     hud.paint(g2d, this);
+    if(atLogo == true){
+    g2d.setColor(Color.WHITE);
+    g2d.fillRect(-5000,-5000,screenWidth*10,screenHeight*10);
+    g2d.drawImage(logo,-150,-250, null);
+    }
   }
   
   public void move(){
@@ -314,12 +328,14 @@ public class SSRB extends JPanel{
     SSRB s = new SSRB();
     frame.add(s);
     
+    
     //set the window size to match the screen size
     frame.setSize(s.screenWidth,s.screenHeight);
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    
-    
+    s.repaint();
+    Thread.sleep(1000);
+    s.atLogo=false;
     while (true){
       s.repaint();
       s.move();

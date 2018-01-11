@@ -10,8 +10,8 @@ public class EnemyShooting extends Enemy{
  public EnemyShooting(int x, int y, PlayerCharacter pc, SSRB ssrb){
     this.pc=pc;
     this.ssrb = ssrb;
-    width = 58;
-    height = 48; 
+    width = 46;
+    height = 46; 
     this.x = (int)x;
     this.y = (int)y;
     maxVelocity = 1;
