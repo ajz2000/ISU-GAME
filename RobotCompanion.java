@@ -144,7 +144,7 @@ public class RobotCompanion extends Character{
           limitBreak = 0;
         }
         for (int i = 0; i <shotgunBullets; i++){
-          toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 2, 5.0, bulletAngle+((Math.random()*30)-15), 2, "Shotgun", true);
+          toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 2, 5.0, bulletAngle+((Math.random()*30)-15), 3, "Shotgun", true);
           ssrb.addBullet(toAdd);
         }
         shotgunTimer = 0;

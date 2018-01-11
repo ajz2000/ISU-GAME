@@ -42,6 +42,8 @@ public class SSRB extends JPanel{
   private BufferedImage background = null;
   private BufferedImage logo = null;
   private boolean atLogo = true;
+  private Menu currentMenu;
+  private boolean atMenu = false;
   
   public SSRB(){
     addKeyListener(new KeyListener() {
@@ -54,9 +56,15 @@ public class SSRB extends JPanel{
       }
       @Override
       public void keyPressed(KeyEvent e) {
+        if(!atMenu){
         pc.keyPressed(e);
+        }
         if(e.getKeyCode() == KeyEvent.VK_Z){
           SSRB.debug = !SSRB.debug;
+        }
+        else  if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+          currentMenu = new Menu(3);
+          atMenu = !atMenu;
         }
       }
     });
@@ -72,7 +80,13 @@ public class SSRB extends JPanel{
       public void mouseExited(MouseEvent e) {
       }
       public void mousePressed(MouseEvent e) {
-        rc.mousePressed(e);
+        
+        if(currentMenu.getMenu() == 0 && atMenu){
+          atMenu = false;
+        }
+        else{
+          rc.mousePressed(e);
+        }
       }
       public void mouseReleased(MouseEvent e) {
         rc.mouseReleased(e);
@@ -98,6 +112,8 @@ public class SSRB extends JPanel{
     audioDirector = new AudioDirector(this);
     
     audioDirector.start();
+    currentMenu = new Menu(0);
+    atMenu = true;
     try {
       background = ImageIO.read(new File("BackgroundBig.png"));
       logo = ImageIO.read(new File("Sad Worm.png"));
@@ -108,60 +124,74 @@ public class SSRB extends JPanel{
   
   @Override
   public void paint(Graphics g){
-    boolean FGDrawn = false;
+    
     
     Graphics2D g2d = (Graphics2D) g;
     super.paint(g);
     
     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-    //Set Scale Ratio
-    g2d.scale(scaleRatio, scaleRatio);
-    //translate the "camera"
-    g2d.translate(-xOffset+(screenWidth/4), - yOffset+(screenHeight/4));
-    //draw the background
-    g2d.setColor(backGroundGreen);
-    g2d.fillRect(0,0,screenWidth,screenHeight);
-    g2d.drawImage(background, -512,-512, null);
-    currentLevel.paintBG(g2d); 
     
-    for(int i = 0; i < wallList.size(); i++){
-      if(wallList.get(i).getHitBox().intersects(pc.getHeadHitBox())){
-        currentLevel.paintFG(g2d);
-        FGDrawn = true;
-        break;
-      }
-    }
-    
-    //draw the player
-    pc.paint(g2d);
-    
-    
-    
-    if(!FGDrawn){
-      currentLevel.paintFG(g2d);
-    }
-    rc.paint(g2d);
-    //loop through every bullet in bulletList
-    for(int i = 0; i < bulletList.size(); i++){
-      bulletList.get(i).paint(g2d);
-    }
-    //loop through every enemy in enemyList
-    for(int i = 0; i < enemyList.size(); i++){
-      enemyList.get(i).paint(g2d);
-    }
-    //loop through every wall in wallList
-    for(int i = 0; i < wallList.size(); i++){
-      wallList.get(i).paint(g2d);
-    }
-    //loop through every pickup in pickupList
-    for (int i = 0; i < pickupList.size(); i++){
-      pickupList.get(i).paint(g2d);
-    }
-    hud.paint(g2d, this);
     if(atLogo == true){
-    g2d.setColor(Color.WHITE);
-    g2d.fillRect(-5000,-5000,screenWidth*10,screenHeight*10);
-    g2d.drawImage(logo,-150,-250, null);
+      g2d.setColor(Color.WHITE);
+      g2d.fillRect(-5000,-5000,screenWidth*10,screenHeight*10);
+      g2d.drawImage(logo,(getScreenWidth() / 2) - (logo.getWidth() / 2), (getScreenHeight() / 2) - (logo.getHeight() / 2), null);
+    }else if(atMenu && currentMenu.getMenu() != 3){
+      g2d.setColor(Color.WHITE);
+      g2d.fillRect(-5000,-5000,screenWidth*10,screenHeight*10);
+      currentMenu.paint(g2d);
+      
+    }else{
+      boolean FGDrawn = false;
+      //Set Scale Ratio
+      g2d.scale(scaleRatio, scaleRatio);
+      //translate the "camera"
+      g2d.translate(-xOffset+(screenWidth/4), - yOffset+(screenHeight/4));
+      //draw the background
+      g2d.setColor(backGroundGreen);
+      g2d.fillRect(0,0,screenWidth,screenHeight);
+      g2d.drawImage(background, -512,-512, null);
+      currentLevel.paintBG(g2d); 
+      
+      for(int i = 0; i < wallList.size(); i++){
+        if(wallList.get(i).getHitBox().intersects(pc.getHeadHitBox())){
+          currentLevel.paintFG(g2d);
+          FGDrawn = true;
+          break;
+        }
+      }
+      
+      //draw the player
+      pc.paint(g2d);
+      
+      
+      
+      if(!FGDrawn){
+        currentLevel.paintFG(g2d);
+      }
+      rc.paint(g2d);
+      //loop through every bullet in bulletList
+      for(int i = 0; i < bulletList.size(); i++){
+        bulletList.get(i).paint(g2d);
+      }
+      //loop through every enemy in enemyList
+      for(int i = 0; i < enemyList.size(); i++){
+        enemyList.get(i).paint(g2d);
+      }
+      //loop through every wall in wallList
+      for(int i = 0; i < wallList.size(); i++){
+        wallList.get(i).paint(g2d);
+      }
+      //loop through every pickup in pickupList
+      for (int i = 0; i < pickupList.size(); i++){
+        pickupList.get(i).paint(g2d);
+      }
+      hud.paint(g2d, this);
+      
+      if(currentMenu.getMenu() == 3 && atMenu){
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+        g2d.setColor(Color.BLACK);
+        g2d.fillRect(-5000,-5000,screenWidth*10,screenHeight*10);
+      }
     }
   }
   
@@ -333,12 +363,16 @@ public class SSRB extends JPanel{
     frame.setSize(s.screenWidth,s.screenHeight);
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    
     s.repaint();
     Thread.sleep(1000);
     s.atLogo=false;
+    
     while (true){
       s.repaint();
-      s.move();
+      if(s.atMenu == false){
+        s.move();
+      }
       Thread.sleep(10);
     }
   }
