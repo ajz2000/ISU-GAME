@@ -44,6 +44,8 @@ public class SSRB extends JPanel{
   private boolean atLogo = true;
   private Menu currentMenu;
   private boolean atMenu = false;
+  //Level Editor
+  private LevelEditor le;
   
   public SSRB(){
     addKeyListener(new KeyListener() {
@@ -57,14 +59,22 @@ public class SSRB extends JPanel{
       @Override
       public void keyPressed(KeyEvent e) {
         if(!atMenu){
-        pc.keyPressed(e);
+          pc.keyPressed(e);
         }
+        else if(currentMenu.getMenu() == 0){
+          if(e.getKeyCode() == KeyEvent.VK_E){
+            startLevelEditor();
+          }
+        }
+        
         if(e.getKeyCode() == KeyEvent.VK_Z){
           SSRB.debug = !SSRB.debug;
         }
-        else  if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
-          currentMenu = new Menu(3);
-          atMenu = !atMenu;
+        else if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+          if(!(atMenu && currentMenu.getMenu() == 0)){
+            currentMenu = new Menu(3);
+            atMenu = !atMenu;
+          }
         }
       }
     });
@@ -323,8 +333,17 @@ public class SSRB extends JPanel{
   public void resetGame(){
     pc.setHealth(100);
     pc.setActive(true);
+  }
+  
+  public void startLevelEditor(){
+    JFrame frame = new JFrame("Editor");
+    le = new LevelEditor();
+    frame.add(le);
+    frame.setSize(1000, 1000);
+    frame.setVisible(true);
+    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     
-    
+    new Thread(le).start();;
   }
   
   //add a bullet to the list of active projectiles
