@@ -9,6 +9,9 @@ public class RobotCompanion extends Character{
   private int machineGunAmmo = 120;
   private int sniperAmmo = 5;
   private int shotgunAmmo = 10;
+  private int machineGunMaxAmmo = 120;
+  private int sniperMaxAmmo = 5;
+  private int shotgunMaxAmmo = 10;
   private int accelTimer = 0;
   private int floatTimer = 0;
   private int shotgunTimer = 0;
@@ -227,6 +230,19 @@ public class RobotCompanion extends Character{
         return sniperAmmo;
       case 3:
         return machineGunAmmo;
+      default:
+        return 0;
+    }
+  }
+  
+  public int getMaxAmmo(int gun){
+    switch(gun){
+      case 1:
+        return shotgunMaxAmmo;
+      case 2:
+        return sniperMaxAmmo;
+      case 3:
+        return machineGunMaxAmmo;
       default:
         return 0;
     }

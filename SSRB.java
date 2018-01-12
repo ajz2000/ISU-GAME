@@ -311,8 +311,10 @@ public class SSRB extends JPanel{
           pickupList.get(i).collect();
         }
         else if(pickupList.get(i) instanceof AmmoPickup){
-          rc.addAmmo(pickupList.get(i).getType(),pickupList.get(i).getValue());   
-          pickupList.get(i).collect();
+          if(!(rc.getAmmo(pickupList.get(i).getType()) >= rc.getMaxAmmo(pickupList.get(i).getType()))){
+            rc.addAmmo(pickupList.get(i).getType(),pickupList.get(i).getValue());   
+            pickupList.get(i).collect();
+          }
         }
       }
     }

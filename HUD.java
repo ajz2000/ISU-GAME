@@ -16,8 +16,8 @@ public class HUD extends GraphicsObject{
     
     x = 20;
     y = 4;
-    width = 32;
-    height = 16;
+    width = 16;
+    height = 8;
     
     try{
     imageList.add(ImageIO.read(new File("PistolIcon1.png")));
@@ -31,50 +31,48 @@ public class HUD extends GraphicsObject{
   }
   
   public void paint (Graphics2D g2d, SSRB ssrb){
-    //g2d.translate(SSRB.getXOffset()-SSRB.getScreenWidth()/4,SSRB.getYOffset()-SSRB.getScreenHeight()/4);
-    
-    g2d = (Graphics2D)ssrb.getGraphics();
-    g2d.scale(SSRB.getScaleRatio(), SSRB.getScaleRatio());
+    g2d.translate(SSRB.getXOffset(),SSRB.getYOffset());
     
     //Health Bar
-    g2d.setColor(Color.WHITE);
-    g2d.fillRect(4,4,4,4);
-    g2d.fillRect(4,210,4,4);
     g2d.setColor(Color.RED);
     for(int i = pc.getHealth(); i>=1; i--){
-      g2d.fillRect(4,(200-i*2)+8,4,4);
+      g2d.fillRect(0+i/4,-4,1,2);
     }
     //limit break bar
-    g2d.setColor(Color.WHITE);
-    g2d.fillRect(8,4,4,4);
-    g2d.fillRect(8,112,4,4);
      g2d.setColor(Color.ORANGE);
     for(int i = rc.getLimitBreak(); i>=1; i--){
-      g2d.fillRect(8,(100 -((i/40)*2))+8,4,4);
+      g2d.fillRect(0+i/80,-6,1,2);
     }
+    
+    x = rc.getX() - SSRB.getXOffset();
+    y = rc.getY() - SSRB.getYOffset() - 8;
+    
     //Gun Image
-    g2d.setColor(Color.ORANGE);
+    g2d.setColor(Color.BLACK);
+    g2d.setFont(new Font("TimesRoman", Font.BOLD, 6));
     switch(rc.getCurrentGun()){
       case 0:
         sprite = imageList.get(0);
-        g2d.drawString("Unlimited",20,30);
+        g2d.drawString("Unlimited",(int)(x + 17),(int)y + 4);
         break;
       case 1:
         sprite = imageList.get(1);
-        g2d.drawString(Integer.toString(rc.getAmmo(1)),20,30);
+        g2d.drawString(Integer.toString(rc.getAmmo(1)),(int)(x + 17),(int)y + 4);
         break;
       case 2:
         sprite = imageList.get(2);
-        g2d.drawString(Integer.toString(rc.getAmmo(2)),20,30);
+        g2d.drawString(Integer.toString(rc.getAmmo(2)),(int)(x + 18),(int)y + 4);
         break;
       case 3:
         sprite = imageList.get(3);
-        g2d.drawString(Integer.toString(rc.getAmmo(3)),20,30);
+        g2d.drawString(Integer.toString(rc.getAmmo(3)),(int)(x + 17),(int)y + 4);
         break;
       default:
         System.out.println("WHY ARE YOU ON GUN TYPE 4?!?");
     }
+    
     super.paint(g2d);
-    //g2d.translate(-SSRB.getXOffset()+SSRB.getScreenWidth()/4,-SSRB.getYOffset()+SSRB.getScreenHeight()/4);
+
+    g2d.translate(-SSRB.getXOffset(),-SSRB.getYOffset());
   }
 }
