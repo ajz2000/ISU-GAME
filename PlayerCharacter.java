@@ -29,7 +29,7 @@ public class PlayerCharacter extends Character{
     hitBox.x=y;
     hitBox.width = width;
     hitBox.height = height;
-    footHitBox.height = 2;
+    footHitBox.height = 8;
     footHitBox.width = width;
     headHitBox.height = 33;
     headHitBox.width = width;
@@ -196,7 +196,7 @@ public class PlayerCharacter extends Character{
     if(velocity==0){
     curFrame = 0;
     }
-    footHitBox.y=(int)y+62;
+    footHitBox.y=(int)y+56;
     footHitBox.x=(int)x;
     headHitBox.y = (int)y;
     headHitBox.x = (int)x;

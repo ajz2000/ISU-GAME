@@ -290,18 +290,18 @@ public class SSRB extends JPanel{
       pc.footCollide(wallList.get(i));
     }
     //bullet and wall
-    for(int i = 0; i < bulletList.size(); i++){
-      for(int j = 0; j < wallList.size(); j++){
-        if(bulletList.get(i).collide(wallList.get(j))&& wallList.get(j).isPit()==false){
-          if(!bulletList.get(i).getType().equals("Sniper")){
-            bulletList.get(i).setActive(false);
-          }
-          else{
-          //sniper collision goes here
-          }
-        }
-      }
-    }
+//    for(int i = 0; i < bulletList.size(); i++){
+//      for(int j = 0; j < wallList.size(); j++){
+//        if(bulletList.get(i).collide(wallList.get(j))&& wallList.get(j).isPit()==false){
+//          if(!bulletList.get(i).getType().equals("Sniper")){
+//            bulletList.get(i).setActive(false);
+//          }
+//          else{
+//          //sniper collision goes here
+//          }
+//        }
+//      }
+//    }
 
     //player and pickup
     for(int i = 0; i < pickupList.size(); i++){
