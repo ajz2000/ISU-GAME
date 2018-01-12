@@ -28,7 +28,14 @@ public class Menu{
         case 2:
           break;
         case 3:
+          imageList.add(ImageIO.read(new File("MenuPause.png")));
+          imagePointList.add(new Point((SSRB.getScreenWidth() / 2) - imageList.get(0).getWidth() ,0));
+          //imageList.get(3) - Pause Menu
           break;
+        case 4:
+           imageList.add(ImageIO.read(new File("MenuDead.png")));
+           imagePointList.add(new Point((SSRB.getScreenWidth() / 2) - (imageList.get(0).getWidth() / 2), (SSRB.getScreenHeight() / 2) - (imageList.get(0).getHeight() / 2)));
+          //game over
         default:
           break;
       }
@@ -38,6 +45,9 @@ public class Menu{
   }
   
   public void paint(Graphics2D g2d){
+    if(currentMenu == 3){
+    g2d.translate(SSRB.getXOffset()-SSRB.getScreenWidth()/4,SSRB.getYOffset()-SSRB.getScreenHeight()/4);
+    }
     for(int i = 0; i < imageList.size(); i++){
       g2d.drawImage(imageList.get(i),(int)(imagePointList.get(i).getX()),(int)(imagePointList.get(i).getY()),null);
     }

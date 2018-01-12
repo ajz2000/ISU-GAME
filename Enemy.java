@@ -7,6 +7,7 @@ public class Enemy extends Character{
   protected double distanceToPlayer;
   protected int maxVelocity;
   protected boolean moving = true;
+  protected boolean collidingWithWall;
   
   //moves the enemy in the direction of the player
   public void move(){
@@ -61,7 +62,6 @@ public int getDamage(){
 
 public void die(){
   super.die();
-  
   double drop = Math.random()*100;
   
   if(drop <= 10){

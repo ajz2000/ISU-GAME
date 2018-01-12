@@ -84,6 +84,10 @@ public class SSRB extends JPanel{
         if(currentMenu.getMenu() == 0 && atMenu){
           atMenu = false;
         }
+        else if (currentMenu.getMenu() == 4){
+          resetGame();
+          currentMenu = new Menu(0);
+        }
         else{
           rc.mousePressed(e);
         }
@@ -102,10 +106,7 @@ public class SSRB extends JPanel{
     //create a new playercharacter, with a robot companion in the middle of the screen
     pc = new PlayerCharacter(screenWidth/2/SSRB.getScaleRatio(),screenHeight/2/SSRB.getScaleRatio(),this);
     rc = new RobotCompanion(pc, this);
-//    creates 3 basic enemies for testing purposes
-//    enemyList.add(new EnemyBasic(40,40,pc,this));
-//    enemyList.add(new EnemyExploding(80,80,pc,this));
-//    enemyList.add(new EnemyShooting(200,80,pc,this));
+
 //    initialise the hud
     hud = new HUD(pc, rc);
     director = new Director(this,pc);
@@ -131,6 +132,7 @@ public class SSRB extends JPanel{
     
     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     
+     
     if(atLogo == true){
       g2d.setColor(Color.WHITE);
       g2d.fillRect(-5000,-5000,screenWidth*10,screenHeight*10);
@@ -151,6 +153,12 @@ public class SSRB extends JPanel{
       g2d.fillRect(0,0,screenWidth,screenHeight);
       g2d.drawImage(background, -512,-512, null);
       currentLevel.paintBG(g2d); 
+      
+      //loop through every pickup in pickupList
+      for (int i = 0; i < pickupList.size(); i++){
+        pickupList.get(i).paint(g2d);
+      }
+      
       
       for(int i = 0; i < wallList.size(); i++){
         if(wallList.get(i).getHitBox().intersects(pc.getHeadHitBox())){
@@ -181,16 +189,14 @@ public class SSRB extends JPanel{
       for(int i = 0; i < wallList.size(); i++){
         wallList.get(i).paint(g2d);
       }
-      //loop through every pickup in pickupList
-      for (int i = 0; i < pickupList.size(); i++){
-        pickupList.get(i).paint(g2d);
-      }
       hud.paint(g2d, this);
       
       if(currentMenu.getMenu() == 3 && atMenu){
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
         g2d.setColor(Color.BLACK);
         g2d.fillRect(-5000,-5000,screenWidth*10,screenHeight*10);
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+        currentMenu.paint(g2d);
       }
     }
   }
@@ -231,6 +237,12 @@ public class SSRB extends JPanel{
     //check all collisions
     checkCollisions();
     
+    //show game over screen
+    if(!pc.isActive()){
+       currentMenu = new Menu(4);
+       atMenu = true;
+    }
+    
     if(enemyList.size() == 0){
       director.calculateEnemies();
     }
@@ -261,6 +273,7 @@ public class SSRB extends JPanel{
       }
     }
     
+    
     //enemy and player collision
     for(int i = 0; i < enemyList.size(); i++){
       if(enemyList.get(i).collide(pc)&&!pc.getDodging()){
@@ -276,7 +289,20 @@ public class SSRB extends JPanel{
     for(int i = 0; i <wallList.size(); i++){
       pc.footCollide(wallList.get(i));
     }
-    
+    //bullet and wall
+    for(int i = 0; i < bulletList.size(); i++){
+      for(int j = 0; j < wallList.size(); j++){
+        if(bulletList.get(i).collide(wallList.get(j))&& wallList.get(j).isPit()==false){
+          if(!bulletList.get(i).getType().equals("Sniper")){
+            bulletList.get(i).setActive(false);
+          }
+          else{
+          //sniper collision goes here
+          }
+        }
+      }
+    }
+
     //player and pickup
     for(int i = 0; i < pickupList.size(); i++){
       if(pc.collide(pickupList.get(i))){
@@ -290,6 +316,13 @@ public class SSRB extends JPanel{
         }
       }
     }
+  }
+  
+  public void resetGame(){
+    pc.setHealth(100);
+    pc.setActive(true);
+    
+    
   }
   
   //add a bullet to the list of active projectiles

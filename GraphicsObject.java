@@ -39,5 +39,8 @@ public abstract class GraphicsObject{
   public Rectangle getHitBox(){
     return hitBox;
   }
-  
+  //returns isActive
+  public boolean isActive(){
+    return isActive;
+  }
 }

@@ -11,11 +11,13 @@ public class Wall extends GraphicsObject{
     hitBox.y = y;
     hitBox.width = width;
     hitBox.height = height;
+    this.isPit = isPit;
   }
   
   public void paint(Graphics2D g2d){
     if(SSRB.getDebug()){
       g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+      
       g2d.setColor(Color.GREEN);
       g2d.fill(hitBox);
       g2d.setColor(Color.ORANGE);
