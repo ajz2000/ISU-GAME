@@ -159,8 +159,8 @@ public class LevelEditor extends JPanel implements Runnable{
   
   public void finishCreate(){
     fileName = input.getName();
-    height = input.getHeight();
-    width = input.getWidth();
+    height = input.getHeight() + 2;
+    width = input.getWidth() + 2;
     
     String workingDir = System.getProperty("user.dir");
     File f = new File(workingDir + "/CustomLevels/" + fileName + ".txt");
@@ -178,9 +178,16 @@ public class LevelEditor extends JPanel implements Runnable{
     //Fill the array with values to make sure it loads width properly
     for(int i = 0; i < height; i++){
       for(int j = 0; j < width; j++){
-        levelArray[i][j] = 'o';
+        if(i == 0 || i == height - 1 || j == 0 || j == width - 1){
+          levelArray[i][j] = 'x';
+        } else {
+          levelArray[i][j] = 'o';
+        }
       }
     }
+    
+    height -= 2;
+    width -= 2;
     loaded = true;
   }
 
@@ -241,6 +248,8 @@ public class LevelEditor extends JPanel implements Runnable{
         currentLine++;
       }
       br3.close();
+      height -= 2;
+      width -= 2;
     } catch(Exception e){
       System.out.println("dear god i dont even remember what im doing im just on autopilot here hope it works");
     }
@@ -256,73 +265,83 @@ public class LevelEditor extends JPanel implements Runnable{
   }
   
   public void drawArray(Graphics2D g2d){
-    for(int i = 0; i <= height-1; i++){
-      for(int j = 0; j <= width-1; j++){
-        if(levelArray[i][j] == 'c'){
-          g2d.drawImage(character1,j*tileSize, i*tileSize-tileSize,null);
-        }
-        else if(levelArray[i][j] == 'x'){
-          g2d.drawImage(wall1,j*tileSize, i*tileSize,null);
-        }
-        else if(levelArray[i][j] == 't'){
-          //First check top of array, then top of wall, then left of array, then left of wall, then bottom right of array, then bottom right of wall, default to neutral.
-          if(i == (0))
-          {
-            if(j == 0)
+    if(!(width == 0 || height == 0)){
+      for(int i = 0; i <= height+1; i++){
+        for(int j = 0; j <= width+1; j++){
+          if(levelArray[i][j] == 'c'){
+            g2d.drawImage(character1,j*tileSize, i*tileSize-tileSize,null);
+          }
+          else if(levelArray[i][j] == 'x'){
+            g2d.drawImage(wall1,j*tileSize, i*tileSize,null);
+          }
+          else if(levelArray[i][j] == 't'){
+            //First check top of array, then top of wall, then left of array, then left of wall, then bottom right of array, then bottom right of wall, default to neutral.
+            if(i == (0))
             {
-              g2d.drawImage(wallTopTL,j*tileSize, i*tileSize,null);
+              if(j == 0)
+              {
+                g2d.drawImage(wallTopTL,j*tileSize, i*tileSize,null);
+              }
+              else if(j == (width - 1))
+              {
+                g2d.drawImage(wallTopTR,j*tileSize, i*tileSize,null);
+              }
+              else if(levelArray[i][j - 1] != 't')
+              {
+                g2d.drawImage(wallTopTL,j*tileSize, i*tileSize,null);
+              }
+              else if(levelArray[i][j + 1] != 't')
+              {
+                g2d.drawImage(wallTopTR,j*tileSize, i*tileSize,null);
+              }
+              else
+              {
+                g2d.drawImage(wallTopN,j*tileSize, i*tileSize,null);
+              }
             }
-            else if(j == (width - 1))
+            else if(levelArray[i - 1][j] != 't')
             {
-              g2d.drawImage(wallTopTR,j*tileSize, i*tileSize,null);
+              if(j == 0)
+              {
+                g2d.drawImage(wallTopTL,j*tileSize, i*tileSize,null);
+              }
+              else if(j == (width - 1))
+              {
+                g2d.drawImage(wallTopTR,j*tileSize, i*tileSize,null);
+              }
+              else if(levelArray[i][j - 1] != 't')
+              {
+                g2d.drawImage(wallTopTL,j*tileSize, i*tileSize,null);
+              }
+              else if(levelArray[i][j + 1] != 't')
+              {
+                g2d.drawImage(wallTopTR,j*tileSize, i*tileSize,null);
+              }
+              else
+              {
+                g2d.drawImage(wallTopN,j*tileSize, i*tileSize,null);
+              }
+            }
+            else if(j == 0)
+            {
+              g2d.drawImage(wallTopL,j*tileSize, i*tileSize,null);
             }
             else if(levelArray[i][j - 1] != 't')
             {
-              g2d.drawImage(wallTopTL,j*tileSize, i*tileSize,null);
-            }
-            else if(levelArray[i][j + 1] != 't')
-            {
-              g2d.drawImage(wallTopTR,j*tileSize, i*tileSize,null);
-            }
-            else
-            {
-              g2d.drawImage(wallTopN,j*tileSize, i*tileSize,null);
-            }
-          }
-          else if(levelArray[i - 1][j] != 't')
-          {
-            if(j == 0)
-            {
-              g2d.drawImage(wallTopTL,j*tileSize, i*tileSize,null);
+              g2d.drawImage(wallTopL,j*tileSize, i*tileSize,null);
             }
             else if(j == (width - 1))
             {
-              g2d.drawImage(wallTopTR,j*tileSize, i*tileSize,null);
+              if(i == (height - 1))
+              {
+                g2d.drawImage(wallTopBR,j*tileSize, i*tileSize,null);
+              }
+              else
+              {
+                g2d.drawImage(wallTopN,j*tileSize, i*tileSize,null);
+              }
             }
-            else if(levelArray[i][j - 1] != 't')
-            {
-              g2d.drawImage(wallTopTL,j*tileSize, i*tileSize,null);
-            }
-            else if(levelArray[i][j + 1] != 't')
-            {
-              g2d.drawImage(wallTopTR,j*tileSize, i*tileSize,null);
-            }
-            else
-            {
-              g2d.drawImage(wallTopN,j*tileSize, i*tileSize,null);
-            }
-          }
-          else if(j == 0)
-          {
-            g2d.drawImage(wallTopL,j*tileSize, i*tileSize,null);
-          }
-          else if(levelArray[i][j - 1] != 't')
-          {
-            g2d.drawImage(wallTopL,j*tileSize, i*tileSize,null);
-          }
-          else if(j == (width - 1))
-          {
-            if(i == (height - 1))
+            else if(levelArray[i][j + 1] != 't' && levelArray[i + 1][j] != 't')
             {
               g2d.drawImage(wallTopBR,j*tileSize, i*tileSize,null);
             }
@@ -330,16 +349,8 @@ public class LevelEditor extends JPanel implements Runnable{
             {
               g2d.drawImage(wallTopN,j*tileSize, i*tileSize,null);
             }
-          }
-          else if(levelArray[i][j + 1] != 't' && levelArray[i + 1][j] != 't')
-          {
-            g2d.drawImage(wallTopBR,j*tileSize, i*tileSize,null);
-          }
-          else
-          {
-            g2d.drawImage(wallTopN,j*tileSize, i*tileSize,null);
-          }
-        } 
+          } 
+        }
       }
     }
   }
@@ -360,12 +371,14 @@ public class LevelEditor extends JPanel implements Runnable{
       FileWriter fw = new FileWriter(f);
       PrintWriter pw = new PrintWriter(fw);
       String currentLine = "";
-      for(int i = 0; i <= height-1; i++){
-        for(int j = 0; j <= width-1; j++){
-          currentLine = currentLine + levelArray[i][j];
+      if(height > 0){
+        for(int i = 0; i <= height+1; i++){
+          for(int j = 0; j <= width+1; j++){
+            currentLine = currentLine + levelArray[i][j];
+          }
+          pw.println(currentLine);
+          currentLine = "";
         }
-        pw.println(currentLine);
-        currentLine = "";
       }
       pw.close();
     } catch(IOException e){

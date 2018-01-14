@@ -4,10 +4,10 @@ import java.awt.event.*;
 import java.util.*;
 public class Selector{
   
-  private int x = 0;
-  private int y = 0;
-  private int mouseX = 0;
-  private int mouseY = 0;
+  private int x = 1;
+  private int y = 1;
+  private int mouseX = 1;
+  private int mouseY = 1;
   private Boolean showDebug = false;
   private LevelEditor le;
   private char tileType = 'o';
@@ -23,19 +23,19 @@ public class Selector{
     if (e.getKeyCode() == KeyEvent.VK_SPACE){
     }
     if (e.getKeyCode() == KeyEvent.VK_A){
-      if(x-1>=0 && !le.getMouseMode())
+      if(x-1>=1 && !le.getMouseMode())
         x--;
     }
     if (e.getKeyCode() == KeyEvent.VK_W){
-      if(y-1>=0 && !le.getMouseMode())
+      if(y-1>=1 && !le.getMouseMode())
         y--;
     }
     if (e.getKeyCode() == KeyEvent.VK_S){
-      if(y+1<LevelEditor.height && !le.getMouseMode())
+      if(y+1<LevelEditor.height + 1 && !le.getMouseMode())
         y++;
     }
     if (e.getKeyCode() == KeyEvent.VK_D){
-      if(x+1<LevelEditor.width && !le.getMouseMode())
+      if(x+1<LevelEditor.width + 1 && !le.getMouseMode())
         x++;
     }
     if (e.getKeyCode() == KeyEvent.VK_Q){
@@ -85,13 +85,25 @@ public class Selector{
     mouseY = (int)(MouseInfo.getPointerInfo().getLocation().getY()) - ((int)(le.getLocationOnScreen().getY()));
     
     if(le.getMouseMode()){
-      if(mouseX > le.getTileSize() * LevelEditor.width){
-        mouseX = le.getTileSize() * (LevelEditor.width - 1);
+      if(mouseX > le.getTileSize() * LevelEditor.width + 1){
+        mouseX = le.getTileSize() * (LevelEditor.width);
       }
       
-      if(mouseY > le.getTileSize() * LevelEditor.height){
-        mouseY = le.getTileSize() * (LevelEditor.height - 1);
+      if(mouseX < le.getTileSize()){
+        mouseX = le.getTileSize();
       }
+      
+      if(mouseY > le.getTileSize() * LevelEditor.height + 1){
+        mouseY = le.getTileSize() * (LevelEditor.height);
+      }
+      
+      if(mouseY < le.getTileSize()){
+        mouseY = le.getTileSize();
+      }
+      
+      x = (int)(mouseX / le.getTileSize());
+      y = (int)(mouseY / le.getTileSize());
+      
       g2d.drawRect(mouseX - (mouseX % le.getTileSize()), mouseY - (mouseY % le.getTileSize()),le.getTileSize(),le.getTileSize());
     }
     else

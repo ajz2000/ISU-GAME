@@ -70,6 +70,8 @@ public class EditorInput{
     
     private JTextArea displayArea;
     
+    private int startReplace = 0;
+    
     //Strings to store variables.
     String name;
     String height;
@@ -77,6 +79,8 @@ public class EditorInput{
     
     //String for file to load.
     String loadName;
+    
+    boolean errorPrinted = false;
     
     public InputField()
     {
@@ -89,7 +93,8 @@ public class EditorInput{
       inField.addActionListener(this);
       
       //Initialize JTextArea and print initial text
-      displayArea = new JTextArea("Name: \n", 20, 6);
+      displayArea = new JTextArea("Name: \n", 20, 10);
+      startReplace += 7;
       
       GridBagConstraints c = new GridBagConstraints();
       c.weightx = 1.0;
@@ -109,16 +114,32 @@ public class EditorInput{
         switch(inCount)
         {
           case 0:
-            //Set variable to text in JTextField
-            name = inField.getText();
-            //Show new text in JTextArea.
-            displayArea.append(name + "\n");
-            displayArea.append("Height: \n");
-            //Highlight text.
-            inField.selectAll();
-            inCount++;
+            if(inField.getText().length() <= 0){
+              displayArea.selectAll();
+              displayArea.replaceRange("Please enter a name with at least 1 character. \n", startReplace, displayArea.getSelectionEnd());
+              errorPrinted = true;
+            } else{
+              //Set variable to text in JTextField
+              name = inField.getText();
+              //Show new text in JTextArea.
+              displayArea.append(name + "\n");
+              displayArea.append("Height: \n");
+              //Highlight text.
+              inField.selectAll();
+              inCount++;
+              startReplace += name.length() + 10;
+              
+              System.out.println(errorPrinted);
+              if(errorPrinted){
+                startReplace += 48;
+              }
+              
+              errorPrinted = false;
+            }
             break;
           case 1:
+            try{
+            Integer.parseInt(inField.getText());
             //Set variable to text in JTextField
             height = inField.getText();
             //Show new text in JTextArea.
@@ -127,8 +148,22 @@ public class EditorInput{
             //Highlight text.
             inField.selectAll();
             inCount++;
+            startReplace += height.length() + 9;
+            
+            if(errorPrinted){
+              startReplace += 66;
+            }
+            
+            errorPrinted = false;
+          } catch (NumberFormatException n){
+            displayArea.selectAll();
+            displayArea.replaceRange("Please enter a valid Integer value with a length greater than 1. \n", startReplace, displayArea.getSelectionEnd());
+            errorPrinted = true;
+          }
             break;
           case 2:
+            try{
+            Integer.parseInt(inField.getText());
             //Set variable to text in JTextField
             width = inField.getText();
             //Show new text in JTextArea.
@@ -137,6 +172,11 @@ public class EditorInput{
             //Highlight text.
             inField.selectAll();
             inCount++;
+          } catch(NumberFormatException n){
+            displayArea.selectAll();
+            displayArea.replaceRange("Please enter a valid Integer value with a length greater than 1. \n", startReplace, displayArea.getSelectionEnd());
+            errorPrinted = true;
+          }
             break;
           default:
             //Get rid of frame.
@@ -149,12 +189,17 @@ public class EditorInput{
         switch(inCount)
         {
           case 0:
+            if(inField.getText().length() <= 0){
+            displayArea.selectAll();
+            displayArea.replaceRange("Please enter a name with at least 1 character. \n", startReplace, displayArea.getSelectionEnd());
+          } else {
             //Set variable to text in JTextField
             loadName = inField.getText();
             //Show new text in JTextArea.
             displayArea.append(loadName + "\n");
             displayArea.append("Press enter to close.");
             inCount++;
+          }
             break;
           default:
             //Get rid of frame.
