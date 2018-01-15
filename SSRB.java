@@ -65,6 +65,9 @@ public class SSRB extends JPanel{
           if(e.getKeyCode() == KeyEvent.VK_E){
             startLevelEditor();
           }
+          if(e.getKeyCode () == KeyEvent.VK_H){
+            currentMenu = new Menu(5);
+          }
         }
         
         if(e.getKeyCode() == KeyEvent.VK_Z){
@@ -93,6 +96,9 @@ public class SSRB extends JPanel{
         
         if(currentMenu.getMenu() == 0 && atMenu){
           atMenu = false;
+        }
+        else if(currentMenu.getMenu() == 5 && atMenu){
+          currentMenu = new Menu(0);
         }
         else if (currentMenu.getMenu() == 4){
           resetGame();
