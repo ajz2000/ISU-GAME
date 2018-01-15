@@ -120,7 +120,7 @@ public class Selector{
     
     int[] i;
     
-    if(x < LevelEditor.width && y < LevelEditor.height){
+    if(x < LevelEditor.width + 1 && y < LevelEditor.height + 1){
       i = new int[] {y, x};
     }
     else{
@@ -144,7 +144,7 @@ public class Selector{
     }
   }
   
-  public void fill(char[][] levelArray){
+  public void fill(char[][] levelArray) throws Exception{
     //Boolean to check when values are found.
     boolean found = false;
     int left = 0;
@@ -162,6 +162,10 @@ public class Selector{
     
     //The tile you are writing over
     fillTile = le.getLevelArray(rowY, left);
+    
+    if(fillTile == tileType){
+      throw new Exception();
+    }
     
     //Find the left of the row.
     while(!found){

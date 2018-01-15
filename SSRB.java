@@ -342,6 +342,14 @@ public class SSRB extends JPanel{
     frame.setSize(1000, 1000);
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    WindowListener exitListener = new WindowAdapter() {
+
+      @Override
+      public void windowClosing(WindowEvent e) {
+        le.unload();
+      }
+    };
+    frame.addWindowListener(exitListener);
     
     new Thread(le).start();;
   }

@@ -76,7 +76,11 @@ public class LevelEditor extends JPanel implements Runnable{
           }
         }
         if(e.getKeyCode() == KeyEvent.VK_F){
-          selector.fill(levelArray);
+          try{
+            selector.fill(levelArray);
+          }catch(Exception x){
+            
+          }
         }
       }
     });
@@ -163,7 +167,7 @@ public class LevelEditor extends JPanel implements Runnable{
     width = input.getWidth() + 2;
     
     String workingDir = System.getProperty("user.dir");
-    File f = new File(workingDir + "/CustomLevels/" + fileName + ".txt");
+    File f = new File(workingDir + "/CustomLevels/" + fileName + "Editor.txt");
     
     try{
       
@@ -208,7 +212,7 @@ public class LevelEditor extends JPanel implements Runnable{
     fileName = input.getLoad();
     
     String workingDir = System.getProperty("user.dir");
-    File f = new File(workingDir + "/CustomLevels/" + fileName + ".txt");
+    File f = new File(workingDir + "/CustomLevels/" + fileName + "Editor.txt");
     
     //load the file
     try{
@@ -365,7 +369,8 @@ public class LevelEditor extends JPanel implements Runnable{
     System.out.println("Saving level");
     
     String workingDir = System.getProperty("user.dir");
-    File f = new File(workingDir + "/CustomLevels/" + fileName + ".txt");
+    //Write Level Editor File
+    File f = new File(workingDir + "/CustomLevels/" + fileName + "Editor.txt");
     
     try{
       FileWriter fw = new FileWriter(f);
@@ -381,6 +386,37 @@ public class LevelEditor extends JPanel implements Runnable{
         }
       }
       pw.close();
+      
+      //Write Collision File
+      File cf = new File(workingDir + "/CustomLevels/" + fileName + ".txt");
+
+      FileWriter cfw = new FileWriter(cf);
+      PrintWriter cpw = new PrintWriter(cfw);
+      if(height > 0){
+        for(int i = 0; i <= height+1; i++){
+          for(int j = 0; j <= width+1; j++){
+            if(!(levelArray[i][j] == 'o' || levelArray[i][j] == 't' || levelArray[i][j] == 'c')){
+              currentLine = currentLine + levelArray[i][j];
+            } else {
+              currentLine = currentLine + '0';
+            }
+          }
+          cpw.println(currentLine);
+          currentLine = "";
+        }
+      }
+      cpw.close();
+      
+      BufferedImage screenImg = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
+      Graphics2D screenG2D = screenImg.createGraphics();
+      this.paintAll(screenG2D);
+      
+      Image i = screenImg.getScaledInstance(screenImg.getWidth() * 2, screenImg.getHeight() * 2, BufferedImage.SCALE_DEFAULT);
+      BufferedImage saveImg = new BufferedImage(i.getWidth(null), i.getHeight(null), BufferedImage.TYPE_INT_RGB);
+      saveImg.getGraphics().drawImage(i, 0, 0, null);
+      
+      ImageIO.write(saveImg, "png", new File(workingDir + "/CustomLevels/" + fileName + ".png"));
+    
     } catch(IOException e){
       System.out.println("Save Failed");
     }
