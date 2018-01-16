@@ -46,6 +46,8 @@ public class SSRB extends JPanel{
   private boolean atMenu = false;
   //Level Editor
   private LevelEditor le;
+  //Input for custom level loading
+  EditorInput levelInput;
   
   public SSRB(){
     addKeyListener(new KeyListener() {
@@ -74,9 +76,12 @@ public class SSRB extends JPanel{
           SSRB.debug = !SSRB.debug;
         }
         else if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
-          if(!(atMenu && currentMenu.getMenu() == 0)){
+          if(!(atMenu && currentMenu.getMenu() == 0) && currentMenu.getMenu() != 5){
             currentMenu = new Menu(3);
             atMenu = !atMenu;
+          }
+          else if(atMenu && currentMenu.getMenu() == 5){
+            currentMenu = new Menu(0);
           }
         }
       }
@@ -104,7 +109,7 @@ public class SSRB extends JPanel{
           resetGame();
           currentMenu = new Menu(0);
         }
-        else{
+        else if(!atMenu){
           rc.mousePressed(e);
         }
       }
@@ -358,6 +363,26 @@ public class SSRB extends JPanel{
     frame.addWindowListener(exitListener);
     
     new Thread(le).start();;
+  }
+  
+  public void loadLevel(){
+    //get the file you're going to load
+    
+    System.out.println("file to load??");
+    
+    try{
+      levelInput = new EditorInput(this, false);
+    } 
+    catch (Exception e){
+      
+    }
+  }
+  
+  public void finishLoad(){
+    String fileName = levelInput.getLoad();
+    
+    String workingDir = System.getProperty("user.dir");
+    String pathName = workingDir + "/CustomLevels/" + fileName;
   }
   
   //add a bullet to the list of active projectiles

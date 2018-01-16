@@ -9,12 +9,26 @@ public class EditorInput{
   private InputField i;
   protected boolean closed = false;
   protected LevelEditor le;
+  protected SSRB ssrb;
+  protected boolean fromEditor;
   //If create is true, create level, else, load level.
   protected boolean create;
   
   public EditorInput(LevelEditor le, boolean create){
     this.le = le;
     this.create = create;
+    fromEditor = true;
+    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+      public void run() {
+        createFrame();
+      }
+    });
+  }
+  
+  public EditorInput(SSRB ssrb, boolean create){
+    this.ssrb = ssrb;
+    this.create = create;
+    fromEditor = false;
     javax.swing.SwingUtilities.invokeLater(new Runnable() {
       public void run() {
         createFrame();
@@ -204,8 +218,12 @@ public class EditorInput{
           default:
             //Get rid of frame.
             frame.dispose();
-            //Finish loading in LevelEditor.
-            le.finishLoad();
+            //Finish loading in LevelEditor or SSRB, depending on where the call was from.
+            if(fromEditor){
+              le.finishLoad();
+            } else{
+              ssrb.finishLoad();
+            }
         }
       }
     }

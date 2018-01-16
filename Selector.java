@@ -61,9 +61,9 @@ public class Selector{
     }
     if (e.getKeyCode() == KeyEvent.VK_4&&le.getLoaded()==true){
       if(!le.getMouseMode()){
-        le.setLevelArray(y, x, 'c');
+        //le.setLevelArray(y, x, 'c');
       }
-      tileType = 'c';
+      //tileType = 'c';
     }
   }
   public void debug(Graphics2D g2d){

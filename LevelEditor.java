@@ -16,6 +16,9 @@ import javax.imageio.*;
 import java.awt.Image; 
 import java.awt.image.BufferedImage;
 import java.nio.file.Paths;
+import java.awt.image.ImageFilter;
+import java.awt.image.RGBImageFilter;
+import java.awt.image.FilteredImageSource;
 
 public class LevelEditor extends JPanel implements Runnable{
   private Color backGroundGreen = new Color(59,206,113);  
@@ -409,11 +412,28 @@ public class LevelEditor extends JPanel implements Runnable{
       
       BufferedImage screenImg = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
       Graphics2D screenG2D = screenImg.createGraphics();
-      this.paintAll(screenG2D);
+      drawArray(screenG2D);
+      Image arrayI = screenImg.getScaledInstance(screenImg.getWidth() * 2, screenImg.getHeight() * 2, BufferedImage.SCALE_DEFAULT);
       
-      Image i = screenImg.getScaledInstance(screenImg.getWidth() * 2, screenImg.getHeight() * 2, BufferedImage.SCALE_DEFAULT);
-      BufferedImage saveImg = new BufferedImage(i.getWidth(null), i.getHeight(null), BufferedImage.TYPE_INT_RGB);
-      saveImg.getGraphics().drawImage(i, 0, 0, null);
+      BufferedImage transpI = new BufferedImage(screenImg.getWidth() * 2, screenImg.getHeight() * 2, BufferedImage.TYPE_INT_ARGB);
+      Graphics2D transpG2D = transpI.createGraphics();
+      transpG2D.setColor(new Color(0, 102, 255));
+      transpG2D.fillRect(0, 0, transpI.getWidth(), transpI.getHeight());
+      
+      RGBImageFilter filter = new RGBImageFilter()
+      {
+        public final int filterRGB(int x, int y, int rgb)
+        {
+          return (rgb << 8) & 0xff0066ff;
+        }
+      };
+
+      Image i = Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(transpI.getSource(), filter));
+    
+      BufferedImage saveImg = new BufferedImage(i.getWidth(null), i.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+      Graphics2D saveG2D = saveImg.createGraphics();
+      saveG2D.drawImage(i, 0, 0, null);
+      saveG2D.drawImage(arrayI, 0, 0, null);
       
       ImageIO.write(saveImg, "png", new File(workingDir + "/CustomLevels/" + fileName + ".png"));
     
