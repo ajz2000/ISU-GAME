@@ -412,28 +412,24 @@ public class LevelEditor extends JPanel implements Runnable{
       
       BufferedImage screenImg = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
       Graphics2D screenG2D = screenImg.createGraphics();
+      screenG2D.setColor(new Color(0, 102, 255));
+      screenG2D.fillRect(0, 0, screenImg.getWidth(), screenImg.getHeight());
       drawArray(screenG2D);
       Image arrayI = screenImg.getScaledInstance(screenImg.getWidth() * 2, screenImg.getHeight() * 2, BufferedImage.SCALE_DEFAULT);
-      
-      BufferedImage transpI = new BufferedImage(screenImg.getWidth() * 2, screenImg.getHeight() * 2, BufferedImage.TYPE_INT_ARGB);
-      Graphics2D transpG2D = transpI.createGraphics();
-      transpG2D.setColor(new Color(0, 102, 255));
-      transpG2D.fillRect(0, 0, transpI.getWidth(), transpI.getHeight());
-      
-      RGBImageFilter filter = new RGBImageFilter()
-      {
-        public final int filterRGB(int x, int y, int rgb)
-        {
-          return (rgb << 8) & 0xff0066ff;
-        }
-      };
-
-      Image i = Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(transpI.getSource(), filter));
     
-      BufferedImage saveImg = new BufferedImage(i.getWidth(null), i.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+      BufferedImage saveImg = new BufferedImage(arrayI.getWidth(null), arrayI.getHeight(null), BufferedImage.TYPE_INT_ARGB);
       Graphics2D saveG2D = saveImg.createGraphics();
-      saveG2D.drawImage(i, 0, 0, null);
       saveG2D.drawImage(arrayI, 0, 0, null);
+      
+      for (int i = 0; i < saveImg.getHeight(); i++) {
+        for (int j = 0; j < saveImg.getWidth(); j++) {
+          int argb = saveImg.getRGB(j, i);
+          if (argb == 0xff0066ff)
+          {
+            saveImg.setRGB(j, i, 0);
+          }
+        }
+      }
       
       ImageIO.write(saveImg, "png", new File(workingDir + "/CustomLevels/" + fileName + ".png"));
     

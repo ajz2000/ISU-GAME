@@ -9,6 +9,7 @@ public class LevelAsset extends GraphicsObject{
   private BufferedImage fgLayer;
   private char[][] levelArray;
   private SSRB ssrb;
+  private boolean custom;
   
   public LevelAsset(String levelName, SSRB ssrb){
     try {
@@ -19,10 +20,32 @@ public class LevelAsset extends GraphicsObject{
     width = bgLayer.getWidth();
     height = bgLayer.getHeight();
     this.ssrb = ssrb;
+    custom = false;
     loadCollision(levelName);
   }
+  
+  public LevelAsset(String levelName, File level, SSRB ssrb){
+    try {
+      BufferedImage bgInput = ImageIO.read(new File("background1.png"));
+      Image bgScaled = bgInput.getScaledInstance(bgInput.getWidth() * 2, bgInput.getHeight() * 2, BufferedImage.SCALE_DEFAULT);
+      bgLayer = new BufferedImage(bgScaled.getWidth(null), bgScaled.getHeight(null), BufferedImage.TYPE_INT_RGB);
+      bgLayer.createGraphics().drawImage(bgScaled, 0, 0, null);
+      fgLayer = ImageIO.read(level);
+    } catch (IOException e) {
+    }
+    width = fgLayer.getWidth();
+    height = fgLayer.getHeight();
+    this.ssrb = ssrb;
+    custom = true;
+    loadCollision(levelName);
+  }
+  
   public void paintBG(Graphics2D g2d){
-    g2d.drawImage(bgLayer,0,0,null);
+    if(custom){
+      g2d.drawImage(bgLayer,-500,-500,null);
+    }else{
+      g2d.drawImage(bgLayer,0,0,null);
+    }
   }
   public void paintFG(Graphics2D g2d){
     g2d.drawImage(fgLayer,0,0,null);

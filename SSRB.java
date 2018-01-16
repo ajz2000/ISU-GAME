@@ -47,7 +47,7 @@ public class SSRB extends JPanel{
   //Level Editor
   private LevelEditor le;
   //Input for custom level loading
-  EditorInput levelInput;
+  private EditorInput levelInput;
   
   public SSRB(){
     addKeyListener(new KeyListener() {
@@ -67,8 +67,11 @@ public class SSRB extends JPanel{
           if(e.getKeyCode() == KeyEvent.VK_E){
             startLevelEditor();
           }
-          if(e.getKeyCode () == KeyEvent.VK_H){
+          else if(e.getKeyCode () == KeyEvent.VK_H){
             currentMenu = new Menu(5);
+          }
+          else if(e.getKeyCode () == KeyEvent.VK_V){
+            loadLevel();
           }
         }
         
@@ -366,6 +369,8 @@ public class SSRB extends JPanel{
   }
   
   public void loadLevel(){
+    //Reset Walls in wallList
+    wallList.clear();
     //get the file you're going to load
     
     System.out.println("file to load??");
@@ -382,7 +387,9 @@ public class SSRB extends JPanel{
     String fileName = levelInput.getLoad();
     
     String workingDir = System.getProperty("user.dir");
-    String pathName = workingDir + "/CustomLevels/" + fileName;
+    File f = new File(workingDir + "/CustomLevels/" + fileName + ".png");
+    String collisionPath = workingDir + "/CustomLevels/" + fileName;
+    currentLevel = new LevelAsset(collisionPath, f, this);
   }
   
   //add a bullet to the list of active projectiles
