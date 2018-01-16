@@ -31,7 +31,7 @@ public class SSRB extends JPanel{
   //Toggle for debug (Currently includes: Hitboxes.)
   private static boolean debug = false;
   //current level
-  private LevelAsset currentLevel = new LevelAsset("Level1",this);
+  private LevelAsset currentLevel = new LevelAsset("Level2",this);
   //offset
   private static double xOffset;
   private static double yOffset;
@@ -132,7 +132,7 @@ public class SSRB extends JPanel{
     currentMenu = new Menu(0);
     atMenu = true;
     try {
-      background = ImageIO.read(new File("BackgroundBig.png"));
+      background = ImageIO.read(new File("BackgroundBig2.png"));
       logo = ImageIO.read(new File("Sad Worm.png"));
     } catch (IOException e) {
     } 
