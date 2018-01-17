@@ -294,6 +294,28 @@ public class PlayerCharacter extends Character{
       health = 100;
     }
   }
+  
+  public void reset(){
+    health = 100;
+    isActive = true;
+    try{
+      sprite = ImageIO.read(new File("PlayerCharacter1.png"));
+    }catch(Exception e){
+      
+    }
+    maxFrame = 3;
+    x = ssrb.getScreenWidth()/2/SSRB.getScaleRatio();
+    y = ssrb.getScreenHeight()/2/SSRB.getScaleRatio();
+    hitBox.x=(int)x;
+    hitBox.x=(int)y;
+    hitBox.width = width;
+    hitBox.height = height;
+    footHitBox.height = 8;
+    footHitBox.width = width;
+    headHitBox.height = 33;
+    headHitBox.width = width;
+    deathAnimFrames = 14;
+  }
   //return true if the player is dodging
   public boolean getDodging(){
     return dodging;

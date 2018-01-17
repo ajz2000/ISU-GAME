@@ -111,6 +111,15 @@ public class Director{
     spawnEnemies();
   }
   
+  public void reset(){
+    wave = 0;
+    basicMultiplier = 3;
+    rangedMultiplier = 0;
+    explodeMultiplier = 0;
+    spawnerMultiplier = 0;
+    calculateEnemies();
+  }
+  
   public int getWave(){
     return wave;
   }

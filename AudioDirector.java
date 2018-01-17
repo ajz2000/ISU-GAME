@@ -9,6 +9,7 @@ public class AudioDirector{
   private ArrayList<AudioInputStream> inputStreamList = new ArrayList<AudioInputStream>();
   private ArrayList<Clip> clipList = new ArrayList<Clip>();
   private ArrayList<FloatControl> controlList = new ArrayList<FloatControl>();
+  FloatControl menuControl;
   private SSRB ssrb;
   private int totalEnemiesThisWave = 1;
   
@@ -35,22 +36,9 @@ public class AudioDirector{
       inputStreamList.add(AudioSystem.getAudioInputStream(secondaryKeyUrl));
       inputStreamList.add(AudioSystem.getAudioInputStream(menuMusicUrl));
       
-      
       for(int i = 0; i < inputStreamList.size(); i++){
         clipList.add(AudioSystem.getClip());
-        clipList.get(clipList.size() - 1).open(inputStreamList.get(clipList.size() - 1));
-        clipList.get(clipList.size() - 1).loop((int)(clipList.get(clipList.size() - 1).getMicrosecondLength()));
       }
-      
-      for(int i = 0; i < clipList.size(); i++){
-        controlList.add((FloatControl) clipList.get(i).getControl(FloatControl.Type.MASTER_GAIN));
-      }
-      
-      System.out.println(controlList.get(1).getMaximum());
-      System.out.println(controlList.get(1).getMinimum());
-      System.out.println(controlList.get(1).getUnits());
-      
-      controlList.get(3).setValue(-80f);
     } catch(Exception e){
       System.out.println("Oh boy, definitely not running in the 90's");
       e.printStackTrace();
@@ -58,12 +46,36 @@ public class AudioDirector{
   }
   
   public void start(){
-    for(int i = 0; i < clipList.size(); i++){
-      clipList.get(i).start();
-      controlList.get(i).setValue(-80);
+    try{
+     for(int i = 0; i < inputStreamList.size() - 1; i++){
+        clipList.get(i).open(inputStreamList.get(i));
+        clipList.get(i).loop((int)(clipList.get(i).getMicrosecondLength()));
+      }
+      
+      for(int i = 0; i < clipList.size() - 1; i++){
+        controlList.add((FloatControl) clipList.get(i).getControl(FloatControl.Type.MASTER_GAIN));
+      }
+      
+      for(int i = 0; i < clipList.size() - 1; i++){
+        controlList.get(i).setValue(-80);
+        clipList.get(i).start();
+      }
+    }catch(Exception e){
+      
     }
   }
-
+  
+  public void startMenu(){
+    try{
+       clipList.get(7).open(inputStreamList.get(7));
+       clipList.get(7).loop((int)(clipList.get(7).getMicrosecondLength()));
+       menuControl = (FloatControl) clipList.get(7).getControl(FloatControl.Type.MASTER_GAIN);
+    }catch(Exception e){
+      
+    }
+    menuControl.setValue(0);
+    clipList.get(7).start();
+  }
   
   public void setVolume(){
     float enemyBasicNum = 0f;
@@ -94,16 +106,16 @@ public class AudioDirector{
     }
     
    
-    if(ssrb.getAtMenu()){
-      controlList.get(7).setValue(0);
-      for(int i = 0; i < 7; i++){
-     controlList.get(i).setValue(-80); 
+    if(ssrb.getAtMenu() || ssrb.getAtLogo()){
+      menuControl.setValue(0);
+      for(int i = 0; i < controlList.size(); i++){
+        controlList.get(i).setValue(-80); 
       }
     }
     else{
       
     controlList.get(2).setValue(-4);
-    controlList.get(7).setValue(-80);
+    menuControl.setValue(-80);
 
     
     if(maxEnemies > 0){

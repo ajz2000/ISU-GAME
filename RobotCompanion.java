@@ -273,6 +273,12 @@ public class RobotCompanion extends Character{
     }
   }
   
+  public void reset(){
+    x = pc.getX() - 16;
+    y = pc.getY();
+    curFrame = (int)(Math.random() * 6);
+  }
+  
   public int getLimitBreak(){
     return limitBreak;
   }

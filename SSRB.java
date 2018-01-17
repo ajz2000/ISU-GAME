@@ -79,6 +79,7 @@ public class SSRB extends JPanel{
             } catch (IOException e2) {
             } 
             atMenu = false;
+            audioDirector.start();
           }
           else if(e.getKeyCode() == KeyEvent.VK_2){
             loadLevel("Level2");
@@ -87,7 +88,7 @@ public class SSRB extends JPanel{
             } catch (IOException e3) {
             } 
             atMenu = false;
-            
+            audioDirector.start();
           }
           else if(e.getKeyCode() == KeyEvent.VK_3){
             loadCustomLevel();
@@ -130,6 +131,8 @@ public class SSRB extends JPanel{
         else if (currentMenu.getMenu() == 4){
           resetGame();
           currentMenu = new Menu(0);
+          System.out.println(pc.isActive());
+          System.out.println(pc.getHealth());
         }
         else if(!atMenu){
           rc.mousePressed(e);
@@ -156,7 +159,7 @@ public class SSRB extends JPanel{
     atMenu = true;
     audioDirector = new AudioDirector(this);
     audioDirector.setTotalWaveEnemies(enemyList.size());
-    audioDirector.start();
+    audioDirector.startMenu();
     currentMenu = new Menu(0);
     
     try {
@@ -309,6 +312,7 @@ public class SSRB extends JPanel{
           if(!bulletList.get(i).getType().equals("Sniper")){
             bulletList.get(i).setActive(false);
           }
+          break;
         }
       }
     }
@@ -370,8 +374,13 @@ public class SSRB extends JPanel{
   }
   
   public void resetGame(){
-    pc.setHealth(100);
-    pc.setActive(true);
+    pc.reset();
+    rc.reset();
+    wallList.clear();
+    enemyList.clear();
+    bulletList.clear();
+    pickupList.clear();
+    director.reset();
   }
   
   public void startLevelEditor(){
@@ -419,6 +428,7 @@ public class SSRB extends JPanel{
     String collisionPath = workingDir + "/CustomLevels/" + fileName;
     currentLevel = new LevelAsset(collisionPath, f, this);
     atMenu = false;
+    audioDirector.start();
   }
   
   //add a bullet to the list of active projectiles
@@ -484,6 +494,12 @@ public class SSRB extends JPanel{
   
   public boolean getAtMenu(){
     return atMenu;
+  }
+  public int getCurrentMenu(){
+    return currentMenu.getMenu();
+  }
+  public boolean getAtLogo(){
+    return atLogo;
   }
   public static void main(String[] args) throws InterruptedException, IOException {
     
