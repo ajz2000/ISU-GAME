@@ -31,7 +31,7 @@ public class SSRB extends JPanel{
   //Toggle for debug (Currently includes: Hitboxes.)
   private static boolean debug = false;
   //current level
-  private LevelAsset currentLevel = new LevelAsset("Level2",this);
+  private LevelAsset currentLevel;
   //offset
   private static double xOffset;
   private static double yOffset;
@@ -70,11 +70,29 @@ public class SSRB extends JPanel{
           else if(e.getKeyCode () == KeyEvent.VK_H){
             currentMenu = new Menu(5);
           }
-          else if(e.getKeyCode () == KeyEvent.VK_V){
-            loadLevel();
-          }
         }
-        
+        else if(currentMenu.getMenu() == 1){
+          if(e.getKeyCode() == KeyEvent.VK_1){
+            loadLevel("Level1");
+            try {
+              background = ImageIO.read(new File("BackgroundBig.png"));
+            } catch (IOException e2) {
+            } 
+            atMenu = false;
+          }
+          else if(e.getKeyCode() == KeyEvent.VK_2){
+            loadLevel("Level2");
+            try {
+              background = ImageIO.read(new File("BackgroundBig2.png"));
+            } catch (IOException e3) {
+            } 
+            atMenu = false;
+            
+          }
+          else if(e.getKeyCode() == KeyEvent.VK_3){
+            loadCustomLevel();
+          } 
+        }
         if(e.getKeyCode() == KeyEvent.VK_Z){
           SSRB.debug = !SSRB.debug;
         }
@@ -103,7 +121,8 @@ public class SSRB extends JPanel{
       public void mousePressed(MouseEvent e) {
         
         if(currentMenu.getMenu() == 0 && atMenu){
-          atMenu = false;
+          currentMenu = new Menu(1);
+//          atMenu = false;
         }
         else if(currentMenu.getMenu() == 5 && atMenu){
           currentMenu = new Menu(0);
@@ -130,17 +149,18 @@ public class SSRB extends JPanel{
     //create a new playercharacter, with a robot companion in the middle of the screen
     pc = new PlayerCharacter(screenWidth/2/SSRB.getScaleRatio(),screenHeight/2/SSRB.getScaleRatio(),this);
     rc = new RobotCompanion(pc, this);
-
+    
 //    initialise the hud
     hud = new HUD(pc, rc);
     director = new Director(this,pc);
+    atMenu = true;
     audioDirector = new AudioDirector(this);
-    
+    audioDirector.setTotalWaveEnemies(enemyList.size());
     audioDirector.start();
     currentMenu = new Menu(0);
-    atMenu = true;
+    
     try {
-      background = ImageIO.read(new File("BackgroundBig2.png"));
+      //background = ImageIO.read(new File("BackgroundBig2.png"));
       logo = ImageIO.read(new File("Sad Worm.png"));
     } catch (IOException e) {
     } 
@@ -149,14 +169,15 @@ public class SSRB extends JPanel{
   
   @Override
   public void paint(Graphics g){
-    
+    //this goes here because it needs to occur even when gameplay is not
+    audioDirector.setVolume();
     
     Graphics2D g2d = (Graphics2D) g;
     super.paint(g);
     
     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     
-     
+    
     if(atLogo == true){
       g2d.setColor(Color.WHITE);
       g2d.fillRect(-5000,-5000,screenWidth*10,screenHeight*10);
@@ -214,7 +235,7 @@ public class SSRB extends JPanel{
         wallList.get(i).paint(g2d);
       }
       hud.paint(g2d, this);
-      
+        
       if(currentMenu.getMenu() == 3 && atMenu){
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
         g2d.setColor(Color.BLACK);
@@ -229,50 +250,54 @@ public class SSRB extends JPanel{
     //move the player and robot
     pc.move();
     rc.move();
-    
-    //move all active enemies
-    for(int i = 0; i < enemyList.size(); i++){
-      enemyList.get(i).move();
-    }
-    
-    //Check for enemies to delete
-    for(int i = 0; i < enemyList.size(); i++){
-      if(!enemyList.get(i).isActive){
-        enemyList.remove(i);
+    if(pc.getHealth()>0){
+      //move all active enemies
+      for(int i = 0; i < enemyList.size(); i++){
+        enemyList.get(i).move();
       }
+       //move every active bullet
+        for(int i = 0; i < bulletList.size(); i++){
+          bulletList.get(i).move();
+        }
     }
-    
-    //Check for bullets to delete
-    for(int i = 0; i < bulletList.size(); i++){
-      if(!bulletList.get(i).isActive){
-        bulletList.remove(i);
+      //Check for enemies to delete
+      for(int i = 0; i < enemyList.size(); i++){
+        if(!enemyList.get(i).isActive){
+          enemyList.remove(i);
+        }
       }
-    }
-    //check for pickups to delete
-    for(int i = 0; i < pickupList.size(); i++){
-      if(!pickupList.get(i).isActive){
-        pickupList.remove(i);
+      
+      //Check for bullets to delete
+      for(int i = 0; i < bulletList.size(); i++){
+        if(!bulletList.get(i).isActive){
+          bulletList.remove(i);
+        }
       }
+     
+      
+      //check for pickups to delete
+      for(int i = 0; i < pickupList.size(); i++){
+        if(!pickupList.get(i).isActive){
+          pickupList.remove(i);
+        }
+      }
+      
+      //check all collisions
+      checkCollisions();
+      
+      //show game over screen
+      if(!pc.isActive()){
+        currentMenu = new Menu(4);
+        atMenu = true;
+      }
+      
+      if(enemyList.size() == 0){
+        director.calculateEnemies();
+        audioDirector.setTotalWaveEnemies(enemyList.size());
+      }
+      
+      
     }
-    //move every active bullet
-    for(int i = 0; i < bulletList.size(); i++){
-      bulletList.get(i).move();
-    }
-    //check all collisions
-    checkCollisions();
-    
-    //show game over screen
-    if(!pc.isActive()){
-       currentMenu = new Menu(4);
-       atMenu = true;
-    }
-    
-    if(enemyList.size() == 0){
-      director.calculateEnemies();
-    }
-    
-    audioDirector.setVolume();
-  }
   
   public void checkCollisions(){
     //bullet and enemy collision
@@ -326,7 +351,7 @@ public class SSRB extends JPanel{
 //        }
 //      }
 //    }
-
+    
     //player and pickup
     for(int i = 0; i < pickupList.size(); i++){
       if(pc.collide(pickupList.get(i))){
@@ -357,7 +382,7 @@ public class SSRB extends JPanel{
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     WindowListener exitListener = new WindowAdapter() {
-
+      
       @Override
       public void windowClosing(WindowEvent e) {
         le.unload();
@@ -367,8 +392,11 @@ public class SSRB extends JPanel{
     
     new Thread(le).start();;
   }
+  public void loadLevel(String toLoad){
+    currentLevel = new LevelAsset(toLoad,this);
+  }
   
-  public void loadLevel(){
+  public void loadCustomLevel(){
     //Reset Walls in wallList
     wallList.clear();
     //get the file you're going to load
@@ -390,6 +418,7 @@ public class SSRB extends JPanel{
     File f = new File(workingDir + "/CustomLevels/" + fileName + ".png");
     String collisionPath = workingDir + "/CustomLevels/" + fileName;
     currentLevel = new LevelAsset(collisionPath, f, this);
+    atMenu = false;
   }
   
   //add a bullet to the list of active projectiles
@@ -452,6 +481,10 @@ public class SSRB extends JPanel{
   public ArrayList<Enemy> getEnemyList(){
     return enemyList;
   }
+  
+  public boolean getAtMenu(){
+    return atMenu;
+  }
   public static void main(String[] args) throws InterruptedException, IOException {
     
     JFrame frame = new JFrame("SUPER SPICY ROBOT BOYS 23");
@@ -467,7 +500,7 @@ public class SSRB extends JPanel{
     s.repaint();
     Thread.sleep(1000);
     s.atLogo=false;
-    
+    s.atMenu = true;
     while (true){
       s.repaint();
       if(s.atMenu == false){

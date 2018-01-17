@@ -1,4 +1,5 @@
 import java.util.*;
+import java.awt.*;
 
 public class Director{
   private SSRB ssrb;
@@ -22,9 +23,11 @@ public class Director{
     spawnerMultiplier = 0;
     calculateEnemies();
   }
+  public void paint(Graphics2D g2d){
+    g2d.drawString("Wave: " + Integer.toString(wave), (SSRB.getScreenWidth() / 2), (SSRB.getScreenHeight() / 2));
+  }
   
   public void spawnEnemies(){
-    
     int spawnX = 0;
     int spawnY = 0;
     

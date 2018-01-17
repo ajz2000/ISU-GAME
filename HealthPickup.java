@@ -11,7 +11,7 @@ public class HealthPickup extends Pickup{
     this.height = 18;
     hitBox.width = 8;
     hitBox.height = 18;
-    value = 10;
+    value = 25;
     try {
       sprite = ImageIO.read(new File("HealthPickup.png"));
     } catch (IOException e) {

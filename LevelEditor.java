@@ -109,7 +109,7 @@ public class LevelEditor extends JPanel implements Runnable{
     
     setFocusable(true); 
     try {
-      background1 = ImageIO.read(new File("background1.png"));
+      background1 = ImageIO.read(new File("backgroundBig3.png"));
       wall1 = ImageIO.read(new File("wall1.png"));
       wallTopN = ImageIO.read(new File("cielingMiddle.png"));
       wallTopBR = ImageIO.read(new File("cielingBottomRight.png"));

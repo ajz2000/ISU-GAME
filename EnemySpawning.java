@@ -21,8 +21,10 @@ public class EnemySpawning extends Enemy{
     hitBox.width = width;
     hitBox.height = height;
     damage = 20;
+    deathAnimFrames = 4;
     try {
       sprite = ImageIO.read(new File("EnemySpawning1.png"));
+      deathSprite = ImageIO.read(new File("EnemyBasicDeath.png"));
     } catch (IOException e) {
     } 
  }
@@ -33,6 +35,9 @@ public class EnemySpawning extends Enemy{
    } else{
      super.move();
    }
+     if(health <= 0){
+      die();
+    }
  }
  
  //if the distance to the player is within a specified range, begin shooting

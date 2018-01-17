@@ -147,7 +147,7 @@ public class RobotCompanion extends Character{
           limitBreak = 0;
         }
         for (int i = 0; i <shotgunBullets; i++){
-          toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 2, 5.0, bulletAngle+((Math.random()*30)-15), 3, "Shotgun", true);
+          toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 2, 10.0, bulletAngle+((Math.random()*30)-15), 3, "Shotgun", true);
           ssrb.addBullet(toAdd);
         }
         shotgunTimer = 0;
@@ -159,7 +159,7 @@ public class RobotCompanion extends Character{
         break;
       case 2:
         if(sniperAmmo>0&&sniperTimer>=100){
-        toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 2, 10.0, bulletAngle, 30, "Sniper", true);
+        toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 2, 10.0, bulletAngle, 25, "Sniper", true);
         ssrb.addBullet(toAdd);
         sniperAmmo--;
         sniperTimer = 0;

@@ -16,9 +16,11 @@ public class EnemyBasic extends Enemy{
     hitBox.y = y;
     hitBox.width = width;
     hitBox.height = height;
+    deathAnimFrames = 4;
     damage = 1;
     try {
       sprite = ImageIO.read(new File("EnemyBasic1.png"));
+       deathSprite = ImageIO.read(new File("EnemyBasicDeath.png"));
     } catch (IOException e) {
     } 
   }

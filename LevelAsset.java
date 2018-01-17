@@ -5,8 +5,8 @@ import java.awt.image.BufferedImage;
 
 public class LevelAsset extends GraphicsObject{
   
-  private BufferedImage bgLayer;
-  private BufferedImage fgLayer;
+  private BufferedImage bgLayer = null;
+  private BufferedImage fgLayer = null;
   private char[][] levelArray;
   private SSRB ssrb;
   private boolean custom;
@@ -16,6 +16,7 @@ public class LevelAsset extends GraphicsObject{
       bgLayer = ImageIO.read(new File(levelName + "Back.png"));
       fgLayer = ImageIO.read(new File(levelName + "Front.png"));
     } catch (IOException e) {
+      
     } 
     width = bgLayer.getWidth();
     height = bgLayer.getHeight();
@@ -26,7 +27,7 @@ public class LevelAsset extends GraphicsObject{
   
   public LevelAsset(String levelName, File level, SSRB ssrb){
     try {
-      BufferedImage bgInput = ImageIO.read(new File("background1.png"));
+      BufferedImage bgInput = ImageIO.read(new File("BackgroundBig3.png"));
       Image bgScaled = bgInput.getScaledInstance(bgInput.getWidth() * 2, bgInput.getHeight() * 2, BufferedImage.SCALE_DEFAULT);
       bgLayer = new BufferedImage(bgScaled.getWidth(null), bgScaled.getHeight(null), BufferedImage.TYPE_INT_RGB);
       bgLayer.createGraphics().drawImage(bgScaled, 0, 0, null);

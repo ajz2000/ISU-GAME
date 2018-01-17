@@ -25,6 +25,9 @@ public class Menu{
           //imageList.get(0) - Main Menu
           break;
         case 1:
+          imageList.add(ImageIO.read(new File("MenuLevelSelect.png")));
+           imagePointList.add(new Point((SSRB.getScreenWidth() / 2) - (imageList.get(0).getWidth() / 2), (SSRB.getScreenHeight() / 2) - (imageList.get(0).getHeight() / 2)));
+               //imageList.get(1) - Level Select
           break;
         case 2:
           break;
