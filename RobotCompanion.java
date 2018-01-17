@@ -28,6 +28,10 @@ public class RobotCompanion extends Character{
   private int currentGun = 0;
   private boolean beingKnockedBack = false;
   private int limitBreak = 0;
+  private boolean sniperLimitBreak = false;
+  private int sniperBreakCounter = 0;
+  private int sniperBreakTimer = 0;
+  private double bulletAngle = 0;
   
   public RobotCompanion(PlayerCharacter pc, SSRB ssrb){
     this.pc=pc;
@@ -59,7 +63,7 @@ public class RobotCompanion extends Character{
        
       
    
-        if(distanceToPlayer>=48){
+      if(distanceToPlayer>=48){
         if(velocity<5&&accelTimer>5){
           velocity++;
           accelTimer = 0;
@@ -99,6 +103,9 @@ public class RobotCompanion extends Character{
     if(machineGunShooting){
       shootMachineGun();
     }
+    if(sniperLimitBreak){
+      sniperBreak();
+    }
     if (shotgunTimer < 60){
       shotgunTimer++;
     }
@@ -124,7 +131,7 @@ public class RobotCompanion extends Character{
     double yDist = mouseY - (y + ((height) / 2));
     
     //Find angle to fire by using Tan-1(opp/adj or y/x)
-    double bulletAngle = (double)Math.toDegrees(Math.atan2(yDist, xDist));
+    bulletAngle = (double)Math.toDegrees(Math.atan2(yDist, xDist));
     switch(currentGun){
       case 0:
         if(limitBreak == 2000){
@@ -143,7 +150,7 @@ public class RobotCompanion extends Character{
         if(shotgunAmmo>0&&shotgunTimer>=60){
         int shotgunBullets = 20;
         if(limitBreak == 2000){
-          shotgunBullets = 40;
+          shotgunBullets = 100;
           limitBreak = 0;
         }
         for (int i = 0; i <shotgunBullets; i++){
@@ -159,11 +166,17 @@ public class RobotCompanion extends Character{
         break;
       case 2:
         if(sniperAmmo>0&&sniperTimer>=100){
-        toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 2, 10.0, bulletAngle, 25, "Sniper", true);
-        ssrb.addBullet(toAdd);
-        sniperAmmo--;
-        sniperTimer = 0;
-        velocity = 0;          
+        if(limitBreak == 2000){
+          sniperLimitBreak = true;
+          limitBreak = 0;
+          sniperAmmo--;
+        } else{
+          toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 2, 10.0, bulletAngle, 25, "Sniper", true);
+          ssrb.addBullet(toAdd);
+          sniperAmmo--;
+          sniperTimer = 0;
+          velocity = 0;
+        }
       }
         break;
       case 3:
@@ -277,6 +290,34 @@ public class RobotCompanion extends Character{
     x = pc.getX() - 16;
     y = pc.getY();
     curFrame = (int)(Math.random() * 6);
+    machineGunAmmo = 120;
+    sniperAmmo = 5;
+    shotgunAmmo = 10;
+  }
+  
+  public void sniperBreak(){
+    if(sniperBreakTimer > 10){
+      if(sniperBreakCounter == 3){
+        sniperLimitBreak = false;
+        sniperBreakCounter = 0;
+      } else if(sniperBreakCounter == 0){
+        Projectile toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 2, 10.0, bulletAngle, 25, "Sniper", true);
+        ssrb.addBullet(toAdd);
+        sniperTimer = 0;
+        velocity = 0;
+      } else{
+        Projectile toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 2, 10.0, bulletAngle + (sniperBreakCounter * 7), 25, "Sniper", true);
+        ssrb.addBullet(toAdd);
+        toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 2, 10.0, bulletAngle - (sniperBreakCounter * 7), 25, "Sniper", true);
+        ssrb.addBullet(toAdd);
+        sniperTimer = 0;
+        velocity = 0;
+      }
+      sniperBreakCounter++;
+      sniperBreakTimer = 0;
+    } else{
+      sniperBreakTimer++;
+    }
   }
   
   public int getLimitBreak(){

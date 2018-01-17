@@ -170,7 +170,7 @@ public class Selector{
     //Find the left of the row.
     while(!found){
       //If x is 0 or the tile to the Left is the same type, the left is found.
-      if(left == 0){
+      if(left == 1){
         found = true;
       }
       else if(levelArray[rowY][left - 1] != fillTile){
@@ -190,7 +190,7 @@ public class Selector{
     //Find right of row.
     while(!found){
       //If x is at the right of the array or the tile to the right is the same type, the right is found.
-      if(right == LevelEditor.width - 1){
+      if(right == LevelEditor.width){
         found = true;
       }
       else if(levelArray[rowY][right + 1] != fillTile){
@@ -208,14 +208,14 @@ public class Selector{
       
       //If there is a space above that is not the right tile, recursively call fill giving the location to an overloaded method, this also applies if
       //the tile below is not the right type.
-      if(rowY != 0){
+      if(rowY != 1){
         if(levelArray[rowY - 1][j] == fillTile){
           fill(levelArray, rowY - 1, j);
         }
       }
       
       
-      if(rowY != LevelEditor.height - 1){
+      if(rowY != LevelEditor.height){
         if(levelArray[rowY + 1][j] == fillTile){
           fill(levelArray, rowY + 1, j);
         }
@@ -233,7 +233,7 @@ public class Selector{
     //Find the left of the row.
     while(!found){
       //If x is 0 or the tile to the Left is the same type, the left is found.
-      if(left == 0){
+      if(left == 1){
         found = true;
       }
       else if(levelArray[rowY][left - 1] != fillTile){
@@ -253,7 +253,7 @@ public class Selector{
     //Find right of row.
     while(!found){
       //If x is at the right of the array or the tile to the right is the same type, the right is found.
-      if(right == LevelEditor.width - 1){
+      if(right == LevelEditor.width){
         found = true;
       }
       else if(levelArray[rowY][right + 1] != fillTile){
@@ -271,14 +271,14 @@ public class Selector{
       
       //If there is a space above that is not the right tile, recursively call fill giving the location to an overloaded method, this also applies if
       //the tile below(if at the bottom of the fill) is not the right type.
-      if(rowY != 0){
+      if(rowY != 1){
         if(levelArray[rowY - 1][j] == fillTile){
           fill(levelArray, rowY - 1, j);
         }
       }
       
       
-      if(rowY != LevelEditor.height - 1){
+      if(rowY != LevelEditor.height){
         if(levelArray[rowY + 1][j] == fillTile){
           fill(levelArray, rowY + 1, j);
         }

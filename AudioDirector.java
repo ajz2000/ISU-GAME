@@ -129,7 +129,7 @@ public class AudioDirector{
       controlList.get(1).setValue(-20 + (((enemyBasicNum+enemyShootingNum+enemyExplodingNum+enemySpawningNum)/totalEnemiesThisWave) * 20));
       
       //main key set based on exploding enemies
-      controlList.get(4).setValue(-17 + ((enemyExplodingNum/maxEnemies) * 17));
+      controlList.get(4).setValue(-5 + ((enemyExplodingNum/maxEnemies) * 5));
       
       //Secondary key set based on Spawning enemies
       controlList.get(6).setValue(-5 + ((enemyExplodingNum/maxEnemies) * 17));

@@ -303,6 +303,7 @@ public class PlayerCharacter extends Character{
     }catch(Exception e){
       
     }
+    curFrame = 0;
     maxFrame = 3;
     x = ssrb.getScreenWidth()/2/SSRB.getScaleRatio();
     y = ssrb.getScreenHeight()/2/SSRB.getScaleRatio();

@@ -98,7 +98,7 @@ public class SSRB extends JPanel{
           SSRB.debug = !SSRB.debug;
         }
         else if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
-          if(!(atMenu && currentMenu.getMenu() == 0) && currentMenu.getMenu() != 5){
+          if(!(atMenu && currentMenu.getMenu() != 3) && currentMenu.getMenu() != 5){
             currentMenu = new Menu(3);
             atMenu = !atMenu;
           }
@@ -238,6 +238,7 @@ public class SSRB extends JPanel{
         wallList.get(i).paint(g2d);
       }
       hud.paint(g2d, this);
+      director.paint(g2d);
         
       if(currentMenu.getMenu() == 3 && atMenu){
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
@@ -258,6 +259,14 @@ public class SSRB extends JPanel{
       for(int i = 0; i < enemyList.size(); i++){
         enemyList.get(i).move();
       }
+      
+        //Check for bullets to delete
+      for(int i = 0; i < bulletList.size(); i++){
+        if(!bulletList.get(i).isActive){
+          bulletList.remove(i);
+        }
+      }
+      
        //move every active bullet
         for(int i = 0; i < bulletList.size(); i++){
           bulletList.get(i).move();
@@ -269,14 +278,6 @@ public class SSRB extends JPanel{
           enemyList.remove(i);
         }
       }
-      
-      //Check for bullets to delete
-      for(int i = 0; i < bulletList.size(); i++){
-        if(!bulletList.get(i).isActive){
-          bulletList.remove(i);
-        }
-      }
-     
       
       //check for pickups to delete
       for(int i = 0; i < pickupList.size(); i++){
@@ -311,8 +312,8 @@ public class SSRB extends JPanel{
           
           if(!bulletList.get(i).getType().equals("Sniper")){
             bulletList.get(i).setActive(false);
+            break;
           }
-          break;
         }
       }
     }

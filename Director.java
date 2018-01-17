@@ -12,6 +12,7 @@ public class Director{
   private Stack<Enemy> spawnStack;
   private int baseEnemies;
   private int addBase;
+  private int newWaveTimer = 0;
   
   public Director(SSRB ssrb,PlayerCharacter pc){
     this.ssrb = ssrb;
@@ -24,7 +25,20 @@ public class Director{
     calculateEnemies();
   }
   public void paint(Graphics2D g2d){
-    g2d.drawString("Wave: " + Integer.toString(wave), (SSRB.getScreenWidth() / 2), (SSRB.getScreenHeight() / 2));
+    if(!ssrb.getAtMenu() && newWaveTimer < 50){
+      AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (1.0f - (float)(newWaveTimer/50f)) * 1.0f);
+      g2d.setComposite(alphaComposite);
+      g2d.setColor(Color.WHITE);
+      g2d.fillRect(-5000,-5000,SSRB.getScreenWidth()*10,SSRB.getScreenHeight()*10);
+      g2d.setColor(Color.RED);
+      g2d.setFont(new Font("TimesRoman", Font.BOLD, 64));
+      g2d.translate(SSRB.getXOffset(),SSRB.getYOffset());
+      g2d.drawString("Wave: " + Integer.toString(wave), 0 - g2d.getFontMetrics().stringWidth("Wave: " + Integer.toString(wave)) / 2, 0);
+      g2d.translate(-SSRB.getXOffset(),-SSRB.getYOffset());
+      alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f);
+      g2d.setComposite(alphaComposite);
+      newWaveTimer++;
+    }
   }
   
   public void spawnEnemies(){
@@ -108,6 +122,7 @@ public class Director{
       }
     }
     baseEnemies = (int)((Math.random() * 3) + addBase);
+    newWaveTimer = 0;
     spawnEnemies();
   }
   
