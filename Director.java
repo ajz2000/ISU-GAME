@@ -1,5 +1,6 @@
 import java.util.*;
 import java.awt.*;
+import java.io.*;
 
 public class Director{
   private SSRB ssrb;
@@ -40,7 +41,32 @@ public class Director{
       newWaveTimer++;
     }
   }
+  public int checkHighScore(){
+    try{
+    FileReader fr = new FileReader("Score.txt");
+      BufferedReader br = new BufferedReader(fr);
+      int toReturn = Integer.parseInt(br.readLine());
+      fr.close();
+      br.close();
+            return toReturn;
+    } catch(Exception e){
+      System.out.println("error checking high score");
+      return 0;
+    }
+  }
   
+    public void setHighScore(int toSet){
+      try{
+    FileWriter fw = new FileWriter("Score.txt");
+      PrintWriter pw = new PrintWriter(fw);
+      pw.println(toSet);
+      fw.close();
+      pw.close();
+      } catch(Exception e){
+        System.out.println("error writing high score to file");
+      }
+    }
+    
   public void spawnEnemies(){
     int spawnX = 0;
     int spawnY = 0;
@@ -68,7 +94,9 @@ public class Director{
   }
   public void calculateEnemies(){
     wave++;
-    
+    if(wave> checkHighScore()){
+      setHighScore(wave);
+    }
     if(wave%3 == 1){
       if(wave == 1){
         basicMultiplier = 3;

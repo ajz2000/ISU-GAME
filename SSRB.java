@@ -189,7 +189,10 @@ public class SSRB extends JPanel{
       g2d.setColor(Color.WHITE);
       g2d.fillRect(-5000,-5000,screenWidth*10,screenHeight*10);
       currentMenu.paint(g2d);
-      
+      if(currentMenu.getMenu() == 0){
+        g2d.setColor(Color.BLACK);
+        g2d.drawString("High Score: " + Integer.toString(director.checkHighScore()),40,40);
+      }
     }else{
       boolean FGDrawn = false;
       //Set Scale Ratio
