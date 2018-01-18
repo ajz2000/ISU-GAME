@@ -293,6 +293,7 @@ public class RobotCompanion extends Character{
     machineGunAmmo = 120;
     sniperAmmo = 5;
     shotgunAmmo = 10;
+    limitBreak = 0;
   }
   
   public void sniperBreak(){

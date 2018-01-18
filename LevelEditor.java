@@ -35,6 +35,7 @@ public class LevelEditor extends JPanel implements Runnable{
   private BufferedImage wallTopTL = null;
   private BufferedImage wallTopTR = null;
   private BufferedImage character1 = null;
+  private BufferedImage eraserImage = null;
   //DUDE ENCAPSULATION LMAO
   private int tileSize = 16;
   private boolean loaded = false;
@@ -117,6 +118,7 @@ public class LevelEditor extends JPanel implements Runnable{
       wallTopTL = ImageIO.read(new File("cielingTopLeft.png"));
       wallTopTR = ImageIO.read(new File("cielingTopRight.png"));
       character1 = ImageIO.read(new File("character1.png"));
+      eraserImage = ImageIO.read(new File("Eraser.jpg"));
     } catch (IOException e) {
       System.out.println("Could not load files");
     }
@@ -134,6 +136,43 @@ public class LevelEditor extends JPanel implements Runnable{
     g2d.drawImage(background1,0,0,null);
     drawArray(g2d);
     selector.draw(g2d);
+    drawUI(g2d);
+  }
+  
+  public void drawUI(Graphics2D g2d){
+    g2d.scale(2, 2);
+    g2d.setColor(Color.CYAN);
+    g2d.fillRect(this.getWidth()/2 - 20, 0, 20, 60);
+    g2d.drawImage(eraserImage, this.getWidth()/2 - 18, 4, this.getWidth()/2 - 2, 20, 0, 0, eraserImage.getWidth(), eraserImage.getHeight(), null);
+    g2d.drawImage(wall1, this.getWidth()/2 - 18, 22, null);
+    g2d.drawImage(wallTopBR, this.getWidth()/2 - 18, 40,null);
+    g2d.setColor(Color.BLACK);
+    g2d.drawString("1", this.getWidth()/2 - (20 + g2d.getFontMetrics().stringWidth("1")), 16);
+    g2d.drawString("2", this.getWidth()/2 - (20 + g2d.getFontMetrics().stringWidth("2")), 34);
+    g2d.drawString("3", this.getWidth()/2 - (20 + g2d.getFontMetrics().stringWidth("3")), 52);
+    if(mouseMode){
+      g2d.setColor(Color.RED);
+      if(selector.getTileType() == 'o'){
+        g2d.drawRect(this.getWidth()/2 - 19, 3, 18, 18);
+      } else if(selector.getTileType() == 'x'){
+        g2d.drawRect(this.getWidth()/2 - 19, 21, 18, 18);
+      } else if(selector.getTileType() == 't'){
+        g2d.drawRect(this.getWidth()/2 - 19, 39, 18, 18);
+      }
+    }
+    g2d.setColor(Color.BLACK);
+    g2d.setFont(new Font("TimesRoman", Font.BOLD, 6));
+    g2d.drawString("Press N to create a level.", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Press N to create a level.")), 70);
+    g2d.drawString("Press Enter to save a level.", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Press Enter to save a level.")), 75);
+    g2d.drawString("Press L to load a level.", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Press L to load a level.")), 80);
+    g2d.drawString("Press U to unload a level.", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Press U to unload a level.")), 85);
+    g2d.drawString("(A level must be unloaded before a new level can be created or loaded.)", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("(A level must be unloaded before a new level can be created or loaded.)")), 85);
+    g2d.drawString("Press Z to swap between mouse mode and keyboard mode.", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Press Z to swap between mouse mode and keyboard mode.")), 95);
+    if(mouseMode){
+      g2d.drawString("Current Mode: Mouse Mode", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Current Mode: Keyboard Mode")), 100);
+    } else{
+      g2d.drawString("Current Mode: Keyboard Mode", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Current Mode: Keyboard Mode")), 100);
+    }
   }
   
   public void updateFrame(){
