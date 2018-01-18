@@ -285,4 +285,8 @@ public class Selector{
       }
     }
   }
+  
+  public char getTileType(){
+    return tileType;
+  }
 }

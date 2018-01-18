@@ -73,5 +73,4 @@ public abstract class MovableObject extends GraphicsObject{
   public double getVelocity(){
   return velocity;
   }
-
 }

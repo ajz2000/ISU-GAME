@@ -94,6 +94,12 @@ public class SSRB extends JPanel{
             loadCustomLevel();
           } 
         }
+        else if (currentMenu.getMenu() == 3){
+          if(e.getKeyCode() == KeyEvent.VK_E){
+            currentMenu = new Menu(0);
+            resetGame();
+          }
+        }
         if(e.getKeyCode() == KeyEvent.VK_Z){
           SSRB.debug = !SSRB.debug;
         }
@@ -254,6 +260,7 @@ public class SSRB extends JPanel{
   }
   
   public void move(){
+    if(!director.getDisplayingWave()){
     //move the player and robot
     pc.move();
     rc.move();
@@ -303,7 +310,7 @@ public class SSRB extends JPanel{
         audioDirector.setTotalWaveEnemies(enemyList.size());
       }
       
-      
+    }
     }
   
   public void checkCollisions(){
@@ -407,6 +414,7 @@ public class SSRB extends JPanel{
   }
   public void loadLevel(String toLoad){
     currentLevel = new LevelAsset(toLoad,this);
+    pc.move();
   }
   
   public void loadCustomLevel(){
@@ -433,6 +441,7 @@ public class SSRB extends JPanel{
     currentLevel = new LevelAsset(collisionPath, f, this);
     atMenu = false;
     audioDirector.start();
+    pc.move();
   }
   
   //add a bullet to the list of active projectiles

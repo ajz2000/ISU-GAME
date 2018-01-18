@@ -14,6 +14,7 @@ public class Director{
   private int baseEnemies;
   private int addBase;
   private int newWaveTimer = 0;
+  private boolean displayingWave = false;
   
   public Director(SSRB ssrb,PlayerCharacter pc){
     this.ssrb = ssrb;
@@ -39,8 +40,16 @@ public class Director{
       alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f);
       g2d.setComposite(alphaComposite);
       newWaveTimer++;
+      if(newWaveTimer > 48){
+        displayingWave = false;
+      }
     }
   }
+  
+  public boolean getDisplayingWave(){
+    return displayingWave;
+  }
+  
   public int checkHighScore(){
     try{
     FileReader fr = new FileReader("Score.txt");
@@ -151,6 +160,7 @@ public class Director{
     }
     baseEnemies = (int)((Math.random() * 3) + addBase);
     newWaveTimer = 0;
+    displayingWave = true;
     spawnEnemies();
   }
   
