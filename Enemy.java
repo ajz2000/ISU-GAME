@@ -7,7 +7,6 @@ public class Enemy extends Character{
   protected double distanceToPlayer;
   protected int maxVelocity;
   protected boolean moving = true;
-  protected boolean collidingWithWall;
   protected boolean hasAdjusted = false;
   protected boolean hasExploded = false;
   protected boolean isColliding = false;

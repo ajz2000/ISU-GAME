@@ -481,6 +481,7 @@ public class LevelEditor extends JPanel implements Runnable{
       }
       
       ImageIO.write(saveImg, "png", new File(workingDir + "/CustomLevels/" + fileName + ".png"));
+      saved = true;
     
     } catch(IOException e){
       System.out.println("Save Failed");
