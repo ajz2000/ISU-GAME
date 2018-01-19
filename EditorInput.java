@@ -107,8 +107,8 @@ public class EditorInput{
       inField.addActionListener(this);
       
       //Initialize JTextArea and print initial text
-      displayArea = new JTextArea("Name: \n", 20, 10);
-      startReplace += 7;
+      displayArea = new JTextArea("Enter Name: \n", 20, 10);
+      startReplace += 13;
       
       GridBagConstraints c = new GridBagConstraints();
       c.weightx = 1.0;
@@ -137,13 +137,12 @@ public class EditorInput{
               name = inField.getText();
               //Show new text in JTextArea.
               displayArea.append(name + "\n");
-              displayArea.append("Height: \n");
+              displayArea.append("Enter Height(max 50): \n");
               //Highlight text.
               inField.selectAll();
               inCount++;
-              startReplace += name.length() + 10;
+              startReplace += name.length() + 24;
               
-              System.out.println(errorPrinted);
               if(errorPrinted){
                 startReplace += 48;
               }
@@ -153,31 +152,37 @@ public class EditorInput{
             break;
           case 1:
             try{
-            Integer.parseInt(inField.getText());
+            int i = Integer.parseInt(inField.getText());
+            if(i > 50){
+              throw new Exception();
+            }
             //Set variable to text in JTextField
             height = inField.getText();
             //Show new text in JTextArea.
             displayArea.append(height + "\n");
-            displayArea.append("Width: \n");
+            displayArea.append("Enter Width(max 50): \n");
             //Highlight text.
             inField.selectAll();
             inCount++;
-            startReplace += height.length() + 9;
+            startReplace += height.length() + 23;
             
             if(errorPrinted){
-              startReplace += 66;
+              startReplace += 60;
             }
             
             errorPrinted = false;
-          } catch (NumberFormatException n){
+          } catch (Exception n){
             displayArea.selectAll();
-            displayArea.replaceRange("Please enter a valid Integer value with a length greater than 1. \n", startReplace, displayArea.getSelectionEnd());
+            displayArea.replaceRange("Please enter a valid Integer value greater than 1(max 50). \n", startReplace, displayArea.getSelectionEnd());
             errorPrinted = true;
           }
             break;
           case 2:
             try{
-            Integer.parseInt(inField.getText());
+            int i = Integer.parseInt(inField.getText());
+            if(i > 50){
+              throw new Exception();
+            }
             //Set variable to text in JTextField
             width = inField.getText();
             //Show new text in JTextArea.
@@ -186,9 +191,9 @@ public class EditorInput{
             //Highlight text.
             inField.selectAll();
             inCount++;
-          } catch(NumberFormatException n){
+          } catch(Exception n){
             displayArea.selectAll();
-            displayArea.replaceRange("Please enter a valid Integer value with a length greater than 1. \n", startReplace, displayArea.getSelectionEnd());
+            displayArea.replaceRange("Please enter a valid Integer value greater than 1(max 50). \n", startReplace, displayArea.getSelectionEnd());
             errorPrinted = true;
           }
             break;

@@ -123,8 +123,8 @@ public class RobotCompanion extends Character{
   public void shoot(MouseEvent e){
     Projectile toAdd;
     //Get mouse x and y
-    mouseX = e.getX() / SSRB.getScaleRatio() + SSRB.getXOffset() - (ssrb.getScreenWidth()/4);
-    mouseY = e.getY() / SSRB.getScaleRatio() + SSRB.getYOffset() - (ssrb.getScreenHeight()/4);
+    mouseX = e.getX() / SSRB.getScaleRatio() + SSRB.getXOffset() - (SSRB.getScreenWidth()/4);
+    mouseY = e.getY() / SSRB.getScaleRatio() + SSRB.getYOffset() - (SSRB.getScreenHeight()/4);
     
     //Find x and y distance between mouse and companion's centre.
     double xDist = mouseX - (x + ((width) / 2));
@@ -195,8 +195,8 @@ public class RobotCompanion extends Character{
   
   public void shootMachineGun(){
     if (machineGunAmmo>0&&machinegunTimer>=5){
-      mouseX = (MouseInfo.getPointerInfo().getLocation().x + ssrb.getXPosition())/SSRB.getScaleRatio() + SSRB.getXOffset() - (ssrb.getScreenWidth()/4);
-      mouseY = (MouseInfo.getPointerInfo().getLocation().y + ssrb.getYPosition()-31)/SSRB.getScaleRatio() + SSRB.getYOffset() - (ssrb.getScreenHeight()/4);
+      mouseX = (MouseInfo.getPointerInfo().getLocation().x + ssrb.getXPosition())/SSRB.getScaleRatio() + SSRB.getXOffset() - (SSRB.getScreenWidth()/4);
+      mouseY = (MouseInfo.getPointerInfo().getLocation().y + ssrb.getYPosition()-31)/SSRB.getScaleRatio() + SSRB.getYOffset() - (SSRB.getScreenHeight()/4);
       Projectile toAdd;
       double xDist = mouseX - (x + ((width) / 2));
       double yDist = mouseY - (y + ((height) / 2));

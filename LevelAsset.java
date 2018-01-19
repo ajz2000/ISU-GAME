@@ -2,6 +2,7 @@ import javax.imageio.*;
 import java.io.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import javax.swing.*;
 
 public class LevelAsset extends GraphicsObject{
   
@@ -25,7 +26,7 @@ public class LevelAsset extends GraphicsObject{
     loadCollision(levelName);
   }
   
-  public LevelAsset(String levelName, File level, SSRB ssrb){
+  public LevelAsset(String levelName, File level, SSRB ssrb) throws Exception{
     try {
       BufferedImage bgInput = ImageIO.read(new File("BackgroundBig3.png"));
       Image bgScaled = bgInput.getScaledInstance(bgInput.getWidth() * 2, bgInput.getHeight() * 2, BufferedImage.SCALE_DEFAULT);
@@ -33,6 +34,7 @@ public class LevelAsset extends GraphicsObject{
       bgLayer.createGraphics().drawImage(bgScaled, 0, 0, null);
       fgLayer = ImageIO.read(level);
     } catch (IOException e) {
+      throw e;
     }
     width = fgLayer.getWidth();
     height = fgLayer.getHeight();

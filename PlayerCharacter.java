@@ -305,8 +305,8 @@ public class PlayerCharacter extends Character{
     }
     curFrame = 0;
     maxFrame = 3;
-    x = ssrb.getScreenWidth()/2/SSRB.getScaleRatio();
-    y = ssrb.getScreenHeight()/2/SSRB.getScaleRatio();
+    x = SSRB.getScreenWidth()/2/SSRB.getScaleRatio();
+    y = SSRB.getScreenHeight()/2/SSRB.getScaleRatio();
     hitBox.x=(int)x;
     hitBox.x=(int)y;
     hitBox.width = width;

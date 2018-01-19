@@ -93,6 +93,9 @@ public class SSRB extends JPanel{
           else if(e.getKeyCode() == KeyEvent.VK_3){
             loadCustomLevel();
           } 
+          if(currentMenu.getMenu() != 0 && e.getKeyCode() == KeyEvent.VK_ESCAPE){
+             currentMenu = new Menu(0);
+          }
         }
         else if (currentMenu.getMenu() == 3){
           if(e.getKeyCode() == KeyEvent.VK_E){
@@ -353,19 +356,17 @@ public class SSRB extends JPanel{
     for(int i = 0; i <wallList.size(); i++){
       pc.footCollide(wallList.get(i));
     }
-    //bullet and wall
-//    for(int i = 0; i < bulletList.size(); i++){
-//      for(int j = 0; j < wallList.size(); j++){
-//        if(bulletList.get(i).collide(wallList.get(j))&& wallList.get(j).isPit()==false){
-//          if(!bulletList.get(i).getType().equals("Sniper")){
-//            bulletList.get(i).setActive(false);
-//          }
-//          else{
-//          //sniper collision goes here
-//          }
-//        }
-//      }
-//    }
+    //Enemy and wall
+    for(int i = 0; i < enemyList.size(); i++){
+      for(int j = 0; j < wallList.size(); j++){
+        if(enemyList.get(i).collide(wallList.get(j))){
+            enemyList.get(i).setColliding(true);
+            break;
+        } else{
+          enemyList.get(i).setColliding(false);
+        }
+      }
+    }
     
     //player and pickup
     for(int i = 0; i < pickupList.size(); i++){
@@ -438,10 +439,16 @@ public class SSRB extends JPanel{
     String workingDir = System.getProperty("user.dir");
     File f = new File(workingDir + "/CustomLevels/" + fileName + ".png");
     String collisionPath = workingDir + "/CustomLevels/" + fileName;
-    currentLevel = new LevelAsset(collisionPath, f, this);
-    atMenu = false;
-    audioDirector.start();
-    pc.move();
+    try{
+      currentLevel = new LevelAsset(collisionPath, f, this);
+      atMenu = false;
+      audioDirector.start();
+      pc.move();
+    }catch(Exception e){
+      JFrame frame = new JFrame();
+      JOptionPane.showMessageDialog(frame, "Level does not exist.");
+      resetGame();
+    }
   }
   
   //add a bullet to the list of active projectiles
@@ -522,7 +529,7 @@ public class SSRB extends JPanel{
     
     
     //set the window size to match the screen size
-    frame.setSize(s.screenWidth,s.screenHeight);
+    frame.setSize(SSRB.screenWidth,SSRB.screenHeight);
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     

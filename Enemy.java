@@ -10,6 +10,7 @@ public class Enemy extends Character{
   protected boolean collidingWithWall;
   protected boolean hasAdjusted = false;
   protected boolean hasExploded = false;
+  protected boolean isColliding = false;
   //moves the enemy in the direction of the player
   public void move(){
     if(health>0){
@@ -105,23 +106,27 @@ public class Enemy extends Character{
       deathAnimTimer=0;
       if(curFrame==deathAnimFrames){
         super.die();
-        double drop = Math.random()*100;
-        
-        if(drop <= 10){
-          ssrb.addPickup(new HealthPickup((int)x,(int)y));
-        }
-        else if (drop > 10 && drop <= 20){
-          ssrb.addPickup(new AmmoPickup((int)x,(int)y,1));
-        }
-        else if(drop > 20 && drop <= 30){
-          ssrb.addPickup(new AmmoPickup((int)x,(int)y,2));
-        }
-        else if(drop > 30 && drop <= 40 ){
-          ssrb.addPickup(new AmmoPickup((int)x,(int)y,3));
+        if(!isColliding){
+          double drop = Math.random()*100;
+          
+          if(drop <= 10){
+            ssrb.addPickup(new HealthPickup((int)x,(int)y));
+          }
+          else if (drop > 10 && drop <= 20){
+            ssrb.addPickup(new AmmoPickup((int)x,(int)y,1));
+          }
+          else if(drop > 20 && drop <= 30){
+            ssrb.addPickup(new AmmoPickup((int)x,(int)y,2));
+          }
+          else if(drop > 30 && drop <= 40 ){
+            ssrb.addPickup(new AmmoPickup((int)x,(int)y,3));
+          }
         }
       }
     }
-    
-    
+  }
+  
+  public void setColliding(boolean colliding){
+    isColliding = colliding;
   }
 }

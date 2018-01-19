@@ -126,7 +126,11 @@ public class AudioDirector{
       controlList.get(0).setValue(-17 + ((enemyShootingNum/maxEnemies) * 17));
       
       //Drums set based on number of enemies
-      controlList.get(1).setValue(-20 + (((enemyBasicNum+enemyShootingNum+enemyExplodingNum+enemySpawningNum)/totalEnemiesThisWave) * 20));
+      float toSetDrums = (-20 + (((enemyBasicNum+enemyShootingNum+enemyExplodingNum+enemySpawningNum)/totalEnemiesThisWave) * 20));
+      if(toSetDrums>6){
+        toSetDrums = 6;
+      }
+      controlList.get(1).setValue(toSetDrums);
       
       //main key set based on exploding enemies
       controlList.get(4).setValue(-5 + ((enemyExplodingNum/maxEnemies) * 5));

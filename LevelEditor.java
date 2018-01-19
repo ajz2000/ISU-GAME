@@ -43,6 +43,8 @@ public class LevelEditor extends JPanel implements Runnable{
   private boolean mouseHeld = false;
   private MouseEvent clicked;
   private boolean mouseMode = false;
+  private boolean textShown = true;
+  private boolean saved = false;
   public static int width = 0;
   public static int height = 0;
   
@@ -71,6 +73,8 @@ public class LevelEditor extends JPanel implements Runnable{
           unload();
         if(e.getKeyCode() == KeyEvent.VK_ENTER)
           save();
+        if(e.getKeyCode() == KeyEvent.VK_O)
+          textShown = !textShown;
         if(e.getKeyCode() == KeyEvent.VK_Z){
           if(mouseMode){
             mouseMode = false;
@@ -162,16 +166,19 @@ public class LevelEditor extends JPanel implements Runnable{
     }
     g2d.setColor(Color.BLACK);
     g2d.setFont(new Font("TimesRoman", Font.BOLD, 6));
-    g2d.drawString("Press N to create a level.", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Press N to create a level.")), 70);
-    g2d.drawString("Press Enter to save a level.", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Press Enter to save a level.")), 75);
-    g2d.drawString("Press L to load a level.", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Press L to load a level.")), 80);
-    g2d.drawString("Press U to unload a level.", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Press U to unload a level.")), 85);
-    g2d.drawString("(A level must be unloaded before a new level can be created or loaded.)", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("(A level must be unloaded before a new level can be created or loaded.)")), 85);
-    g2d.drawString("Press Z to swap between mouse mode and keyboard mode.", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Press Z to swap between mouse mode and keyboard mode.")), 95);
-    if(mouseMode){
-      g2d.drawString("Current Mode: Mouse Mode", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Current Mode: Keyboard Mode")), 100);
-    } else{
-      g2d.drawString("Current Mode: Keyboard Mode", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Current Mode: Keyboard Mode")), 100);
+    g2d.drawString("Press O to show/hide text.", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Press U to show/hide text.")), 65);
+    if(textShown){
+      g2d.drawString("Press N to create a level.", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Press N to create a level.")), 70);
+      g2d.drawString("Press Enter to save a level.", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Press Enter to save a level.")), 75);
+      g2d.drawString("Press L to load a level.", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Press L to load a level.")), 80);
+      g2d.drawString("Press U to unload a level.", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Press U to unload a level.")), 85);
+      g2d.drawString("(A level must be unloaded before a new level can be created or loaded.)", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("(A level must be unloaded before a new level can be created or loaded.)")), 90);
+      g2d.drawString("Press Z to swap between mouse mode and keyboard mode.", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Press Z to swap between mouse mode and keyboard mode.")), 95);
+      if(mouseMode){
+        g2d.drawString("Current Mode: Mouse Mode", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Current Mode: Keyboard Mode")), 100);
+      } else{
+        g2d.drawString("Current Mode: Keyboard Mode", this.getWidth()/2 - (g2d.getFontMetrics().stringWidth("Current Mode: Keyboard Mode")), 100);
+      }
     }
   }
   
@@ -271,7 +278,10 @@ public class LevelEditor extends JPanel implements Runnable{
       }
       height = tempHeight;
       br2.close();
-    } catch (Exception e){
+    } catch (Exception e){ 
+      JFrame frame = new JFrame();
+      JOptionPane.showMessageDialog(frame, "Level does not exist.");
+      unload();
       System.out.println("LEVEL PROBABLY CANT BE LOADED L M A O");
     }
     levelArray = new char[height][width];
