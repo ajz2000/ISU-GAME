@@ -512,6 +512,15 @@ public class LevelEditor extends JPanel implements Runnable{
     return mouseMode;
   }
   
+  public boolean getSaved(){
+    return saved;
+  }
+  
+  //Always sets to false.
+  public void setSaved(){
+    saved = false;
+  }
+  
 //  public int getWidth(){
 //    return width;
 //  }

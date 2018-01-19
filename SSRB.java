@@ -403,9 +403,15 @@ public class SSRB extends JPanel{
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     WindowListener exitListener = new WindowAdapter() {
-      
       @Override
       public void windowClosing(WindowEvent e) {
+        if(!le.getSaved()){
+          JFrame f = new JFrame();
+          int i = JOptionPane.showConfirmDialog(f, "You have unsaved changes, would you like to save before closing?", "Unsaved Changes.", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+          if(i == JOptionPane.YES_OPTION){
+            le.save();
+          }
+        }
         le.unload();
       }
     };

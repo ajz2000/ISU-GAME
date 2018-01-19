@@ -44,18 +44,21 @@ public class Selector{
     if (e.getKeyCode() == KeyEvent.VK_2&&le.getLoaded()==true){
       if(!le.getMouseMode()){
         le.setLevelArray(y, x, 'x');
+        le.setSaved();
       }
       tileType = 'x';
     }
     if (e.getKeyCode() == KeyEvent.VK_1&&le.getLoaded()==true){
       if(!le.getMouseMode()){
         le.setLevelArray(y, x, 'o');
+        le.setSaved();
       }
       tileType = 'o';
     }
     if (e.getKeyCode() == KeyEvent.VK_3&&le.getLoaded()==true){
       if(!le.getMouseMode()){
         le.setLevelArray(y, x, 't');
+        le.setSaved();
       }
       tileType = 't';
     }
@@ -137,9 +140,11 @@ public class Selector{
     {
       if(e.getButton() == MouseEvent.BUTTON1){
         le.setLevelArray(colTile[0], colTile[1], tileType);
+        le.setSaved();
       }
       else if(e.getButton() == MouseEvent.BUTTON3){
         le.setLevelArray(colTile[0], colTile[1], 'o');
+        le.setSaved();
       }
     }
   }
@@ -221,6 +226,8 @@ public class Selector{
         }
       }
     }
+    
+    le.setSaved();
   }
   
   public void fill(char[][] levelArray, int startY, int startX){
