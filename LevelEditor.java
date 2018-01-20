@@ -416,6 +416,7 @@ public class LevelEditor extends JPanel implements Runnable{
     levelArray = null;
     loaded = false;
     fileName = "";
+    saved = true;
   }
   public void save(){
     System.out.println("Saving level");
