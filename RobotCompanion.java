@@ -185,7 +185,7 @@ public class RobotCompanion extends Character{
         machineGunAmmo--;
         for(int i = 0; i<36; i++){
           bulletAngle+=10;
-          toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 3, 7.0, bulletAngle, 3, "MachineGun", true);
+          toAdd = new Projectile((int)(x + (width / 2)), (int)(y + (height / 2)), 3, 7.0, bulletAngle, 100, "MachineGun", true);
           ssrb.addBullet(toAdd);
         }
         limitBreak = 0;
