@@ -135,7 +135,10 @@ public class SSRB extends JPanel{
 //          atMenu = false;
         }
         else if(currentMenu.getMenu() == 5 && atMenu){
-          currentMenu = new Menu(0);
+          currentMenu = new Menu(6);
+        }
+        else if(currentMenu.getMenu() == 6 && atMenu){
+          currentMenu = new Menu(5);
         }
         else if (currentMenu.getMenu() == 4){
           resetGame();

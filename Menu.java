@@ -17,6 +17,11 @@ public class Menu{
   public Menu(int menuNum){
     currentMenu = menuNum;
     try{
+                
+          BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+          Graphics2D g2d = img.createGraphics();
+          
+          int arrayPos = 0;
       switch(menuNum){
         case 0:
           
@@ -26,8 +31,8 @@ public class Menu{
           break;
         case 1:
           imageList.add(ImageIO.read(new File("MenuLevelSelect.png")));
-           imagePointList.add(new Point((SSRB.getScreenWidth() / 2) - (imageList.get(0).getWidth() / 2), (SSRB.getScreenHeight() / 2) - (imageList.get(0).getHeight() / 2)));
-               //imageList.get(1) - Level Select
+          imagePointList.add(new Point((SSRB.getScreenWidth() / 2) - (imageList.get(0).getWidth() / 2), (SSRB.getScreenHeight() / 2) - (imageList.get(0).getHeight() / 2)));
+          //imageList.get(1) - Level Select
           break;
         case 2:
           break;
@@ -44,55 +49,82 @@ public class Menu{
         case 5:
           imageList.add(ImageIO.read(new File("MenuHelp.png")));
           imagePointList.add(new Point((SSRB.getScreenWidth() / 2) - (imageList.get(0).getWidth() / 2), (SSRB.getScreenHeight() / 2) - (imageList.get(0).getHeight() / 2)));
-          textList.add("There are robots trying ruin your day!!!");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)));
-          textList.add("Take your guns and ruin their day by brutally murdering them before they brutally murder you!!!");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+20));
+          textList.add("Click to Continue");
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),700));
+          arrayPos++;
+          break;
+        case 6:
+          
+          textList.add("There are robots trying ruin your day!!! Take your guns and ruin their day by brutally murdering them before they brutally murder you!!!");
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),20));
+          arrayPos++;
           textList.add("They are sentient and they feel pain!!!");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+40));
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),40));
+          arrayPos++;
           textList.add("Enemies can damage you by lowering your health!!!");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+60));
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),60));
+          arrayPos++;
           textList.add("If the health bar above your character hits zero you will be embraced by the sweet release of death!!!");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+80));
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),80));
+          arrayPos++;
           textList.add("All of your weapons except your pistol have limited ammuniton, collect mysterious black boxes to continue your roboto massacre!!!");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+100));
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),100));
+          arrayPos++;
           textList.add("Enemies come in waves!!! Listen carefully to the music to determine the makeup of the enemy ranks!!!");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+120));          
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),120));    
+          arrayPos++;
           textList.add("Once your orange bar charges up, you'll get one S U P E R S H O T with whatever gun you currently have equipped");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+140));         
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),140));         
+          arrayPos++;
           textList.add("THEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERME");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+160));                  
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),160));               
+          arrayPos++;
           textList.add("THEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERMETHEROBOTSAREAFTERME");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+180));                  
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),180));  
+          arrayPos++;
           textList.add("HELPMEHELPMEHELPMEHELPMEHELPMEHELPMEHELPME");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+180));
-           textList.add("HELPMEHELPMEHELPMEHELPMEHELPMEHELPMEHELPME");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+200));
-           textList.add("HELPMEHELPMEHELPMEHELPMEHELPMEHELPMEHELPME");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+220));          
-           textList.add("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+240));          
-           textList.add("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+270));
-           textList.add("----------------------------------------------------------------------------------------------------");
-           textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+270));          
-           textList.add("                                                        ************))))))))))))))))++++++++++#############");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+270));
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),180));
+          arrayPos++;
+          textList.add("HELPMEHELPMEHELPMEHELPMEHELPMEHELPMEHELPME");
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),200));
+          arrayPos++;
+          textList.add("HELPMEHELPMEHELPMEHELPMEHELPMEHELPMEHELPME");
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),220)); 
+          arrayPos++;
+          textList.add("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),240));          
+          arrayPos++;
+          textList.add("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),270));
+          arrayPos++;
+          textList.add("----------------------------------------------------------------------------------------------------");
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),270));   
+          arrayPos++;
+          textList.add("                                                        ************))))))))))))))))++++++++++#############");
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),270));
+          arrayPos++;
+          textList.add("*****&&&&*******))$$$$))))))))))))))+++++|||||}{{}{}}+++++#############");
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),290));     
+          arrayPos++;
+          textList.add("*****    &&&&*******))      ))))))))))))))+ ++++|||||}{{}{}}+++++#############");
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),290));
+          arrayPos++;
           
-           textList.add("*****&&&&*******))$$$$))))))))))))))+++++|||||}{{}{}}+++++#############");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+290));          
-           textList.add("*****    &&&&*******))      ))))))))))))))+ ++++|||||}{{}{}}+++++#############");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+290));
-          
-           textList.add("^^^^^^^");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+320));
+          textList.add("^^^^^^^");
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),320));
+          arrayPos++;
           textList.add("|||||");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+320));
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),320));
+          arrayPos++;
           textList.add("Space to dodge, WASD to move, Left Mouse to shoot, Right Mouse to change guns, Esc to pause");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+350));
-          
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),350));
+          arrayPos++;          
           textList.add("good luck");
-          textPointList.add( new Point((SSRB.getScreenWidth() / 3),(imageList.get(0).getHeight() / 2)+370));
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),370));
+              arrayPos++;                
+           textList.add("Hit ESC to return to main menu");
+          textPointList.add( new Point((SSRB.getScreenWidth() / 2)- (g2d.getFontMetrics().stringWidth(textList.get(arrayPos)) / 2),700));
+          break;
           
         default:
           break;
