@@ -100,6 +100,10 @@ public class Director{
       spawnX = (int)((Math.random() * 2000) + 1);
       spawnY = (int)((Math.random() * 2000) + 1);
     }
+    
+    if(wave == 1){
+      ssrb.addEnemy(new Boss(spawnX,spawnY,pc,ssrb));
+    }
   }
   public void calculateEnemies(){
     wave++;

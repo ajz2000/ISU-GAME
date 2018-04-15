@@ -35,9 +35,9 @@ public class EnemySpawning extends Enemy{
    } else{
      super.move();
    }
-     if(health <= 0){
-      die();
-    }
+   if(health <= 0){
+     die();
+   }
  }
  
  //if the distance to the player is within a specified range, begin shooting
