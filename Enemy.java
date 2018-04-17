@@ -75,7 +75,7 @@ public class Enemy extends Character{
     if(this instanceof EnemyBasic){
       if(!hasAdjusted){
         x -=15;
-        y-=15;
+        y -=15;
         hasAdjusted = true;
       }
       width = height = 50;
@@ -94,7 +94,6 @@ public class Enemy extends Character{
         toExplode.explode();
         hasExploded = true;
       }
-      
     }
     
     deathAnimTimer++;

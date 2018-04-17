@@ -8,12 +8,13 @@ public class Boss extends Enemy{
   private boolean lineAtkOn = false;
   private int lineAtkTimer = 0;
   private LineAttack lineAtk;
+  private MortarCircle mortarAtk;
   
   public Boss(int x, int y, PlayerCharacter pc, SSRB ssrb){
     this.pc=pc;
     this.ssrb = ssrb;
-    width = 20;
-    height = 28; 
+    width = 60;
+    height = 84; 
     this.x = (int)x;
     this.y = (int)y;
     maxVelocity = 2;
@@ -21,17 +22,29 @@ public class Boss extends Enemy{
     damage = 40;
     hitBox.x = x;
     hitBox.y = y;
-    hitBox.width = width * 3;
-    hitBox.height = height * 3;
-    deathAnimFrames = 9;
+    hitBox.width = width;
+    hitBox.height = height;
+    deathAnimFrames = 4;
     try {
-      sprite = ImageIO.read(new File("EnemyBasic1.png"));
+      sprite = ImageIO.read(new File("Boss.png"));
       deathSprite = ImageIO.read(new File("EnemyBasicDeath.png"));
     } catch (IOException e) {
-    } 
+    }
   }
   
   public void move(){
+    if(mortarAtk != null){
+      mortarAtk.update();
+      
+      if(mortarAtk.collide(pc)){
+        pc.setHealth(40);
+      }
+      
+      if(!mortarAtk.getActive()){
+        mortarAtk = null;
+      }
+    }
+    
     if(lineAtkOn){
       if(lineAtk == null){
         lineAtkTimer++;
@@ -72,6 +85,7 @@ public class Boss extends Enemy{
   public void attack(){
     switch(curAttack){
       case 0:
+        mortarAtk = new MortarCircle(x + width, y + width, 500);
         break;
       case 1:
         lineAtkOn = true;
@@ -91,6 +105,10 @@ public class Boss extends Enemy{
   public void paint(Graphics2D g2d){
     if(lineAtk != null){
       lineAtk.paint(g2d);
+    }
+    
+    if(mortarAtk != null){
+      mortarAtk.paint(g2d);
     }
     
     super.paint(g2d);
